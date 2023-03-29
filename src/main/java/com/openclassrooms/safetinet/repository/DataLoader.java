@@ -2,9 +2,10 @@ package com.openclassrooms.safetinet.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassrooms.safetinet.data.Data;
+import com.openclassrooms.safetinet.data.*;
 
 public class DataLoader {
 	
@@ -17,9 +18,9 @@ public class DataLoader {
 	
 	
 	  public void loadJsonData() throws IOException {
-	        File file = new File("Data.json");
-	        if (file.exists()) {
-	            Data data = objectMapper.readValue(file, Data.class);
+		  InputStream inputStream = getClass().getClassLoader().getResourceAsStream("FileData.json");
+	        if (inputStream != null) {
+	            Data data = objectMapper.readValue(inputStream, Data.class);
 	        } else {
 	            throw new IOException("Le fichier n'existe pas.");
 	        }

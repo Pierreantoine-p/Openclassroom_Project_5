@@ -12,7 +12,7 @@ import com.openclassrooms.safetinet.repository.DataLoader;
 public class SafetinetApplication {
 
 	public static void main(String[] args) {
-		DataLoader dataload = new DataLoader("Data.json");
+		DataLoader dataload = new DataLoader("FileData.json");
 		try {
 			dataload.loadJsonData();
 			System.out.println(Data.getPersons());
@@ -22,6 +22,7 @@ public class SafetinetApplication {
 			e.printStackTrace();
 		}
 		SpringApplication.run(SafetinetApplication.class, args);
+		run(args);
 	}
 	
 	public static void run(String... args) {
