@@ -7,6 +7,9 @@ import java.io.InputStream;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.data.*;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 public class DataLoader {
 	
     private final String filePath;
@@ -16,13 +19,13 @@ public class DataLoader {
         this.filePath = filePath;
     }
 	
-	
 	  public void loadJsonData() throws IOException {
 		  InputStream inputStream = getClass().getClassLoader().getResourceAsStream("FileData.json");
+
 	        if (inputStream != null) {
 	            Data data = objectMapper.readValue(inputStream, Data.class);
 	        } else {
 	            throw new IOException("Le fichier n'existe pas.");
 	        }
-	    }
-}
+	    } 
+}  

@@ -9,26 +9,28 @@ import com.openclassrooms.safetinet.model.DataPersons;
 
 public class Data {
 	
-	public static List<DataPersons> getPersons() {
-		return persons;
+	public List<DataPersons> getPersons() {
+		return this.persons;
 	}
-	public static void setPersons(List<DataPersons> persons) {
-		Data.persons = persons;
+	public void setPersons(List<DataPersons> persons) {
+		this.persons = persons;
 	}
-	public static List<DataMedicalRecords> getMedicalRecords() {
-		return medicalRecords;
+	public List<DataMedicalRecords> getMedicalRecords() {
+		return this.medicalrecords;
 	}
-	public static void setMedicalRecords(List<DataMedicalRecords> medicalRecords) {
-		Data.medicalRecords = medicalRecords;
+	public void setMedicalRecords(List<DataMedicalRecords> medicalrecords) {
+		this.medicalrecords = medicalrecords;
 	}
-	public static List<DataFireStations> getFireStations() {
-		return fireStations;
+	public List<DataFireStations> getFireStations() {
+		return this.firestations;
 	}
-	public static void setFireStations(List<DataFireStations> fireStations) {
-		Data.fireStations = fireStations;
+	public void setFireStations(List<DataFireStations> firestations) {
+		this.firestations = firestations;
 	}
-	private static List<DataPersons> persons = new ArrayList<DataPersons>();
-	private static List<DataMedicalRecords> medicalRecords = new ArrayList<DataMedicalRecords>();
-	private static List<DataFireStations> fireStations = new ArrayList<DataFireStations>();
+	
+	
+	private List<DataPersons> persons = new ArrayList<DataPersons>();
+	private List<DataMedicalRecords> medicalrecords = new ArrayList<DataMedicalRecords>();
+	private List<DataFireStations> firestations = new ArrayList<DataFireStations>();
 	
 }

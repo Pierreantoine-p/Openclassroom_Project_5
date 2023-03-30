@@ -11,11 +11,17 @@ import com.openclassrooms.safetinet.repository.DataLoader;
 @SpringBootApplication
 public class SafetinetApplication {
 
+	
+	
 	public static void main(String[] args) {
 		DataLoader dataload = new DataLoader("FileData.json");
 		try {
 			dataload.loadJsonData();
-			System.out.println(Data.getPersons());
+			Data data = new Data();
+			System.out.println(data.getPersons());
+			System.out.println(data.getMedicalRecords());
+			System.out.println(data.getFireStations());
+
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
