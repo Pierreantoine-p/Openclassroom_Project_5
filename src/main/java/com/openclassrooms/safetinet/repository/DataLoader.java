@@ -9,6 +9,7 @@ import com.openclassrooms.safetinet.data.*;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+import java.util.logging.Logger;
 
 public class DataLoader {
 	
@@ -20,12 +21,28 @@ public class DataLoader {
     }
 	
 	  public void loadJsonData() throws IOException {
-		  InputStream inputStream = getClass().getClassLoader().getResourceAsStream("FileData.json");
 
-	        if (inputStream != null) {
-	            Data data = objectMapper.readValue(inputStream, Data.class);
-	        } else {
-	            throw new IOException("Le fichier n'existe pas.");
-	        }
+		  InputStream inputStream = getClass().getClassLoader().getResourceAsStream("FileData.json");
+		  //Logger.INFO
+			try {
+				if (inputStream != null) {
+			
+			        Data data = objectMapper.readValue(inputStream, Data.class);
+			        System.out.println(data.getPersons());
+			        System.out.println(data.getFirestations());
+			        System.out.println(data.getMedicalrecords());
+
+			       
+			    } else {
+			        throw new IOException("Le fichier n'existe pas.");
+			    }
+			}
+			catch(IOException e){
+		        System.out.println(e);
+	
+			}finally {
+				inputStream.close();
+			}
+	        
 	    } 
 }  

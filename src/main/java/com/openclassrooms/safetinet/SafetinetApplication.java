@@ -12,16 +12,12 @@ import com.openclassrooms.safetinet.repository.DataLoader;
 public class SafetinetApplication {
 
 	
-	
 	public static void main(String[] args) {
 		DataLoader dataload = new DataLoader("FileData.json");
 		try {
 			dataload.loadJsonData();
 			Data data = new Data();
-			System.out.println(data.getPersons());
-			System.out.println(data.getMedicalRecords());
-			System.out.println(data.getFireStations());
-
+			System.out.println("data" + data);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

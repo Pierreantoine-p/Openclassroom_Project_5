@@ -3,34 +3,42 @@ package com.openclassrooms.safetinet.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.openclassrooms.safetinet.model.DataFireStations;
-import com.openclassrooms.safetinet.model.DataMedicalRecords;
-import com.openclassrooms.safetinet.model.DataPersons;
+import com.openclassrooms.safetinet.model.*;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class Data {
 	
-	public List<DataPersons> getPersons() {
-		return this.persons;
+	private List<Person> persons = new ArrayList<Person>();
+	private List<MedicalRecords> medicalrecords = new ArrayList<MedicalRecords>();
+	private List<FireStations> firestations = new ArrayList<FireStations>();
+
+	
+	public List<Person> getPersons() {
+		return persons;
 	}
-	public void setPersons(List<DataPersons> persons) {
+
+	public void setPersons(List<Person> persons) {
 		this.persons = persons;
 	}
-	public List<DataMedicalRecords> getMedicalRecords() {
-		return this.medicalrecords;
+
+
+	public List<MedicalRecords> getMedicalrecords() {
+		return medicalrecords;
 	}
-	public void setMedicalRecords(List<DataMedicalRecords> medicalrecords) {
+
+	public void setMedicalrecords(List<MedicalRecords> medicalrecords) {
 		this.medicalrecords = medicalrecords;
 	}
-	public List<DataFireStations> getFireStations() {
-		return this.firestations;
+
+
+	public List<FireStations> getFirestations() {
+		return firestations;
 	}
-	public void setFireStations(List<DataFireStations> firestations) {
+
+	public void setFirestations(List<FireStations> firestations) {
 		this.firestations = firestations;
 	}
-	
-	
-	private List<DataPersons> persons = new ArrayList<DataPersons>();
-	private List<DataMedicalRecords> medicalrecords = new ArrayList<DataMedicalRecords>();
-	private List<DataFireStations> firestations = new ArrayList<DataFireStations>();
 	
 }
