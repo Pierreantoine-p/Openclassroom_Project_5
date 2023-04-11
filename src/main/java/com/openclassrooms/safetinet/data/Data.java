@@ -10,12 +10,12 @@ import lombok.Setter;
 
 public class Data {
 	
-	private List<Person> persons = new ArrayList<Person>();
-	private List<MedicalRecords> medicalrecords = new ArrayList<MedicalRecords>();
-	private List<FireStations> firestations = new ArrayList<FireStations>();
+	private static List<Person> persons = new ArrayList<Person>();
+	private static List<MedicalRecordsModel> medicalrecords = new ArrayList<MedicalRecordsModel>();
+	private static List<FireStationsModel> firestations = new ArrayList<FireStationsModel>();
 
 	
-	public List<Person> getPersons() {
+	public static List<Person> getPersons() {
 		return persons;
 	}
 
@@ -24,20 +24,20 @@ public class Data {
 	}
 
 
-	public List<MedicalRecords> getMedicalrecords() {
+	public static List<MedicalRecordsModel> getMedicalrecords() {
 		return medicalrecords;
 	}
 
-	public void setMedicalrecords(List<MedicalRecords> medicalrecords) {
+	public void setMedicalrecords(List<MedicalRecordsModel> medicalrecords) {
 		this.medicalrecords = medicalrecords;
 	}
 
 
-	public List<FireStations> getFirestations() {
+	public static List<FireStationsModel> getFirestations() {
 		return firestations;
 	}
 
-	public void setFirestations(List<FireStations> firestations) {
+	public void setFirestations(List<FireStationsModel> firestations) {
 		this.firestations = firestations;
 	}
 	

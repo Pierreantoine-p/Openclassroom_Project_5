@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MedicalRecords {
+public class MedicalRecordsModel {
 	
+	/*
 	@Getter@Setter
 	private String firstName;
 	
@@ -21,8 +22,8 @@ public class MedicalRecords {
 	
 	@Getter@Setter
 	private ArrayList<String> allergies;
+	*/
 	
-	/*
 	private String firstName;
 	private String lastName;
 	private String birthdate;
@@ -68,7 +69,7 @@ public class MedicalRecords {
 	public void setAllergies(ArrayList<String> allergies) {
 		this.allergies = allergies;
 	}
-*/
+
 	
 	
 }

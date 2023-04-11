@@ -3,30 +3,25 @@ package com.openclassrooms.safetinet.model;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter@Setter
 public class Person {
-	
-	@Getter@Setter
+	/*
 	private String firstName;
 	
-	@Getter@Setter
 	private String lastName;
 	
-	@Getter@Setter
 	private String address;
 	
-	@Getter@Setter
 	private String city;
 	
-	@Getter@Setter
 	private String zip;
 	
-	@Getter@Setter
 	private String phone;
 	
-	@Getter@Setter
 	private String email;
+	*/
 	
-/*
+
 	private String firstName;
 	
 	private String lastName;
@@ -97,7 +92,7 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	*/
+	
 
 }
 

@@ -3,15 +3,14 @@ package com.openclassrooms.safetinet.model;
 import lombok.Getter;
 import lombok.Setter;
 
-public class FireStations {
-	
-	@Getter@Setter
-	private String address;
-	
-	@Getter@Setter
-	private String station;
+public class FireStationsModel {
 	
 	/*
+	private String address;
+	
+	private String station;
+	*/
+	
 	private String address;
 	private String station;
 	
@@ -28,6 +27,6 @@ public class FireStations {
 		this.station = station;
 	}
 	
-*/
+
 	
 }
