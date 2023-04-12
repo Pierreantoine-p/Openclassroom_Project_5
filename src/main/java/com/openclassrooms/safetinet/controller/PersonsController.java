@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetinet.model.MedicalRecordsModel;
+import com.openclassrooms.safetinet.model.MedicalRecords;
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.service.PersonsService;
 
@@ -33,6 +33,11 @@ public class PersonsController {
 	@GetMapping
 	public List<Person> findAll()throws IOException{
 		return personsService.getPersons();
+	}
+	
+	@GetMapping("/{firstName}")
+	public Person findFirstName (@PathVariable int id) throws IOException{
+		return personsService.findFirstName();
 	}
 	
 	/*

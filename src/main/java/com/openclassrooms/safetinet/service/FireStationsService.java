@@ -1,10 +1,24 @@
 package com.openclassrooms.safetinet.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.safetinet.model.FireStations;
+import com.openclassrooms.safetinet.repository.FireStationRepository;
+
+@Service
 public class FireStationsService {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
+public FireStationRepository fireStationRepository;
 	
+public FireStationsService(FireStationRepository fireStationRepository) {
+	this.fireStationRepository = fireStationRepository;
+}
+
+public List<FireStations> getfireStations(){
+	return fireStationRepository.getFireStations();
+}
+
 }

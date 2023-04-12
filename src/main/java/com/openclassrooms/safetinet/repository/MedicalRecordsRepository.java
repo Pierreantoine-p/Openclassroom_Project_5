@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.safetinet.data.Data;
-import com.openclassrooms.safetinet.model.Person;
+import com.openclassrooms.safetinet.model.MedicalRecords;
 
 @Repository
-public interface PersonsRepository extends CrudRepository{
-
+public class MedicalRecordsRepository {
+	
 	@Autowired
-	public List<Person> getPersons() {
-		return Data.getPersons();
+	public List<MedicalRecords> getMedicalRecords(){
+		return Data.getMedicalRecords();
 	}
-	
-	@Autowired
-	public void
-	
+
 }

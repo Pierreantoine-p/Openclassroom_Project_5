@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetinet.model.FireStationsModel;
-import com.openclassrooms.safetinet.model.MedicalRecordsModel;
+import com.openclassrooms.safetinet.model.FireStations;
+import com.openclassrooms.safetinet.model.MedicalRecords;
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.service.FireStationsService;
 import com.openclassrooms.safetinet.service.PersonsService;
@@ -22,7 +22,20 @@ import com.openclassrooms.safetinet.service.PersonsService;
 @RestController
 @RequestMapping("/firestation")
 public class FireStationsController {
+	
 	private FireStationsService fireStationsService;
+	
+	
+	public FireStationsController(FireStationsService fireStationsService) {
+		this.fireStationsService = fireStationsService;
+	}
+	
+	
+	@GetMapping
+	public List<FireStations> findAll()throws IOException{
+		return fireStationsService.getfireStations() ;
+	}
+	
 	/*
 	@Autowired
 	public FireStationsController(FireStationsService fireStationsService) {

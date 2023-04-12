@@ -29,8 +29,8 @@ public class DataLoader {
 			
 			        Data data = objectMapper.readValue(inputStream, Data.class);
 			        System.out.println(data.getPersons());
-			        System.out.println(data.getFirestations());
-			        System.out.println(data.getMedicalrecords());
+			        System.out.println(data.getFireStations());
+			        System.out.println(data.getMedicalRecords());
 
 			       
 			    } else {

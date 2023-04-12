@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MedicalRecordsModel {
+public class MedicalRecords {
 	
 	/*
 	@Getter@Setter

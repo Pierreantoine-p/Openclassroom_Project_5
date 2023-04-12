@@ -13,15 +13,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetinet.model.MedicalRecordsModel;
+import com.openclassrooms.safetinet.model.MedicalRecords;
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.service.MedicalRecordsService;
 import com.openclassrooms.safetinet.service.PersonsService;
 
 @RestController
-@RequestMapping("/medicalRecords")
+@RequestMapping("/medicalRecord")
 public class MedicalRecordsController {
 
+	private MedicalRecordsService medicalRecordsService;
+
+	
+	public MedicalRecordsController(MedicalRecordsService medicalRecordsService) {
+		this.medicalRecordsService = medicalRecordsService;
+	}
+	
+	@GetMapping
+	public List<MedicalRecords> findAll() throws IOException{
+		return medicalRecordsService.getMedicalRecords();
+	}
+	
 	/*
 	private MedicalRecordsService medicalRecordsService;
 	

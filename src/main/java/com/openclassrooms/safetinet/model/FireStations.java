@@ -3,7 +3,7 @@ package com.openclassrooms.safetinet.model;
 import lombok.Getter;
 import lombok.Setter;
 
-public class FireStationsModel {
+public class FireStations {
 	
 	/*
 	private String address;

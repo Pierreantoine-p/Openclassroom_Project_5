@@ -23,6 +23,10 @@ public class PersonsService {
 		return personsRepository.getPersons();
 	}
 	
+	public void deletePerson(String firstname, String lastname) {
+		personsRepository.deleteByName(firstname, lastname);
+		
+	}
 	
 	
 	
