@@ -18,17 +18,27 @@ public class PersonsService {
 		this.personsRepository = personsRepository;
 	}
     
-	
 	public List<Person> getPersons() {
 		return personsRepository.getPersons();
 	}
 	
-	public void deletePerson(String firstname, String lastname) {
-		personsRepository.deleteByName(firstname, lastname);
-		
+	
+	public Person savePerson(Person person) {
+		Person savedPerson = personsRepository.save(person);
+		return savedPerson;
+	}
+	/*
+	public void deletePerson(String firstname) {
+		personsRepository.deleteByName(firstname);
 	}
 	
+    /*
+	public void deletePerson(String firstname) {
+		personsRepository.deleteByName(firstname);
+		
 	
+	}*/
 	
+	dto
 	
 }
