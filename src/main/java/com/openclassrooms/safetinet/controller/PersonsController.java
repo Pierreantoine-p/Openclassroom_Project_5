@@ -33,12 +33,13 @@ public class PersonsController {
 		return personsService.getPersons();
 	}
 	
+	/*
 	@PostMapping
 	public Person createPerson(@RequestBody Person person) {
 		return personsService.savePerson(person);
 	}
 	
-	/*
+	
 	@DeleteMapping("/{firstname}")
 	public void deleteById (@PathVariable("firstname") final String firstname){
 		personsService.deletePerson(firstname);

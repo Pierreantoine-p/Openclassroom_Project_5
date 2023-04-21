@@ -22,12 +22,12 @@ public class PersonsService {
 		return personsRepository.getPersons();
 	}
 	
-	
+	/*
 	public Person savePerson(Person person) {
 		Person savedPerson = personsRepository.save(person);
 		return savedPerson;
 	}
-	/*
+	
 	public void deletePerson(String firstname) {
 		personsRepository.deleteByName(firstname);
 	}
@@ -39,6 +39,6 @@ public class PersonsService {
 	
 	}*/
 	
-	dto
+	//TODO dto
 	
 }
