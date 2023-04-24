@@ -2,8 +2,11 @@ package com.openclassrooms.safetinet.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +35,23 @@ public class MedicalRecordsController {
 	@GetMapping
 	public List<MedicalRecords> findAll() throws IOException{
 		return medicalRecordsService.getMedicalRecords();
+	}
+	
+	@PostMapping
+	public ResponseEntity<Void> save(@RequestBody MedicalRecords medicalRecords) throws IOException{
+		medicalRecordsService.save(medicalRecords);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/{firstName}")
+	public ResponseEntity<Void> deletemedicalRecordsByName (@PathVariable String firstName){
+		Optional<MedicalRecords> existingMedicalRecords = medicalRecordsService.findMedicalRecordsByName(firstName);
+		if(existingMedicalRecords.isPresent()) {
+			medicalRecordsService.deleteMedicalRecords(firstName);
+		return new ResponseEntity <>(HttpStatus.NO_CONTENT);
+		}else{
+			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	/*

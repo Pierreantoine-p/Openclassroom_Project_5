@@ -2,8 +2,11 @@ package com.openclassrooms.safetinet.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,38 +39,43 @@ public class FireStationsController {
 		return fireStationsService.getfireStations() ;
 	}
 	
-	/*
-	@Autowired
-	public FireStationsController(FireStationsService fireStationsService) {
-		this.fireStationsService = fireStationsService;
-	}
-	
 
+	
 	@PostMapping
-	public void save(@RequestBody FireStation fireStation) throws IOException{
-		fireStationsService.save(fireStation);
-	}
-	
-	@GetMapping("/{id}")
-	public Persons findById (@PathVariable int id) throws IOException{
-		return fireStationsService.findById(id);
-	}
-	
-	@GetMapping
-	public List<Persons> findAll()throws IOException{
-		return fireStationsService.findAll();
+	public ResponseEntity<Void> save(@RequestBody FireStations fireStations) throws IOException{
+		fireStationsService.save(fireStations);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	
-	@DeleteMapping("/{id}")
-	public void deleteById (@PathVariable int id){
-		fireStationsService.deleteById;
+	@DeleteMapping("/{firstName}")
+	public ResponseEntity<Void> deletePersonByName (@PathVariable String firstName){
+		Optional<FireStations> existingFireStations = fireStationsService.findPersonByName(firstName);
+		if(existingFireStations.isPresent()) {
+			fireStationsService.deletePerson(firstName);
+		return new ResponseEntity <>(HttpStatus.NO_CONTENT);
+		}else{
+			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	
-	@PutMapping("/{id}")
-	public void replacePersons (@RequestBody Persons newPersons, @PathVariable int id){
-		newPersons.setId(id);
+	@PutMapping("/{firstName}")
+	public ResponseEntity<Void> updatePerson(@PathVariable String firstName, @RequestBody FireStations fireStations){
+		Optional<FireStations> existingFireStations = fireStationsService.findPersonByName(firstName);
+		if(existingFireStations.isPresent()) {
+			fireStationsService.updatePerson(fireStations);
+            return new ResponseEntity<>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+		}
 	}
-	*/
+
+	@GetMapping("/{firstname}")
+	public ResponseEntity<FireStations> getPersonByName(@PathVariable String address ) throws IOException{
+		return fireStationsService.findPersonByName(address)
+				.map(person -> new ResponseEntity<>(person, HttpStatus.OK))
+				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
 }
