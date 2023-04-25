@@ -17,7 +17,7 @@ import java.lang.String;
 @Component
 //public interface PersonsRepository extends CrudRepository {
 public class PersonsRepository{
-
+	
     private final List<Person> persons = new ArrayList<>();
     
     /**
@@ -25,7 +25,6 @@ public class PersonsRepository{
 	 *  Get all person
 	 *  @return
 	 */
-	@Autowired
 	public List<Person> getPersons() {
 		return Data.getPersons();
 	}
@@ -35,7 +34,7 @@ public class PersonsRepository{
 	 * add new person
 	 *  @param Person person
 	 */
-	@Autowired
+	
 	public void save(Person person){
 		persons.add(person);
 	}
@@ -46,9 +45,11 @@ public class PersonsRepository{
 	 *  @param String firstName
 	 *  @return
 	 */
-	@Autowired
-	public Optional<Person> findByName(String firstName) {
-		return persons.stream().filter(p -> p.getFirstName() == firstName).findFirst();
+	
+	public Optional<Person> findByName(String firstname,String lastname) {
+		return persons.stream()
+				.filter(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname))
+				.findFirst();
 	}
 	
 	
@@ -60,10 +61,11 @@ public class PersonsRepository{
 	 * @param Person person
 	 * @return
 	 */
-	@Autowired
+	
 	public Person update(Person person) {
 		persons.stream()
-		.filter(p -> p.getFirstName() == person.getFirstName())
+		.filter(p -> p.getFirstName() == person.getFirstName() &&
+				p.getLastName() == person.getLastName())
 		.findFirst()
 		.ifPresent(p ->{
 			p.setAddress(person.getAddress());
@@ -81,9 +83,9 @@ public class PersonsRepository{
 	 * @param String firstname
 	 * @return
 	 */
-	@Autowired
-	public void delete(@PathVariable("firstName") String firstname) {
-	    persons.remove(firstname);
+	
+	public void delete(@PathVariable("firstname") String firstname, @PathVariable("lastname")String lastname) {
+	    persons.removeIf(p -> p.getFirstName().equals(firstname)&& p.getLastName().equals(lastname));
 	}
 	
 	 

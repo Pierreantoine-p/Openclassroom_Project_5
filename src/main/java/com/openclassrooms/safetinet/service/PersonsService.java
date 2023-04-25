@@ -29,8 +29,8 @@ public class PersonsService {
 	}
 	
 	
-	public void deletePerson(String firstname ) {
-	personsRepository.delete(firstname);
+	public void deletePerson(String firstname, String lastname ) {
+	personsRepository.delete(firstname, lastname);
 	}
 	
 	
@@ -39,8 +39,8 @@ public class PersonsService {
 		return person;
 	}
 	
-	public Optional<Person> findPersonByName(String firstName) {
-		return personsRepository.findByName(firstName);
+	public Optional<Person> findPersonByName(String firstname, String lastname) {
+		return personsRepository.findByName(firstname,lastname);
 	}
 	
 	

@@ -14,13 +14,13 @@ import com.openclassrooms.safetinet.model.MedicalRecords;
 @Repository
 public class MedicalRecordsRepository {
 	
+	
     private final List<MedicalRecords> medicalRecord = new ArrayList<>();
 
 	/**
 	 * GET ALL
 	 * @return
 	 */
-	@Autowired
 	public List<MedicalRecords> getMedicalRecords(){
 		return Data.getMedicalRecords();
 	}
@@ -31,7 +31,6 @@ public class MedicalRecordsRepository {
 	 * ajouter un dossier médical ;
 	 * @param medicalRecords
 	 */
-	@Autowired
 	public void save(MedicalRecords medicalRecords){
 		medicalRecord.add(medicalRecords);
 	}
@@ -43,7 +42,6 @@ public class MedicalRecordsRepository {
 	 * @param String firstName
 	 * @return
 	 */
-	@Autowired
 	public Optional<MedicalRecords> findByName(String firstName) {
 		return medicalRecord.stream().filter(p -> p.getFirstName() == firstName).findFirst();
 	}
@@ -54,7 +52,7 @@ public class MedicalRecordsRepository {
 	 *  mettre à jour un dossier médical existant (comme évoqué précédemment, supposer que le prénom et le nom de famille ne changent pas)
 	 *  @param MedicalRecords medicalRecords
 	 */
-	@Autowired
+	
 	public MedicalRecords update(MedicalRecords medicalRecords) {
 		medicalRecord.stream()
 		.filter(p -> p.getFirstName() == medicalRecords.getFirstName())
@@ -74,7 +72,7 @@ public class MedicalRecordsRepository {
 	 * supprimer un dossier médical (utilisez une combinaison de prénom et de nom comme identificateur unique)
 	 * @param String firstname
 	 */
-	@Autowired
+	
 	public void delete(@PathVariable("firstName") String firstname) {
 		medicalRecord.remove(firstname);
 	}

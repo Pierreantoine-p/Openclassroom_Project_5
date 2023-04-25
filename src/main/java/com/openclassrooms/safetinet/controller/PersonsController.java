@@ -43,11 +43,11 @@ public class PersonsController {
 	}
 	
 	
-	@DeleteMapping("/{firstName}")
-	public ResponseEntity<Void> deletePersonByName (@PathVariable String firstName){
-		Optional<Person> existingPerson = personsService.findPersonByName(firstName);
+	@DeleteMapping("/{firstname}/{lastname}")
+	public ResponseEntity<Void> deletePersonByName (@PathVariable String firstname, @PathVariable String lastname){
+		Optional<Person> existingPerson = personsService.findPersonByName(firstname,lastname);
 		if(existingPerson.isPresent()) {
-		personsService.deletePerson(firstName);
+		personsService.deletePerson(firstname,lastname);
 		return new ResponseEntity <>(HttpStatus.NO_CONTENT);
 		}else{
 			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
@@ -55,9 +55,8 @@ public class PersonsController {
 	}
 	
 	
-	@PutMapping("/{firstName}")
-	public ResponseEntity<Void> updatePerson(@PathVariable String firstName, @RequestBody Person person){
-		Optional<Person> existingPerson = personsService.findPersonByName(firstName);
+	public ResponseEntity<Void> updatePerson(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person){
+		Optional<Person> existingPerson = personsService.findPersonByName(firstname,lastname);
 		if(existingPerson.isPresent()) {
 			personsService.updatePerson(person);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -66,9 +65,9 @@ public class PersonsController {
 		}
 	}
 
-	@GetMapping("/{firstname}")
-	public ResponseEntity<Person> getPersonByName(@PathVariable String firstName ) throws IOException{
-		return personsService.findPersonByName(firstName)
+	@GetMapping("/{firstname}/{lastname}")
+	public ResponseEntity<Person> getPersonByName(@PathVariable String firstname, @PathVariable String lastname) throws IOException{
+		return personsService.findPersonByName(firstname, lastname)
 				.map(person -> new ResponseEntity<>(person, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}

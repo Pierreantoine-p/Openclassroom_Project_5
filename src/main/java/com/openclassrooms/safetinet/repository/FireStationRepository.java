@@ -22,7 +22,6 @@ public class FireStationRepository {
 	 *  Get all fireStations
 	 *  @return
 	 */
-	@Autowired
 	public List<FireStations> getFireStations(){
 		return Data.getFireStations();
 	}
@@ -33,7 +32,6 @@ public class FireStationRepository {
 	 *  ajout d'un mapping caserne/adresse ;
 	 *  @param Person person
 	 */
-	@Autowired
 	public void save(FireStations fireStation){
 		fireStations.add(fireStation);
 	}
@@ -44,7 +42,6 @@ public class FireStationRepository {
 	 *  @param String firstName
 	 *  @return
 	 */
-	@Autowired
 	public Optional<FireStations> findByName(String address) {
 		return fireStations.stream().filter(p -> p.getAddress() == address).findFirst();
 	}
@@ -56,7 +53,6 @@ public class FireStationRepository {
 	 * @param Person person
 	 * @return
 	 */
-	@Autowired
 	public FireStations update(FireStations fireStation) {
 		fireStations.stream()
 		.filter(p -> p.getAddress() == fireStation.getAddress())
@@ -67,7 +63,7 @@ public class FireStationRepository {
 		return fireStation;
 	}
 	
-	
+
 	
 	/**
 	 * DELETE
@@ -75,8 +71,7 @@ public class FireStationRepository {
 	 * @param String firstname
 	 * @return
 	 */
-	@Autowired
-	public void delete(@PathVariable("address") String address) {
+	public void delete(String address) {
 		fireStations.remove(address);
 	}
 	
