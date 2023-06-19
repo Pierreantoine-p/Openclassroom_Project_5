@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.openclassrooms.safetinet.data.Data;
+import com.openclassrooms.safetinet.data.DataFireStation;
+import com.openclassrooms.safetinet.data.DataPerson;
 import com.openclassrooms.safetinet.model.FireStations;
 import com.openclassrooms.safetinet.model.Person;
 
@@ -22,7 +22,7 @@ public class FireStationRepository {
 	 *  Get all fireStations
 	 *  @return
 	 */
-	public List<FireStations> getFireStations(){
+	public List<FireStations> getAll(){
 		return Data.getFireStations();
 	}
 	
@@ -32,8 +32,9 @@ public class FireStationRepository {
 	 *  ajout d'un mapping caserne/adresse ;
 	 *  @param Person person
 	 */
-	public void save(FireStations fireStation){
-		fireStations.add(fireStation);
+	public FireStations save(FireStations fireStation){
+		Data.getFireStations().add(fireStation);
+		return fireStation;
 	}
 	
 	/**
@@ -42,8 +43,19 @@ public class FireStationRepository {
 	 *  @param String firstName
 	 *  @return
 	 */
-	public Optional<FireStations> findByName(String address) {
-		return fireStations.stream().filter(p -> p.getAddress() == address).findFirst();
+	public Optional<FireStations> findByAdress(String address) {
+		return Data.getStationByAdress(address);
+	}
+	
+	/**
+	 * DELETE
+	 * supprimer le mapping d'une caserne ou d'une adresse
+	 * @param String firstname
+	 * @return
+	 */
+	public boolean delete(FireStations fireStation) {
+		Data.deleteFireStation(fireStation);
+		return false;
 	}
 	
 	
@@ -52,28 +64,15 @@ public class FireStationRepository {
 	 * mettre à jour le numéro de la caserne de pompiers d'une adresse ;
 	 * @param Person person
 	 * @return
-	 */
-	public FireStations update(FireStations fireStation) {
-		fireStations.stream()
-		.filter(p -> p.getAddress() == fireStation.getAddress())
-		.findFirst()
-		.ifPresent(p ->{
-			p.setStation(fireStation.getStation());
-		});
-		return fireStation;
+	 */	
+	public boolean update(FireStations fireStation) {
+		Data.updateFireStation(fireStation);
+		return false;
 	}
 	
 
 	
-	/**
-	 * DELETE
-	 * supprimer le mapping d'une caserne ou d'une adresse
-	 * @param String firstname
-	 * @return
-	 */
-	public void delete(String address) {
-		fireStations.remove(address);
-	}
+
 	
 	
 }

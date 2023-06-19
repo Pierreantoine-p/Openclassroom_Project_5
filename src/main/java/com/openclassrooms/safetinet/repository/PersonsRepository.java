@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import com.openclassrooms.safetinet.data.Data;
+import com.openclassrooms.safetinet.data.DataPerson;
 import com.openclassrooms.safetinet.model.Person;
 import java.lang.String;
 
@@ -25,8 +25,8 @@ public class PersonsRepository{
 	 *  Get all person
 	 *  @return
 	 */
-	public List<Person> getPersons() {
-		return Data.getPersons();
+	public List<Person> getAll() {
+		return Data.getAllPersons();
 	}
 	
 	/**
@@ -34,10 +34,11 @@ public class PersonsRepository{
 	 * add new person
 	 *  @param Person person
 	 */
-	
-	public void save(Person person){
-		persons.add(person);
+	public Person save(Person person){
+		Data.getAllPersons().add(person);
+		return person;
 	}
+	
 	
 	/**
 	 * GET ONE
@@ -45,15 +46,10 @@ public class PersonsRepository{
 	 *  @param String firstName
 	 *  @return
 	 */
-	
 	public Optional<Person> findByName(String firstname,String lastname) {
-		return persons.stream()
-				.filter(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname))
-				.findFirst();
+		return Data.getPersonByName(lastname, lastname);
+		
 	}
-	
-	
-	
 	
 	/**
 	 * PUT
@@ -61,20 +57,9 @@ public class PersonsRepository{
 	 * @param Person person
 	 * @return
 	 */
-	
-	public Person update(Person person) {
-		persons.stream()
-		.filter(p -> p.getFirstName() == person.getFirstName() &&
-				p.getLastName() == person.getLastName())
-		.findFirst()
-		.ifPresent(p ->{
-			p.setAddress(person.getAddress());
-			p.setCity(person.getCity());
-			p.setZip(person.getZip());
-			p.setPhone(person.getPhone());
-			p.setEmail(person.getEmail());
-		});
-		return person;
+	public boolean update(Person person) {
+		Data.updatePerson(person);
+		return false;
 	}
 	
 	/**
@@ -83,10 +68,11 @@ public class PersonsRepository{
 	 * @param String firstname
 	 * @return
 	 */
-	
-	public void delete(@PathVariable("firstname") String firstname, @PathVariable("lastname")String lastname) {
-	    persons.removeIf(p -> p.getFirstName().equals(firstname)&& p.getLastName().equals(lastname));
+	public boolean delete(Person person) {
+		Data.deletePerson(person);
+		return false;
 	}
+	
 	
 	 
 	

@@ -18,8 +18,8 @@ public class SafetinetApplication {
 		DataLoader dataload = new DataLoader("FileData.json");
 		try {
 			dataload.loadJsonData();
-			Data data = new Data();
-			System.out.println("data" + data);
+			//Data data = new Data();
+			//System.out.println("data" + data);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

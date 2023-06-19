@@ -69,7 +69,6 @@ public class MedicalRecords {
 	public void setAllergies(ArrayList<String> allergies) {
 		this.allergies = allergies;
 	}
-
 	
 	
 }

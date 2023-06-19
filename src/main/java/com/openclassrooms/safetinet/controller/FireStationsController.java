@@ -35,24 +35,30 @@ public class FireStationsController {
 	
 	
 	@GetMapping
-	public List<FireStations> findAll()throws IOException{
-		return fireStationsService.getfireStations() ;
+	public ResponseEntity <Iterable<FireStations>> getAll()throws IOException{
+		return new ResponseEntity<>(fireStationsService.getAll(), HttpStatus.OK);
 	}
 	
 
+	@GetMapping("/{address}")
+	public ResponseEntity<FireStations> getOne(@PathVariable String address ) throws IOException{
+		return fireStationsService.findByAdress(address)
+				.map(station -> new ResponseEntity<>(station, HttpStatus.OK))
+				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
 	
 	@PostMapping
-	public ResponseEntity<Void> save(@RequestBody FireStations fireStations) throws IOException{
+	public FireStations save(@RequestBody FireStations fireStations) throws IOException{
 		fireStationsService.save(fireStations);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return fireStations;
 	}
 	
 	
-	@DeleteMapping("/{firstName}")
-	public ResponseEntity<Void> deletePersonByName (@PathVariable String firstName){
-		Optional<FireStations> existingFireStations = fireStationsService.findPersonByName(firstName);
+	@DeleteMapping("/{address}")
+	public ResponseEntity<Void> delete (@PathVariable String address){
+		Optional<FireStations> existingFireStations = fireStationsService.findByAdress(address);
 		if(existingFireStations.isPresent()) {
-			fireStationsService.deletePerson(firstName);
+			fireStationsService.delete(address);
 		return new ResponseEntity <>(HttpStatus.NO_CONTENT);
 		}else{
 			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
@@ -60,22 +66,16 @@ public class FireStationsController {
 	}
 	
 	
-	@PutMapping("/{firstName}")
-	public ResponseEntity<Void> updatePerson(@PathVariable String firstName, @RequestBody FireStations fireStations){
-		Optional<FireStations> existingFireStations = fireStationsService.findPersonByName(firstName);
+	@PutMapping("/{address}")
+	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation){
+		Optional<FireStations> existingFireStations = fireStationsService.findByAdress(address);
 		if(existingFireStations.isPresent()) {
-			fireStationsService.updatePerson(fireStations);
+			fireStationsService.update(address, fireStation);
             return new ResponseEntity<>(HttpStatus.OK);
 		}else {
 			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
 		}
 	}
 
-	@GetMapping("/{firstname}")
-	public ResponseEntity<FireStations> getPersonByName(@PathVariable String address ) throws IOException{
-		return fireStationsService.findPersonByName(address)
-				.map(person -> new ResponseEntity<>(person, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	}
 
 }

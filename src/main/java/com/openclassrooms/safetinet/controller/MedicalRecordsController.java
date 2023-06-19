@@ -33,63 +33,45 @@ public class MedicalRecordsController {
 	}
 	
 	@GetMapping
-	public List<MedicalRecords> findAll() throws IOException{
-		return medicalRecordsService.getMedicalRecords();
+	public List<MedicalRecords> getAll() throws IOException{
+		return medicalRecordsService.getAll();
+	}
+	
+	@GetMapping("/{firstname}/{lastname}")
+	public ResponseEntity<MedicalRecords> getOne(@PathVariable String firstname, @PathVariable String lastname) throws IOException{
+		return medicalRecordsService.findByName(firstname, lastname)
+				.map(medicalRecord -> new ResponseEntity<>(medicalRecord, HttpStatus.OK))
+				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> save(@RequestBody MedicalRecords medicalRecords) throws IOException{
+	public MedicalRecords save(@RequestBody MedicalRecords medicalRecords) throws IOException{
 		medicalRecordsService.save(medicalRecords);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return medicalRecords;
 	}
 	
-	@DeleteMapping("/{firstName}")
-	public ResponseEntity<Void> deletemedicalRecordsByName (@PathVariable String firstName){
-		Optional<MedicalRecords> existingMedicalRecords = medicalRecordsService.findMedicalRecordsByName(firstName);
+	
+	@PutMapping("/{firstname}/{lastname}")
+	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody MedicalRecords medicalRecord) throws IOException{
+		Optional<MedicalRecords> existingMedicalRecords = medicalRecordsService.findByName(firstname,lastname);
 		if(existingMedicalRecords.isPresent()) {
-			medicalRecordsService.deleteMedicalRecords(firstName);
-		return new ResponseEntity <>(HttpStatus.NO_CONTENT);
-		}else{
+			medicalRecordsService.update(firstname, lastname, medicalRecord);
+            return new ResponseEntity<>(HttpStatus.OK);
+		}else {
 			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	/*
-	private MedicalRecordsService medicalRecordsService;
-	
-	@Autowired
-	public MedicalRecordsController(MedicalRecordsService medicalRecordsService) {
-		this.medicalRecordsService = medicalRecordsService;
+	@DeleteMapping("/{firstname}/{lastname}")
+	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)throws IOException{
+		Optional<MedicalRecords> existingMedicalRecords = medicalRecordsService.findByName(firstname,lastname);
+		if(existingMedicalRecords.isPresent()) {
+			medicalRecordsService.delete(firstname,lastname);
+			return ResponseEntity.ok("Suppression effectuer");
+		}else{
+			return ResponseEntity.ok("Not found");
+		}
 	}
-	
-	@PostMapping
-	public void save(@RequestBody Persons persons) throws IOException{
-		medicalRecordsService.save(persons);
-	}
-	/*
-	@GetMapping("/{id}")
-	public Persons findById (@PathVariable int id) throws IOException{
-		return medicalRecordsService.findById(id);
-	}
-	
-	@GetMapping
-	public List<Persons> findAll()throws IOException{
-		return medicalRecordsService.findAll();
-	}
-	
-	
-	@DeleteMapping("/{id}")
-	public void deleteById (@PathVariable int id){
-		medicalRecordsService.deleteById;
-	}
-	
-	
-	@PutMapping("/{id}")
-	public void replacePersons (@RequestBody Persons newMedicalRecords, @PathVariable int id){
-		newMedicalRecords.setId(id);
-	
-	}
-	*/
 	
 }
 

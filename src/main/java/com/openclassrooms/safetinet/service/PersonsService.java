@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
 
@@ -19,29 +21,44 @@ public class PersonsService {
 		this.personsRepository = personsRepository;
 	}
     
-	public List<Person> getPersons() {
-		return personsRepository.getPersons();
+    //GET
+	public List<Person> getAll() {
+		return personsRepository.getAll();
 	}
 	
-
+	//GET ONE
+	public Optional<Person> findByName(String firstname, String lastname) {
+		return personsRepository.findByName(firstname,lastname);
+	}
+	
+	//POST
 	public void save(Person person) {
 		personsRepository.save(person);
 	}
 	
+	//DELETE	
+	public boolean  delete(String firstname, String lastname) {
+		List<Person> persons = personsRepository.getAll();
+		for(Person person : persons) {
+			if(person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)) {
+				return personsRepository.delete(person);
+			}
+		}
+		return false;
+		}
 	
-	public void deletePerson(String firstname, String lastname ) {
-	personsRepository.delete(firstname, lastname);
+	//PATCH
+	public boolean update(String firstname, String lastname,Person person) {
+		List<Person> persons = personsRepository.getAll();
+		for(Person person1 : persons) {
+			if(person1.getFirstName().equals(firstname) && person1.getLastName().equals(lastname)) {
+				return personsRepository.update(person);
+			}
+		}
+		return false;
 	}
 	
 	
-	public Person updatePerson(Person person) {
-		personsRepository.update(person);
-		return person;
-	}
-	
-	public Optional<Person> findPersonByName(String firstname, String lastname) {
-		return personsRepository.findByName(firstname,lastname);
-	}
 	
 	
 	

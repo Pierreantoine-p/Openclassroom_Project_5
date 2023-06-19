@@ -1,17 +1,10 @@
 package com.openclassrooms.safetinet.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class FireStations {
 	
-	/*
-	private String address;
-	
-	private String station;
-	*/
 	
 	private String address;
+	
 	private String station;
 	
 	public String getAddress() {
