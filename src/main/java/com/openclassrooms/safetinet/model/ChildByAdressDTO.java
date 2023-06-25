@@ -1,18 +1,12 @@
 package com.openclassrooms.safetinet.model;
 
-import java.util.ArrayList;
-
-import lombok.Getter;
-import lombok.Setter;
-
-public class MedicalRecords {
-	
+public class ChildByAdressDTO {
 	
 	private String firstName;
+	
 	private String lastName;
+	
 	private String birthdate;
-	private ArrayList<String> medications;
-	private ArrayList<String> allergies;
 	
 	public String getFirstName() {
 		return firstName;
@@ -38,21 +32,6 @@ public class MedicalRecords {
 		this.birthdate = birthdate;
 	}
 
-	public ArrayList<String> getMedications() {
-		return medications;
-	}
-
-	public void setMedications(ArrayList<String> medications) {
-		this.medications = medications;
-	}
-
-	public ArrayList<String> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(ArrayList<String> allergies) {
-		this.allergies = allergies;
-	}
 	
-	
+
 }

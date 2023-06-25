@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,54 +28,87 @@ public class PersonsController {
 	
 	private PersonsService personsService;
 	
+    private static final Logger logger = LogManager.getLogger(PersonsController.class);
 
 	public PersonsController(PersonsService personsService) {
 		this.personsService = personsService;
 	}
 	
 	
+
+	
 	@GetMapping
 	public List<Person> getAll()throws IOException{
-		return personsService.getAll();
-	}
+		try {
+			return personsService.getAll();
+
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
+		}
+ 	}
 	
 	
 	@GetMapping("/{firstname}/{lastname}")
 	public ResponseEntity<Person> getOne(@PathVariable String firstname, @PathVariable String lastname) throws IOException{
-		return personsService.findByName(firstname, lastname)
-				.map(person -> new ResponseEntity<>(person, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		try {
+			return personsService.findByName(firstname, lastname)
+					.map(person -> new ResponseEntity<>(person, HttpStatus.OK))
+					.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
+		}
+		 
 	}
 	
 	
 	@PostMapping
 	public Person save(@RequestBody Person person) throws IOException{
-		personsService.save(person);
-		return person;
+		try {
+			personsService.save(person);
+			return person;
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
+		}
+	 
 	}
 	
 	
 	
 	@PutMapping("/{firstname}/{lastname}")
 	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person) throws IOException{
-		Optional<Person> existingPerson = personsService.findByName(firstname,lastname);
-		if(existingPerson.isPresent()) {
-			personsService.update(firstname, lastname, person);
-            return new ResponseEntity<>(HttpStatus.OK);
-		}else {
-			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+		try {
+			Optional<Person> existingPerson = personsService.findByName(firstname,lastname);
+			if(existingPerson.isPresent()) {
+				personsService.update(firstname, lastname, person);
+	            return new ResponseEntity<>(HttpStatus.OK);
+			}else {
+				return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+			}
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
 		}
+		 
 	}
 	
 	@DeleteMapping("/{firstname}/{lastname}")
 	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)throws IOException {
-		Optional<Person> existingPerson = personsService.findByName(firstname,lastname);
-		if(existingPerson.isPresent()) {
-		personsService.delete(firstname,lastname);
-		return ResponseEntity.ok("Suppression effectuer");
-		}else{
-			return ResponseEntity.ok("Not found");
+		try {
+			Optional<Person> existingPerson = personsService.findByName(firstname,lastname);
+			if(existingPerson.isPresent()) {
+			personsService.delete(firstname,lastname);
+			return ResponseEntity.ok("Suppression effectuer");
+			}else{
+				return ResponseEntity.ok("Not found");
+			}
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
 		}
+		 
 	}
 	
 	

@@ -14,7 +14,7 @@ public class DataPerson {
 	 * GET ALL PERSONS
 	 * @return
 	 */
-	public static List<Person> getPersons() {
+	public static List<Person> getAllPersons() {
 		return persons;
 	}
 	
@@ -41,7 +41,7 @@ public class DataPerson {
 	 * @param person
 	 * @return
 	 */
-	public static boolean delete(Person person) {
+	public static boolean deletePerson(Person person) {
 		return persons.remove(person);
 	}
 	
@@ -50,7 +50,7 @@ public class DataPerson {
 	 * @param person
 	 * @return
 	 */
-	 public static Optional<Person> update (Person person) {
+	 public static Optional<Person> updatePerson (Person person) {
 		 return persons.stream()
 		  .filter(p -> p.getFirstName().equals(person.getFirstName()) &&
 		            p.getLastName().equals(person.getLastName()))

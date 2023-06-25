@@ -43,15 +43,33 @@
 	        <artifactId>lombok</artifactId>
 	        <scope>provided</scope>
     	</dependency>
+    	<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.14.1</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			 <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 		</plugins>
 	</build>
-
+	 <profiles>
+	        <profile>
+	            <id>log4j2</id>
+	            <dependencies>
+	                <dependency>
+	                    <groupId>org.apache.logging.log4j</groupId>
+	                    <artifactId>log4j-spring-cloud-config-client</artifactId>
+	                </dependency>
+	                <dependency>
+	                    <groupId>org.springframework.boot</groupId>
+	                    <artifactId>spring-boot-starter-log4j2</artifactId>
+	                </dependency>
+	            </dependencies>
+	        </profile>
+	    </profiles>
 </project>
