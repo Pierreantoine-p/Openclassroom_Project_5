@@ -44,6 +44,17 @@ public class PersonsRepository{
 		 
 	}
 	
+	/*
+	public List<Person> getPersonByAddress(String address)throws IOException {
+		try {
+			return Data.getPersonByAddress(String address);
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	           throw new IOException();
+	   	}
+	}
+	*/
+	
 	/**
 	 * POST
 	 * add new person

@@ -48,7 +48,17 @@ public class Data {
 		}
  	}
 	
-
+	public static Optional<Person> getPersonByAddress(String address) throws IOException {
+		try {
+			return persons.stream()
+					.filter(p -> p.getAddress().equals(address))
+					.findFirst();
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	       	throw new IOException();
+		}
+		
+	}
 	
 	
 	/**
@@ -56,7 +66,6 @@ public class Data {
 	 * @return
 	 */
 	public void setPersons(List<Person> persons)throws IOException {
-		
 		Data.persons = persons;
 	}
 	

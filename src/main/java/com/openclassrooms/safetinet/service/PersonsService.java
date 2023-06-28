@@ -38,10 +38,19 @@ public class PersonsService {
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
 	        throw new IOException();
- 	}
+		}
 	}
+	
+	public List<Person> getPersonByAddress(String address)throws IOException {
+		try {
+			return personsRepository.getPersonByAddress(String address);
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
+		}
+	}
+	
 	
 	//GET ONE
 	public Optional<Person> findByName(String firstname, String lastname)throws IOException {

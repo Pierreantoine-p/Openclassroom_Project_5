@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.model.FireStations;
+import com.openclassrooms.safetinet.model.PersonByStationDTO;
 import com.openclassrooms.safetinet.service.FireStationsService;
 import com.openclassrooms.safetinet.service.MedicalRecordsService;
 import com.openclassrooms.safetinet.service.PersonsService;
@@ -22,12 +26,22 @@ public class DTOController {
 	private MedicalRecordsService medicalRecordsService;
 	private PersonsService personsService;
 	
+	ObjectMapper objectMapper = new ObjectMapper();
 	
     private static final Logger logger = LogManager.getLogger(DTOController.class);
     
-    public DTOController(FireStationsService fireStationsService) {
+    public DTOController(FireStationsService fireStationsService, PersonsService personsService, MedicalRecordsService medicalRecordsService) {
 		this.fireStationsService = fireStationsService;
+		this.personsService = personsService;
+		this.medicalRecordsService = medicalRecordsService;
+
+
     }
+    /*
+    public DTOController(PersonsService personsService) {
+		this.personsService = personsService;
+	}
+	*/
     /*
     public DTOController(PersonsService personsService) {
 		this.personsService = personsService;
@@ -49,9 +63,9 @@ public class DTOController {
 		this.fireStationsService = fireStationsService;
 	}*/
 	
-	
+	/*
 	@GetMapping("/firestation")
-	public List<FireStations> getPersonByFireStation(@RequestParam(value = "stationNumber",required = false)String stationNumber ) throws IOException {
+	public List<PersonByStationDTO> getPersonByFireStation(@RequestParam(value = "stationNumber",required = false)String stationNumber ) throws IOException {
 		try {
 			List<FireStations> fireStationList = fireStationsService.findStationByNumber(stationNumber);
 			if(fireStationList.isEmpty()) {
@@ -65,6 +79,36 @@ public class DTOController {
 		    throw new IOException();
 		}
 	}
+	*/
+	@GetMapping("/firestation")
+	public List<PersonByStationDTO> getPersonByFireStation(@RequestParam(value = "stationNumber",required = false)String stationNumber) throws IOException {
+		try {
+			List<FireStations> fireStationList = fireStationsService.findStationByNumber(stationNumber);
+			if(fireStationList.isEmpty()) {
+				return Collections.emptyList();
+			}else {
+ 
+				String jsonStrings = objectMapper.writeValueAsString(fireStationList);
+
+				JsonNode jsonNode = objectMapper.readTree( jsonStrings);
+
+				for (JsonNode jsonString : jsonNode)
+				{
+				
+					String adress = jsonString.get("address").toString();
+					personsService.getPersonByAddress(String adress);
+
+
+				}
+				return null;
+			}
+
+		}catch (Exception e) {
+			logger.error("Error : " + e);
+		    throw new IOException();
+		}
+	}
+
 	/*
 	type adresse = fireStationsService.findStationByNumber(stationNumber);
 	split take adresse 
