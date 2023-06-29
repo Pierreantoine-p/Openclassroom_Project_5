@@ -8,13 +8,9 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
-
 import com.openclassrooms.safetinet.data.Data;
-import com.openclassrooms.safetinet.data.DataFireStation;
-import com.openclassrooms.safetinet.data.DataPerson;
 import com.openclassrooms.safetinet.model.FireStations;
-import com.openclassrooms.safetinet.model.Person;
-import com.openclassrooms.safetinet.service.FireStationsService;
+
 
 @Repository
 public class FireStationRepository {

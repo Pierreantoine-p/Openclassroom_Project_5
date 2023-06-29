@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.model.FireStations;
+import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.model.PersonByStationDTO;
 import com.openclassrooms.safetinet.service.FireStationsService;
 import com.openclassrooms.safetinet.service.MedicalRecordsService;
@@ -80,6 +81,7 @@ public class DTOController {
 		}
 	}
 	*/
+    
 	@GetMapping("/firestation")
 	public List<PersonByStationDTO> getPersonByFireStation(@RequestParam(value = "stationNumber",required = false)String stationNumber) throws IOException {
 		try {
@@ -94,26 +96,25 @@ public class DTOController {
 
 				for (JsonNode jsonString : jsonNode)
 				{
-				
-					String adress = jsonString.get("address").toString();
-					personsService.getPersonByAddress(String adress);
+					String address = jsonString.get("address").toString();
+					
+					List<Person> persons = personsService.getPersonByAddress(address);
+					
+					for (Person person : persons) {
+						String firstname = person.getFirstName();
+						String lastname = person.getLastName();
 
-
+						medicalRecordsService.getMedicalByName(firstname, lastname);
+					}
 				}
 				return null;
 			}
-
 		}catch (Exception e) {
 			logger.error("Error : " + e);
 		    throw new IOException();
 		}
 	}
 
-	/*
-	type adresse = fireStationsService.findStationByNumber(stationNumber);
-	split take adresse 
-	pui envoie adress
-*/
 
 /**
 * 

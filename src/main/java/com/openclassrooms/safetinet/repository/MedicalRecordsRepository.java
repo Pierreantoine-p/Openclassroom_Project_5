@@ -8,12 +8,8 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.openclassrooms.safetinet.data.Data;
-import com.openclassrooms.safetinet.data.DataMedicalRecord;
 import com.openclassrooms.safetinet.model.MedicalRecords;
-import com.openclassrooms.safetinet.service.MedicalRecordsService;
 
 @Repository
 public class MedicalRecordsRepository {
@@ -103,7 +99,15 @@ public class MedicalRecordsRepository {
 			logger.error("Error : " + e);
 	        throw new IOException();
 		}
-	 
+	}
+	
+	public List getMedicalByName(String firtname, String lastname)throws IOException{
+		try {
+			return Data.getMedicalByName(firtname, lastname);
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
+		}
 	}
 	
 	

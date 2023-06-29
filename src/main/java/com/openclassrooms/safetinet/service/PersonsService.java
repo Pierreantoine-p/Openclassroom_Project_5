@@ -44,7 +44,7 @@ public class PersonsService {
 	
 	public List<Person> getPersonByAddress(String address)throws IOException {
 		try {
-			return personsRepository.getPersonByAddress(String address);
+			return personsRepository.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        throw new IOException();

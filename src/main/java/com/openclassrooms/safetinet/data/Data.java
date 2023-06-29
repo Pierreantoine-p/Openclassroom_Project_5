@@ -15,11 +15,7 @@ import com.openclassrooms.safetinet.model.Person;
 
 public class Data {
 	
-	 /*
-	public static DataPerson dataPerson = new DataPerson();
-	public static DataFireStation dataFirestation = new DataFireStation();
-	public static DataMedicalRecord dataMedicalRecord = new DataMedicalRecord();
-*/
+	
 	
     private static final Logger logger = LogManager.getLogger(Data.class);
 
@@ -48,11 +44,11 @@ public class Data {
 		}
  	}
 	
-	public static Optional<Person> getPersonByAddress(String address) throws IOException {
+	public static List<Person> getPersonByAddress(String address) throws IOException {
 		try {
 			return persons.stream()
 					.filter(p -> p.getAddress().equals(address))
-					.findFirst();
+					.collect(Collectors.toList());
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	       	throw new IOException();
@@ -303,8 +299,17 @@ public class Data {
 					   	throw new IOException();
 					}
 				 
-				  
 			 }			 
  
+			 public static List<MedicalRecords> getMedicalByName(String firstname, String lastname)throws IOException {
+				 try {
+					 return medicalrecords.stream()
+							 .filter(m -> m.getFirstName().equals(firstname) && m.getLastName().equals(lastname))
+								.collect(Collectors.toList());
+				 }catch(Exception e) {
+						logger.error("Error : " + e);
+					   	throw new IOException();
+					}
+			 }
 			 
 }

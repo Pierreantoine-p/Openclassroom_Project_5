@@ -7,10 +7,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-
-import com.openclassrooms.safetinet.controller.PersonsController;
 import com.openclassrooms.safetinet.model.MedicalRecords;
-import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.MedicalRecordsRepository;
 
 @Service
@@ -42,19 +39,16 @@ public class MedicalRecordsService {
 	public Optional<MedicalRecords> findByName(String firstname, String lastname) throws IOException{
 		try {
 			return medicalRecordsRepository.findByName(firstname, lastname);
-
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        throw new IOException();
 		}
- 
 	}
 
 	//POST
 	public void save(MedicalRecords medicalRecord)throws IOException {
 		try {
 			medicalRecordsRepository.save(medicalRecord);
-
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        throw new IOException();
@@ -96,6 +90,15 @@ public class MedicalRecordsService {
 	        throw new IOException();
 		}
 		 
+	}
+	
+	public List<MedicalRecords> getMedicalByName(String firstname, String lastname)throws IOException {
+		try {
+			return medicalRecordsRepository.getMedicalByName(firstname, lastname);
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	        throw new IOException();
+		}
 	}
 	
 	

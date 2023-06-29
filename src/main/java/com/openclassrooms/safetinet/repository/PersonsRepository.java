@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.safetinet.data.Data;
-import com.openclassrooms.safetinet.data.DataPerson;
+
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.service.PersonsService;
 
@@ -28,6 +28,7 @@ public class PersonsRepository{
     private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
 
     
+    
     /**
 	 * GET ALL
 	 *  Get all person
@@ -43,17 +44,6 @@ public class PersonsRepository{
 	   	}
 		 
 	}
-	
-	/*
-	public List<Person> getPersonByAddress(String address)throws IOException {
-		try {
-			return Data.getPersonByAddress(String address);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	           throw new IOException();
-	   	}
-	}
-	*/
 	
 	/**
 	 * POST
@@ -125,6 +115,19 @@ public class PersonsRepository{
 	           throw new IOException();
 	   	}
 		 
+	}
+	
+	
+	
+	//DTO
+
+	public List<Person> getPersonByAddress(String address)throws IOException {
+		try {
+			return Data.getPersonByAddress(address);
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+	           throw new IOException();
+	   	}
 	}
 	
 	
