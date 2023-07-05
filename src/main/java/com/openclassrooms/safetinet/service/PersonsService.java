@@ -106,10 +106,21 @@ public class PersonsService {
 		return null;
 	}
 
+	
+	
+	public List<Person> findEmailByCity(String city){
+		
+	try {
+		return personsRepository.findEmailByCity(city);
+		
+	}catch(Exception e) {
+		logger.error("Error : " + e);
+        return new ArrayList<>();
+}
+}
+	
 
 
 
-
-	//TODO dto
 
 }

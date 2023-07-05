@@ -324,4 +324,15 @@ public class Data {
 					}
 			 }
 			 
+			 public List<Person>getEmailByCity(String city){
+				 try {
+					 return persons.stream()
+							 .filter(c ->c.getCity().equals(city))
+								.collect(Collectors.toList());
+				 }catch(Exception e) {
+						logger.error("Error : " + e);
+				        return new ArrayList<>();
+					}
+			 }
+			 
 }

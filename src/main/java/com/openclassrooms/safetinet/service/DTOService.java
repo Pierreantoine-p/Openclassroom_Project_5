@@ -276,9 +276,26 @@ public class DTOService {
 	}
 	
 	public List<EmailBycity>getEmailByCity(String city){
-		try {			
-			return null;
+		List<EmailBycity> emailByCity = new ArrayList();
+		List<Person> email = new ArrayList();
+
+		try {
+			List<Person> personMails = personsService.findEmailByCity(city);
 			
+			for(Person personMail : personMails ) {
+				if(!email.contains(personMail)) {
+					// emailByCity.addAll(personMail.getEmail()) ;
+					email.add(personMail) ;
+					System.out.println("email" + email);
+				}		
+				EmailBycity emailByCityDTO = new EmailBycity();
+				
+				emailByCityDTO.setEmail(email.get() );
+				emailByCity.add(emailByCityDTO);
+			}
+			
+			
+			return emailByCity;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<>();

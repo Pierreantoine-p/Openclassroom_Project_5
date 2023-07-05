@@ -122,6 +122,15 @@ public class PersonsRepository{
 	   	}
 	}
 	
+	public List<Person>findEmailByCity(String city){
+		try { return data.getEmailByCity(city);
+			
+		}catch(Exception e) {
+			logger.error("Error get person : " + e);
+	        return new ArrayList<>();
+	   	}
+	}
+	
 	
 	 
 	
