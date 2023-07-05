@@ -60,6 +60,8 @@ public class MedicalRecordsController {
 		}
 	}
 	
+	
+	
 	@PostMapping
 	public ResponseEntity<MedicalRecords> save(@RequestBody MedicalRecords medicalRecords)  {
 		try {

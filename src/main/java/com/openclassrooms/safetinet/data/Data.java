@@ -165,15 +165,15 @@ public class Data {
 		 * GET ONE FIRE STATION
 		 * @return
 		 */
-		public  Optional<FireStations> getStationByAdress(String address )  {
+		public  List<FireStations> getStationByAdress(String address )  {
 			try {
 				logger.info("machin");
 				return firestations.stream()
 						.filter(p -> p.getAddress().equals(address))
-						.findFirst();
+						.collect(Collectors.toList());
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-		        return Optional.empty();
+		        return new ArrayList<FireStations>();
 			}
 			 
 		}

@@ -60,12 +60,12 @@ public class FireStationRepository {
 	 *  @param String firstName
 	 *  @return
 	 */
-	public Optional<FireStations> findByAdress(String address)   {
+	public List<FireStations> findByAdress(String address)   {
 		try {
 			return data.getStationByAdress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
+	        return new ArrayList<FireStations>();
 		}
 		
 	}

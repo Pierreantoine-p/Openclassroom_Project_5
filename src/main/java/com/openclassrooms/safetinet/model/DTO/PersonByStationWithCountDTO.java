@@ -26,7 +26,7 @@ public class PersonByStationWithCountDTO {
 	public void setPersonByStationDTO(List<PersonByStationDTO> personByStationDTO) {
 		this.personByStationDTO = personByStationDTO;
 	}
-	public static void add(List<PersonByStationDTO> personByStationDTOList) {
+	public static void add(List<PersonByStationDTO> personByStationDTOList, PersonByStationWithCountDTO personByStationDTOWithCount) {
 		// TODO Auto-generated method stub
 		
 	}

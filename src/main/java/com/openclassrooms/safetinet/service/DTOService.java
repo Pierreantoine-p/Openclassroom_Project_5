@@ -89,41 +89,31 @@ public class DTOService {
 						    PersonByStationDTO personByStationDTO = new PersonByStationDTO();
 							PersonByStationWithCountDTO personByStationDTOWithCount = new PersonByStationWithCountDTO();
 							
+							
+							personByStationDTO.setFirstName(person.getFirstName());
+							personByStationDTO.setLastName(person.getLastName());
+							personByStationDTO.setAddress(person.getAddress());
+							personByStationDTO.setPhone(person.getPhone());
+
+						
+
+							
 							if(age <= 18) {
-								
 								int countChild = +1;
-								personByStationDTOWithCount.setCountChild(countChild);
-	
-								personByStationDTO.setFirstName(person.getFirstName());
-								personByStationDTO.setLastName(person.getLastName());
-								personByStationDTO.setAddress(person.getAddress());
-								personByStationDTO.setPhone(person.getPhone());
-	
-								personByStationDTOList.add(personByStationDTO);
-										
-								String carAsString = objectMapper.writeValueAsString(personByStationDTOList);
-								System.out.println("carAsString" + carAsString);
+								personByStationDTOWithCount.setCountChild(countChild) ;
+
 								
-								PersonByStationWithCountDTO.add(personByStationDTOList);
-	
 							}else {
 								int countAdult = +1;
-								personByStationDTOWithCount.setCountChild(countAdult);
+								personByStationDTOWithCount.setCountAdult(countAdult) ;
+
 								
-								personByStationDTO.setFirstName(person.getFirstName());
-								personByStationDTO.setLastName(person.getLastName());
-								personByStationDTO.setAddress(person.getAddress());
-								personByStationDTO.setPhone(person.getPhone());
-								
-	
-								
-								String carAsString = objectMapper.writeValueAsString(personByStationDTOList);
-								System.out.println("carAsString 2" + carAsString);
-															
-								personByStationDTOList.add(personByStationDTO);
-								PersonByStationWithCountDTO.add(personByStationDTOList);
 	
 							}
+							personByStationDTOList.add(personByStationDTO);
+							personByStationDTOWithCountList.add(personByStationDTOWithCount);
+							System.out.println("personByStationDTOWithCountList" + personByStationDTOWithCountList);
+							//PersonByStationWithCountDTO.add(personByStationDTOWithCount);
 						}else {
 							return Collections.emptyList();
 						}	
@@ -153,14 +143,11 @@ public class DTOService {
 				for(FireStations fireStationList : fireStationsList) {
 					String address = fireStationList.getAddress();
 					
-					//for (String address : addressList) {
 						List<Person> persons = personsService.getPersonByAddress(address);
 						 for (Person person : persons) {
 							 PhoneByFireStationDTO phoneByFireStationDTO = new PhoneByFireStationDTO();
 								
 								phoneByFireStationDTO.setPhone(person.getPhone());
-								//phoneByFireStationDTOlist.add(phoneByFireStationDTO);
-								//PhoneByFireStationDTO.add(phoneByFireStationDTOlist);
 								phoneByFireStationDTOlist.add(phoneByFireStationDTO);
 						 }
 				}
@@ -181,8 +168,63 @@ public class DTOService {
 	
 	
 	public List<PersonByAdressWithFireStationDTO>getFireByAddress(String address){
+		
+		List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTOList = new ArrayList();
+
 		try {
-			return null;
+			List<Person> personsList = personsService.getPersonByAddress(address);
+				for (Person person : personsList) {
+					String firstname = person.getFirstName();
+					String lastname = person.getLastName();
+					
+					Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);					
+					
+					if(medicalRecords.isPresent()) {
+						PersonByAdressWithFireStationDTO personByAdressWithFireStationDTO = new PersonByAdressWithFireStationDTO();
+						
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+						
+				        LocalDate now = LocalDate.now();
+						LocalDate formatterbirthDate = LocalDate.parse(medicalRecords.get().getBirthdate(), formatter);
+						
+				        Period period = Period.between(formatterbirthDate, now);
+			        
+				        int personAge = period.getYears();
+				        String age = String.valueOf(personAge);
+					
+						System.out.println("age" + age);
+
+					//for(MedicalRecords medicalRecord : medicalRecords) {
+					
+					List <FireStations> fireStationList = fireStationsService.findByAdress(address);
+					
+					for(FireStations fireStation : fireStationList) {
+						
+						//System.out.println("medicalRecordList" + medicalRecordList);
+						
+						//PersonByAdressWithFireStationDTO personByAdressWithFireStationDTO = new PersonByAdressWithFireStationDTO();
+
+						
+						personByAdressWithFireStationDTO.setLastName(person.getLastName());
+						personByAdressWithFireStationDTO.setPhone(person.getPhone());
+						personByAdressWithFireStationDTO.setAllergies(medicalRecords.get().getAllergies());
+						personByAdressWithFireStationDTO.setMedications(medicalRecords.get().getMedications());
+						personByAdressWithFireStationDTO.setAge(age);
+						personByAdressWithFireStationDTO.setFireStation(fireStation.getStation());
+						
+						personByAdressWithFireStationDTOList.add(personByAdressWithFireStationDTO);
+						System.out.println("AAAAAAAAAAA" + personByAdressWithFireStationDTOList);
+
+					}
+					
+				}else {
+					return Collections.emptyList();
+
+				}
+				}
+				System.out.println("personByAdressWithFireStationDTOList" + personByAdressWithFireStationDTOList);
+
+			return personByAdressWithFireStationDTOList;
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
@@ -194,6 +236,14 @@ public class DTOService {
 			médicaux (médicaments, posologie et allergies) de chaque personne
 		 */
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public List<HouseholdByStationDTO>getHouseholdByStation(String stationNumber){
 		try {

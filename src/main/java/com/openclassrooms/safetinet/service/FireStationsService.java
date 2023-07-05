@@ -36,12 +36,12 @@ public class FireStationsService {
 	}
 
 	//GET ONE
-	public Optional<FireStations> findByAdress(String address )  {
+	public List<FireStations> findByAdress(String address )  {
 		try {
 			return fireStationRepository.findByAdress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
+	        return new ArrayList<>();
 		}
 	}
 

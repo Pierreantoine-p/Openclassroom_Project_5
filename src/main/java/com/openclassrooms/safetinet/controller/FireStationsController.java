@@ -1,5 +1,6 @@
 package com.openclassrooms.safetinet.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
@@ -53,9 +54,9 @@ public class FireStationsController {
 	@GetMapping("/{address}")
 	public ResponseEntity<String> getOne(@PathVariable String address )   {
 		try {
-			Optional<FireStations> station = fireStationsService.findByAdress(address);
-			if(station.isPresent()) {
-				FireStations fireStations = station.get();
+			List<FireStations> station = fireStationsService.findByAdress(address);
+			if(!station.isEmpty()) {
+				//FireStations fireStations = station ;
 				return new ResponseEntity<>(HttpStatus.OK);
 			}else {
 				return new ResponseEntity<>("{}",HttpStatus.OK);
@@ -83,8 +84,8 @@ public class FireStationsController {
 	@DeleteMapping("/{address}")
 	public ResponseEntity<Void> delete (@PathVariable String address)   {
 		try {
-			Optional<FireStations> existingFireStations = fireStationsService.findByAdress(address);
-			if(existingFireStations.isPresent()) {
+			List<FireStations> existingFireStations = fireStationsService.findByAdress(address);
+			if(!existingFireStations.isEmpty()) {
 				fireStationsService.delete(address);
 			return new ResponseEntity <>(HttpStatus.NO_CONTENT);
 			}else{
@@ -101,8 +102,8 @@ public class FireStationsController {
 	@PutMapping("/{address}")
 	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation)  {
 		try {
-			Optional<FireStations> existingFireStations = fireStationsService.findByAdress(address);
-			if(existingFireStations.isPresent()) {
+			List<FireStations> existingFireStations = fireStationsService.findByAdress(address);
+			if(!existingFireStations.isEmpty()) {
 				fireStationsService.update(address, fireStation);
 	            return new ResponseEntity<>(HttpStatus.OK);
 			}else {
