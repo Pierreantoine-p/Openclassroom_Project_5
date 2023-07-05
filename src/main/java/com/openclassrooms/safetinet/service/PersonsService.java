@@ -1,6 +1,5 @@
 package com.openclassrooms.safetinet.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.safetinet.controller.PersonsController;
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
 
@@ -18,20 +16,20 @@ import com.openclassrooms.safetinet.repository.PersonsRepository;
 @Component
 public class PersonsService {
 
-    
+
     public PersonsRepository personsRepository;
 
     private static final Logger logger = LogManager.getLogger(PersonsService.class);
 
-    
+
     public PersonsService(PersonsRepository personsRepository) {
 		this.personsRepository = personsRepository;
 	}
-    
-  
-    
-   
-    
+
+
+
+
+
     //GET
 	public List<Person> getAll() {
 		try {
@@ -39,7 +37,7 @@ public class PersonsService {
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<Person>();
+	        return new ArrayList<>();
 	}
 	}
 	public List<Person> getPersonByAddress(String address)  {
@@ -49,11 +47,11 @@ public class PersonsService {
 			return personsRepository.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<Person>();
+	        return new ArrayList<>();
 		}
 	}
-	
-	
+
+
 	//GET ONE
 	public Optional<Person> findByName(String firstname, String lastname)  {
 		try {
@@ -64,7 +62,7 @@ public class PersonsService {
 	        return Optional.empty();
 	}
  	}
-	
+
 	//POST
 	public Optional<Person> save(Person person)  {
 		try {
@@ -75,8 +73,8 @@ public class PersonsService {
 	}
 		return null;
  	}
-	
-	//DELETE	
+
+	//DELETE
 	public Optional<Person>  delete(String firstname, String lastname)  {
 		try {
 			List<Person> persons = personsRepository.getAll();
@@ -91,7 +89,7 @@ public class PersonsService {
 		}
 	 return null;
 		}
-	
+
 	//PATCH
 	public Optional<Person> update(String firstname, String lastname,Person person) {
 		try {
@@ -105,13 +103,13 @@ public class PersonsService {
 			logger.error("Error : " + e);
 	        return Optional.empty();
 	}
-		return null;	 
+		return null;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	//TODO dto
-	
+
 }

@@ -1,4 +1,4 @@
-package com.openclassrooms.safetinet.model;
+package com.openclassrooms.safetinet.model.DTO;
 
 public class PhoneByFireStationDTO {
 
@@ -10,6 +10,11 @@ public class PhoneByFireStationDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public static void add(PhoneByFireStationDTO phoneByFireStationDTO) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

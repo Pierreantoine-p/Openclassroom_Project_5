@@ -1,4 +1,4 @@
-package com.openclassrooms.safetinet.model;
+package com.openclassrooms.safetinet.model.DTO;
 
 public class ChildByAddressDTO {
 	

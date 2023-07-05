@@ -1,4 +1,4 @@
-package com.openclassrooms.safetinet.model;
+package com.openclassrooms.safetinet.model.DTO;
 
 public class PersonByStationDTO {
 
@@ -9,9 +9,7 @@ public class PersonByStationDTO {
 	private String address;
 	
 	private String phone;
-	
-	private String birthdate;
-	
+		
 	public String getFirstName() {
 		return firstName;
 	}
@@ -42,14 +40,6 @@ public class PersonByStationDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
 	}
 
 	

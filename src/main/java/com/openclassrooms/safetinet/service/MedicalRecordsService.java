@@ -1,6 +1,5 @@
 package com.openclassrooms.safetinet.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,35 +7,36 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+
 import com.openclassrooms.safetinet.model.MedicalRecords;
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.MedicalRecordsRepository;
 
 @Service
 public class MedicalRecordsService {
-	
+
 	public MedicalRecordsRepository medicalRecordsRepository;
-	
+
     private static final Logger logger = LogManager.getLogger(MedicalRecordsService.class);
 
-	
+
 	public MedicalRecordsService(MedicalRecordsRepository medicalRecordsRepository) {
 		this.medicalRecordsRepository = medicalRecordsRepository;
 	}
-	
-	
-	
+
+
+
     //GET
 	public List<MedicalRecords> getAll() {
 		try {
 			return medicalRecordsRepository.getAll();
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<MedicalRecords>();
+	        return new ArrayList<>();
 		}
-		
+
 	}
-	
+
 	//GET ONE
 	public Optional<MedicalRecords> findByName(String firstname, String lastname)  {
 		try {
@@ -57,9 +57,9 @@ public class MedicalRecordsService {
 		}
 		return null;
  	}
-	
-	
-	//DELETE		
+
+
+	//DELETE
 	public Optional<Person>  delete(String firstname, String lastname)  {
 		try {
 			List<MedicalRecords> medicalRecords = medicalRecordsRepository.getAll();
@@ -67,17 +67,17 @@ public class MedicalRecordsService {
 				if(medicalRecord.getFirstName().equals(firstname) && medicalRecord.getLastName().equals(lastname)) {
 					 medicalRecordsRepository.delete(medicalRecord);
 				}
-			}		
+			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return Optional.empty();
 		}
 		return null;
-	} 
-	
-	
+	}
+
+
 	//PATCH
-	
+
 	public Optional<Person> update(String firstname, String lastname, MedicalRecords medicalRecord)  {
 		try {
 			List<MedicalRecords> medicalRecords = medicalRecordsRepository.getAll();
@@ -92,7 +92,7 @@ public class MedicalRecordsService {
 		}
 		 return null;
 	}
-	
+
 	public Optional<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
 		try {
 			return medicalRecordsRepository.getMedicalByName(firstname, lastname);
@@ -101,7 +101,7 @@ public class MedicalRecordsService {
 	        return Optional.empty();
 		}
 	}
-	
-	
-	
+
+
+
 }

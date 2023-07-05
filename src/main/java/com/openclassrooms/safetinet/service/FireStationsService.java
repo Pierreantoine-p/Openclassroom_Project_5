@@ -15,15 +15,15 @@ import com.openclassrooms.safetinet.repository.FireStationRepository;
 public class FireStationsService {
 
 	public FireStationRepository fireStationRepository;
-		
+
     private static final Logger logger = LogManager.getLogger(FireStationsService.class);
 
 	public FireStationsService(FireStationRepository fireStationRepository) {
 		this.fireStationRepository = fireStationRepository;
 	}
-	
-	
-	
+
+
+
 	//GET
 	public List<FireStations> getAll()  {
 		try {
@@ -31,10 +31,10 @@ public class FireStationsService {
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<FireStations>();
+	        return new ArrayList<>();
 		}
 	}
-	
+
 	//GET ONE
 	public Optional<FireStations> findByAdress(String address )  {
 		try {
@@ -44,23 +44,23 @@ public class FireStationsService {
 	        return Optional.empty();
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public List<FireStations>findStationByNumber(String stationNumber)  {
 		try {
 			return fireStationRepository.findByNumber(stationNumber);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<FireStations>();
+	        return new ArrayList<>();
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	//POST
 	public Optional<FireStations> save(FireStations fireStations)   {
 		try {
@@ -71,8 +71,8 @@ public class FireStationsService {
 		}
 		return null;
 	}
-	
-	//DELETE	
+
+	//DELETE
 	public Optional<FireStations>  delete(String address)   {
 		try {
 			List<FireStations> stations = fireStationRepository.getAll();
@@ -80,15 +80,15 @@ public class FireStationsService {
 				if(station.getAddress().equals(address)) {
 					 fireStationRepository.delete(station);
 				}
-			}			
+			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return Optional.empty();
 		}
 		return null;
-		
+
 	}
-	
+
 	//PATCH
 	public Optional<FireStations> update(String address, FireStations fireStation)   {
 		try {
