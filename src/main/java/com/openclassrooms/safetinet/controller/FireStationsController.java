@@ -1,8 +1,5 @@
 package com.openclassrooms.safetinet.controller;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,104 +46,42 @@ public class FireStationsController {
 		}
 	}
 	*/
-	
-	/*
-	@GetMapping
-	public List<FireStations> getPersonByFireStation(@RequestParam("stationNumber") String stationNumber ) throws IOException{
-		return fireStationsService.findStationByNumber(stationNumber);
-	}*/
-	
-	/*
-	@GetMapping
-	public List<FireStations> getPersonByFireStation(@RequestParam(value = "stationNumber",required = false)String stationNumber ) throws IOException {
-		try {
-			if(stationNumber == null) {
-				//logger.info
-				return fireStationsService.getAll();
-			}else {
-				//logger.info
-				List<FireStations> fireStationList = fireStationsService.findStationByNumber(stationNumber);
-				if(fireStationList.isEmpty()) {
-					return Collections.emptyList();
-				}else {
-					return fireStationList;
-				}		
-			}
-		}catch (Exception e){
-			logger.error("Error : " + e);
-		    throw new IOException();
-		}
-	}
-	*/
-	
-	
-	
+
     ObjectMapper objectMapper = new ObjectMapper();
 
 	
 	@GetMapping("/{address}")
-	public ResponseEntity<String> getOne(@PathVariable String address ) throws IOException {
-        String emptyJson = "{}";
-        
+	public ResponseEntity<String> getOne(@PathVariable String address )   {
 		try {
-            String jsonString = objectMapper.writeValueAsString(emptyJson);
 			Optional<FireStations> station = fireStationsService.findByAdress(address);
 			if(station.isPresent()) {
 				FireStations fireStations = station.get();
 				return new ResponseEntity<>(HttpStatus.OK);
 			}else {
-	   
 				return new ResponseEntity<>("{}",HttpStatus.OK);
-
 			}
-			/*
-			return station.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
-					.orElse(new ResponseEntity<>(jsonString, HttpStatus.OK));
-
-					//orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-					//orElse(EmptyObject.getEmptyObject());
-
-
-					//orElse(new ResponseEntity<>(new EmptyJsonBody(), HttpStatus.OK ));
-
-					//orElse(array);
-		
-			//logger.info
-			return fireStationsService.findByAdress(address)
-					.map(station -> new ResponseEntity<>(station, HttpStatus.OK))
-					//orElse(new ResponseEntity<>(EmptyObject.getEmptyObject(), HttpStatus.OK));
-					.orElse(EmptyObject.getEmptyObject());
-					*/
-			/*	if(station.isPresent()) {
-				return new ResponseEntity<>(station.get(), HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND );
-			}*/
 		}catch (Exception e) {
 			logger.error("Error : " + e);
-
-		    throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 	}
 
 	
 	@PostMapping
-	public FireStations save(@RequestBody FireStations fireStations) throws IOException{
+	public ResponseEntity<FireStations> save(@RequestBody FireStations fireStations)  {
 		try {
 			fireStationsService.save(fireStations);
-			return fireStations;
+			return new ResponseEntity<>( fireStations,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	        throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	
 	}
 	
 	
 	@DeleteMapping("/{address}")
-	public ResponseEntity<Void> delete (@PathVariable String address) throws IOException {
+	public ResponseEntity<Void> delete (@PathVariable String address)   {
 		try {
 			Optional<FireStations> existingFireStations = fireStationsService.findByAdress(address);
 			if(existingFireStations.isPresent()) {
@@ -158,15 +92,14 @@ public class FireStationsController {
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-		    throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	
 	
 	@PutMapping("/{address}")
-	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation) throws IOException {
+	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation)  {
 		try {
 			Optional<FireStations> existingFireStations = fireStationsService.findByAdress(address);
 			if(existingFireStations.isPresent()) {
@@ -177,8 +110,7 @@ public class FireStationsController {
 			}	
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-		    throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

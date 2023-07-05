@@ -1,6 +1,5 @@
 package com.openclassrooms.safetinet.repository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class MedicalRecordsRepository {
 	
 	
     private final List<MedicalRecords> medicalRecord = new ArrayList<>();
-    
+    Data data = new Data();
     private static final Logger logger = LogManager.getLogger(MedicalRecordsRepository.class);
 
 
@@ -24,13 +23,13 @@ public class MedicalRecordsRepository {
 	 * GET ALL
 	 * @return
 	 */
-	public List<MedicalRecords> getAll()throws IOException{
+	public List<MedicalRecords> getAll() {
 		try {
-			return Data.getMedicalRecords();
+			return data.getMedicalRecords();
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ArrayList<MedicalRecords>();
 		}
  	}
 
@@ -40,13 +39,13 @@ public class MedicalRecordsRepository {
 	 * @param String firstName
 	 * @return
 	 */
-	public Optional<MedicalRecords> findByName(String firstname, String lastname)throws IOException {
+	public Optional<MedicalRecords> findByName(String firstname, String lastname)  {
 		try {
-			return Data.getMedicalRecordByName(firstname, lastname);
+			return data.getMedicalRecordByName(firstname, lastname);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
  	}
 	
@@ -56,13 +55,12 @@ public class MedicalRecordsRepository {
 	 * ajouter un dossier médical ;
 	 * @param medicalRecords
 	 */
-	public MedicalRecords save(MedicalRecords medicalRecord)throws IOException{
+	public boolean save(MedicalRecords medicalRecord) {
 		try {
-			Data.getMedicalRecords().add(medicalRecord);
-			return medicalRecord;
+			return data.getMedicalRecords().add(medicalRecord);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+			return false;
 		}
 		 
 	}
@@ -74,13 +72,13 @@ public class MedicalRecordsRepository {
 	 *  mettre à jour un dossier médical existant (comme évoqué précédemment, supposer que le prénom et le nom de famille ne changent pas)
 	 *  @param MedicalRecords medicalRecords
 	 */
-	public boolean update (MedicalRecords medicalRecord) throws IOException{
+	public Optional<MedicalRecords> update (MedicalRecords medicalRecord)  {
 		try {
-			Data.updateMedicalRecords(medicalRecord);
-			return false;
+			return data.updateMedicalRecords(medicalRecord);
+			
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
 	 
 	}
@@ -91,22 +89,23 @@ public class MedicalRecordsRepository {
 	 * supprimer un dossier médical (utilisez une combinaison de prénom et de nom comme identificateur unique)
 	 * @param String firstname
 	 */
-	public boolean delete(MedicalRecords medicalRecord) throws IOException{
+	public boolean delete(MedicalRecords medicalRecord)  {
 		try {
-			Data.deleteMedicalRecords(medicalRecord);
-			return false;
+			
+			data.deleteMedicalRecords(medicalRecord);
+			return true;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+			return false;
 		}
 	}
 	
-	public List getMedicalByName(String firtname, String lastname)throws IOException{
+	public Optional<MedicalRecords> getMedicalByName(String firtname, String lastname) {
 		try {
-			return Data.getMedicalByName(firtname, lastname);
+			return data.getMedicalByName(firtname, lastname);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
 	}
 	

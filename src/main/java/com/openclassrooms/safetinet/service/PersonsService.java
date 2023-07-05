@@ -1,6 +1,7 @@
 package com.openclassrooms.safetinet.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,70 +33,67 @@ public class PersonsService {
    
     
     //GET
-	public List<Person> getAll()throws IOException {
+	public List<Person> getAll() {
 		try {
 			return personsRepository.getAll();
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
-		}
+	        return new ArrayList<Person>();
 	}
-	
-	public List<Person> getPersonByAddress(String address)throws IOException {
+	}
+	public List<Person> getPersonByAddress(String address)  {
 		try {
+			//System.out.println("address" + address);
+			//System.out.println("personsRepository" +  personsRepository.getPersonByAddress(address));
 			return personsRepository.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ArrayList<Person>();
 		}
 	}
 	
 	
 	//GET ONE
-	public Optional<Person> findByName(String firstname, String lastname)throws IOException {
+	public Optional<Person> findByName(String firstname, String lastname)  {
 		try {
 			return personsRepository.findByName(firstname,lastname);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	        throw new IOException();
+	        return Optional.empty();
 	}
  	}
 	
 	//POST
-	public void save(Person person)throws IOException {
+	public Optional<Person> save(Person person)  {
 		try {
 			personsRepository.save(person);
-
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	        throw new IOException();
+	        return Optional.empty();
 	}
+		return null;
  	}
 	
 	//DELETE	
-	public boolean  delete(String firstname, String lastname)throws IOException {
+	public Optional<Person>  delete(String firstname, String lastname)  {
 		try {
 			List<Person> persons = personsRepository.getAll();
 			for(Person person : persons) {
 				if(person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)) {
-					return personsRepository.delete(person);
+					 personsRepository.delete(person);
 				}
 			}
-			return false;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	        throw new IOException();
-	}
-	 
+	        return Optional.empty();
+		}
+	 return null;
 		}
 	
 	//PATCH
-	public boolean update(String firstname, String lastname,Person person)throws IOException {
+	public Optional<Person> update(String firstname, String lastname,Person person) {
 		try {
 			List<Person> persons = personsRepository.getAll();
 			for(Person person1 : persons) {
@@ -103,13 +101,11 @@ public class PersonsService {
 					return personsRepository.update(person);
 				}
 			}
-			return false;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	        throw new IOException();
+	        return Optional.empty();
 	}
-		 
+		return null;	 
 	}
 	
 	

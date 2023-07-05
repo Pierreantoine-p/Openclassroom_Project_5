@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import com.openclassrooms.safetinet.data.Data;
 import com.openclassrooms.safetinet.model.FireStations;
+import com.openclassrooms.safetinet.model.Person;
 
 
 @Repository
@@ -18,6 +19,8 @@ public class FireStationRepository {
     private final List<FireStations> fireStations = new ArrayList<>();
 
     private static final Logger logger = LogManager.getLogger(FireStationRepository.class);
+    
+	Data data = new Data();
 
     
     /**
@@ -25,13 +28,13 @@ public class FireStationRepository {
 	 *  Get all fireStations
 	 *  @return
 	 */
-	public List<FireStations> getAll() throws IOException{
+	public List<FireStations> getAll()  {
 		try {
-			return Data.getFireStations();
+			return data.getFireStations();
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ArrayList<FireStations>();
 		}
 	}
 	
@@ -41,13 +44,12 @@ public class FireStationRepository {
 	 *  ajout d'un mapping caserne/adresse ;
 	 *  @param Person person
 	 */
-	public FireStations save(FireStations fireStation) throws IOException{
+	public boolean save(FireStations fireStation) {
 		try {
-			Data.getFireStations().add(fireStation);
-			return fireStation;	
+			return data.getFireStations().add(fireStation);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+			return false;
 		}
 		
 	}
@@ -58,25 +60,25 @@ public class FireStationRepository {
 	 *  @param String firstName
 	 *  @return
 	 */
-	public Optional<FireStations> findByAdress(String address) throws IOException {
+	public Optional<FireStations> findByAdress(String address)   {
 		try {
-			return Data.getStationByAdress(address);
+			return data.getStationByAdress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return Optional.empty();
 		}
 		
 	}
 	
 	
 	
-	public List<FireStations> findByNumber(String stationNumber) throws IOException {
+	public List<FireStations> findByNumber(String stationNumber)  {
 		try {
-			return Data.getStationByNumber(stationNumber);
+			return data.getStationByNumber(stationNumber);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ArrayList<FireStations>();
 		}
 	}
 	
@@ -87,13 +89,12 @@ public class FireStationRepository {
 	 * @param String firstname
 	 * @return
 	 */
-	public boolean delete(FireStations fireStation) throws IOException {
+	public boolean delete(FireStations fireStation)   {
 		try {
-			Data.deleteFireStation(fireStation);
-			return false;
+			return data.deleteFireStation(fireStation);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+			return false;
 		}
 		
 	}
@@ -105,13 +106,12 @@ public class FireStationRepository {
 	 * @param Person person
 	 * @return
 	 */	
-	public boolean update(FireStations fireStation)  throws IOException{
+	public Optional<FireStations> update(FireStations fireStation)   {
 		try {
-			Data.updateFireStation(fireStation);
-			return false;
+			return data.updateFireStation(fireStation);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return Optional.empty();
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package com.openclassrooms.safetinet.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,47 +39,45 @@ public class PersonsController {
 
 	
 	@GetMapping
-	public List<Person> getAll()throws IOException{
+	public ResponseEntity <List<Person>> getAll(){
 		try {
-			return personsService.getAll();
-
+			return new ResponseEntity<>(personsService.getAll(), HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
  	}
 	
 	
 	@GetMapping("/{firstname}/{lastname}")
-	public ResponseEntity<Person> getOne(@PathVariable String firstname, @PathVariable String lastname) throws IOException{
+	public ResponseEntity<Person> getOne(@PathVariable String firstname, @PathVariable String lastname)  {
 		try {
 			return personsService.findByName(firstname, lastname)
 					.map(person -> new ResponseEntity<>(person, HttpStatus.OK))
 					.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		 
 	}
 	
 	
 	@PostMapping
-	public Person save(@RequestBody Person person) throws IOException{
+	public  ResponseEntity<Person> save(@RequestBody Person person)  {
 		try {
-			personsService.save(person);
-			return person;
+			 personsService.save(person);
+			 return new ResponseEntity<>(person,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
-		}
-	 
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}	 
 	}
 	
 	
 	
 	@PutMapping("/{firstname}/{lastname}")
-	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person) throws IOException{
+	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person)  {
 		try {
 			Optional<Person> existingPerson = personsService.findByName(firstname,lastname);
 			if(existingPerson.isPresent()) {
@@ -89,13 +88,13 @@ public class PersonsController {
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		 
 	}
 	
 	@DeleteMapping("/{firstname}/{lastname}")
-	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)throws IOException {
+	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)  {
 		try {
 			Optional<Person> existingPerson = personsService.findByName(firstname,lastname);
 			if(existingPerson.isPresent()) {
@@ -106,7 +105,7 @@ public class PersonsController {
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		 
 	}

@@ -1,12 +1,12 @@
 package com.openclassrooms.safetinet.model;
 
-public class ChildByAdressDTO {
+public class ChildByAddressDTO {
 	
 	private String firstName;
 	
 	private String lastName;
 	
-	private String birthdate;
+	private String age;
 	
 	public String getFirstName() {
 		return firstName;
@@ -24,13 +24,15 @@ public class ChildByAdressDTO {
 		this.lastName = lastName;
 	}
 
-	public String getBirthdate() {
-		return birthdate;
+	public String getAge() {
+		return age;
 	}
 
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
+	public void setAge(String age) {
+		this.age = age;
 	}
+
+	
 
 	
 

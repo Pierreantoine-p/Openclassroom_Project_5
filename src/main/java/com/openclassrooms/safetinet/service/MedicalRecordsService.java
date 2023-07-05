@@ -1,6 +1,7 @@
 package com.openclassrooms.safetinet.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import com.openclassrooms.safetinet.model.MedicalRecords;
+import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.MedicalRecordsRepository;
 
 @Service
@@ -25,79 +27,78 @@ public class MedicalRecordsService {
 	
 	
     //GET
-	public List<MedicalRecords> getAll()throws IOException{
+	public List<MedicalRecords> getAll() {
 		try {
 			return medicalRecordsRepository.getAll();
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return new ArrayList<MedicalRecords>();
 		}
 		
 	}
 	
 	//GET ONE
-	public Optional<MedicalRecords> findByName(String firstname, String lastname) throws IOException{
+	public Optional<MedicalRecords> findByName(String firstname, String lastname)  {
 		try {
 			return medicalRecordsRepository.findByName(firstname, lastname);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
 	}
 
 	//POST
-	public void save(MedicalRecords medicalRecord)throws IOException {
+	public Optional<MedicalRecords> save(MedicalRecords medicalRecord)  {
 		try {
 			medicalRecordsRepository.save(medicalRecord);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
+		return null;
  	}
 	
 	
 	//DELETE		
-	public boolean  delete(String firstname, String lastname)throws IOException {
+	public Optional<Person>  delete(String firstname, String lastname)  {
 		try {
 			List<MedicalRecords> medicalRecords = medicalRecordsRepository.getAll();
 			for(MedicalRecords medicalRecord : medicalRecords) {
 				if(medicalRecord.getFirstName().equals(firstname) && medicalRecord.getLastName().equals(lastname)) {
-					return medicalRecordsRepository.delete(medicalRecord);
+					 medicalRecordsRepository.delete(medicalRecord);
 				}
-			}
-			return false;
-		
+			}		
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
+		return null;
 	} 
 	
 	
 	//PATCH
 	
-	public boolean update(String firstname, String lastname, MedicalRecords medicalRecord)throws IOException {
+	public Optional<Person> update(String firstname, String lastname, MedicalRecords medicalRecord)  {
 		try {
 			List<MedicalRecords> medicalRecords = medicalRecordsRepository.getAll();
 			for(MedicalRecords medicalRecord1 : medicalRecords) {
 				if(medicalRecord1.getFirstName().equals(firstname) && medicalRecord1.getLastName().equals(lastname)) {
-					return medicalRecordsRepository.update(medicalRecord);
+					 medicalRecordsRepository.update(medicalRecord);
 				}
 			}
-			return false;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
-		 
+		 return null;
 	}
 	
-	public List<MedicalRecords> getMedicalByName(String firstname, String lastname)throws IOException {
+	public Optional<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
 		try {
 			return medicalRecordsRepository.getMedicalByName(firstname, lastname);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        throw new IOException();
+	        return Optional.empty();
 		}
 	}
 	

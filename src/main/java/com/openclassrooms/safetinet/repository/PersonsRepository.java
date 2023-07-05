@@ -26,7 +26,7 @@ public class PersonsRepository{
     private final List<Person> persons = new ArrayList<>();
     
     private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
-
+    Data data = new Data();
     
     
     /**
@@ -34,13 +34,12 @@ public class PersonsRepository{
 	 *  Get all person
 	 *  @return
 	 */
-	public List<Person> getAll()throws IOException {
+	public List<Person> getAll() {
 		try {
-			return Data.getAllPersons();
+			return data.getAllPersons();
 	   	}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	           throw new IOException();
+	        return new ArrayList<Person>();
 	   	}
 		 
 	}
@@ -50,16 +49,13 @@ public class PersonsRepository{
 	 * add new person
 	 *  @param Person person
 	 */
-	public Person save(Person person)throws IOException{
+	public boolean save(Person person){
 		try {
-			Data.getAllPersons().add(person);
-			return person;
+			return data.getAllPersons().add(person);
 	   	}catch(Exception e) {
-			logger.error("Error : " + e);
-
-	           throw new IOException();
+			logger.error("Error save : " + e);
+			return false;
 	   	}
-		 
 	}
 	
 	
@@ -69,13 +65,12 @@ public class PersonsRepository{
 	 *  @param String firstName
 	 *  @return
 	 */
-	public Optional<Person> findByName(String firstname,String lastname)throws IOException {
+	public Optional<Person> findByName(String firstname,String lastname) {
 		try {
-			return Data.getPersonByName(lastname, lastname);
+			return data.getPersonByName(lastname, lastname);
 	   	}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	           throw new IOException();
+	        return Optional.empty();
 	   	}
 		 
 		
@@ -87,16 +82,13 @@ public class PersonsRepository{
 	 * @param Person person
 	 * @return
 	 */
-	public boolean update(Person person)throws IOException {
+	public Optional<Person> update(Person person)  {
 		try {
-			Data.updatePerson(person);
-			return false;
+			return data.updatePerson(person);
 	   	}catch(Exception e) {
-			logger.error("Error : " + e);
-
-	           throw new IOException();
+			logger.error("Error update person : " + e);
+	        return Optional.empty();
 	   	}
-		 
 	}
 	
 	/**
@@ -105,28 +97,28 @@ public class PersonsRepository{
 	 * @param String firstname
 	 * @return
 	 */
-	public boolean delete(Person person)throws IOException {
+	public boolean delete(Person person) {
 		try {
-			Data.deletePerson(person);
-			return false;
+			data.deletePerson(person);
+			return true;
 	   	}catch(Exception e) {
-			logger.error("Error : " + e);
-
-	           throw new IOException();
-	   	}
-		 
+			logger.error("Error delete person : " + e);
+			return false;
+	   	}	 
 	}
 	
 	
 	
 	//DTO
 
-	public List<Person> getPersonByAddress(String address)throws IOException {
+	public List<Person> getPersonByAddress(String address) {
 		try {
-			return Data.getPersonByAddress(address);
+			//System.out.println("address" + address);
+			//System.out.println("Data" +  Data.getPersonByAddress(address));
+			return data.getPersonByAddress(address);
 		}catch(Exception e) {
-			logger.error("Error : " + e);
-	           throw new IOException();
+			logger.error("Error get person : " + e);
+	        return new ArrayList<Person>();
 	   	}
 	}
 	

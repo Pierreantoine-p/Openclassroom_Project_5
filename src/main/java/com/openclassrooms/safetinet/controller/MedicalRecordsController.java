@@ -39,44 +39,42 @@ public class MedicalRecordsController {
 	
 	
 	@GetMapping
-	public List<MedicalRecords> getAll() throws IOException{
+	public ResponseEntity <List<MedicalRecords>> getAll()  {
 		try {
-			return medicalRecordsService.getAll();
+			return new ResponseEntity<> (medicalRecordsService.getAll(), HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	       	throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping("/{firstname}/{lastname}")
-	public ResponseEntity<MedicalRecords> getOne(@PathVariable String firstname, @PathVariable String lastname) throws IOException{
+	public ResponseEntity<MedicalRecords> getOne(@PathVariable String firstname, @PathVariable String lastname) {
 		try {
 			return medicalRecordsService.findByName(firstname, lastname)
 					.map(medicalRecord -> new ResponseEntity<>(medicalRecord, HttpStatus.OK))
 					.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-
-	       	throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PostMapping
-	public MedicalRecords save(@RequestBody MedicalRecords medicalRecords) throws IOException{
+	public ResponseEntity<MedicalRecords> save(@RequestBody MedicalRecords medicalRecords)  {
 		try {
 			medicalRecordsService.save(medicalRecords);
-			return medicalRecords;
+			return new ResponseEntity<>(medicalRecords,HttpStatus.OK);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 	
 	
 	@PutMapping("/{firstname}/{lastname}")
-	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody MedicalRecords medicalRecord) throws IOException{
+	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody MedicalRecords medicalRecord)  {
 		try {
 			Optional<MedicalRecords> existingMedicalRecords = medicalRecordsService.findByName(firstname,lastname);
 			if(existingMedicalRecords.isPresent()) {
@@ -87,13 +85,13 @@ public class MedicalRecordsController {
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
 	
 	@DeleteMapping("/{firstname}/{lastname}")
-	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)throws IOException{
+	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname) {
 		try {
 			Optional<MedicalRecords> existingMedicalRecords = medicalRecordsService.findByName(firstname,lastname);
 			if(existingMedicalRecords.isPresent()) {
@@ -104,7 +102,7 @@ public class MedicalRecordsController {
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}

@@ -34,34 +34,46 @@ public class Data {
 	 * GET ALL PERSONS
 	 * @return
 	 */
-	public static List<Person> getAllPersons()throws IOException {
+	public  List<Person> getAllPersons()  {
 		try {
 			logger.info("machin");
 			return persons;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ArrayList<Person>();
+
 		}
  	}
 	
-	public static List<Person> getPersonByAddress(String address) throws IOException {
+	
+	
+	
+	
+	
+	public  List<Person> getPersonByAddress(String address)   {
 		try {
 			return persons.stream()
 					.filter(p -> p.getAddress().equals(address))
 					.collect(Collectors.toList());
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return new ArrayList<Person>();
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
 	 * POST PERSON
 	 * @return
 	 */
-	public void setPersons(List<Person> persons)throws IOException {
+	public void setPersons(List<Person> persons)  {
 		Data.persons = persons;
 	}
 	
@@ -69,7 +81,7 @@ public class Data {
 	 * GET ONE PERSON
 	 * @return
 	 */
-	public static Optional<Person> getPersonByName(String firstname,String lastname)throws IOException {
+	public  Optional<Person> getPersonByName(String firstname,String lastname)  {
 		
 		try {
 			return persons.stream()
@@ -77,7 +89,7 @@ public class Data {
 					.findFirst();
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	       	throw new IOException();
+	        return Optional.empty();
 		}
 		 
 	}
@@ -87,14 +99,14 @@ public class Data {
 	 * @param person
 	 * @return
 	 */
-	public static boolean deletePerson(Person person)throws IOException {
+	public  boolean deletePerson(Person person) {
 		try {
 			logger.info("machin");
 			return persons.remove(person);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-		   	throw new IOException();
+			return false;		
 		}
  	}
 	
@@ -103,7 +115,7 @@ public class Data {
 	 * @param person
 	 * @return
 	 */
-	 public static Optional<Person> updatePerson (Person person)throws IOException {
+	 public  Optional<Person> updatePerson (Person person)  {
 		 try {
 				logger.info("machin");
 				 return persons.stream()
@@ -120,7 +132,7 @@ public class Data {
 						 });
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-			   	throw new IOException();
+		        return Optional.empty();
 			}
 		 
 		  
@@ -134,19 +146,18 @@ public class Data {
 		 * GET ALL FIRE STATION
 		 * @return
 		 */
-		public static List<FireStations> getFireStations()throws IOException {
+		public List<FireStations> getFireStations()  {
 			try {
 				logger.info("machin");
 				return firestations;
 
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-			   	throw new IOException();
+		        return new ArrayList<FireStations>();
 			}
  		}
 
-		public void setFirestations(List<FireStations> firestations)throws IOException {
-			
+		public void setFirestations(List<FireStations> firestations)  {
 			Data.firestations = firestations;
 		}
 		
@@ -154,7 +165,7 @@ public class Data {
 		 * GET ONE FIRE STATION
 		 * @return
 		 */
-		public static Optional<FireStations> getStationByAdress(String address )throws IOException {
+		public  Optional<FireStations> getStationByAdress(String address )  {
 			try {
 				logger.info("machin");
 				return firestations.stream()
@@ -162,12 +173,12 @@ public class Data {
 						.findFirst();
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-			   	throw new IOException();
+		        return Optional.empty();
 			}
 			 
 		}
 		
-		public static List<FireStations> getStationByNumber(String stationNumber )throws IOException {
+		public  List<FireStations> getStationByNumber(String stationNumber )  {
 			try {
 				logger.info("machin");
 				return firestations.stream()
@@ -175,7 +186,8 @@ public class Data {
 						.collect(Collectors.toList());
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-			   	throw new IOException();
+		        return new ArrayList<FireStations>();
+
 			}
 			 
 		}
@@ -186,14 +198,14 @@ public class Data {
 		 * @param person
 		 * @return
 		 */
-		public static boolean deleteFireStation(FireStations fireStation)throws IOException {
+		public boolean deleteFireStation(FireStations fireStation)  {
 			try {
 				logger.info("machin");
 				return firestations.remove(fireStation);
 
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-			   	throw new IOException();
+				return false;
 			}
  		}
 		
@@ -202,7 +214,7 @@ public class Data {
 		 * @param person
 		 * @return
 		 */
-		 public static Optional<FireStations> updateFireStation (FireStations fireStation)throws IOException {
+		 public  Optional<FireStations> updateFireStation (FireStations fireStation)  {
 			 try {
 					logger.info("machin");
 					 return firestations.stream()
@@ -214,7 +226,7 @@ public class Data {
 							 });
 				}catch(Exception e) {
 					logger.error("Error : " + e);
-				   	throw new IOException();
+			        return Optional.empty();
 				}
 		 
 			  
@@ -228,14 +240,14 @@ public class Data {
 			 * GET ALL MEDICAL RECORD
 			 * @return
 			 */
-		 public static List<MedicalRecords> getMedicalRecords()throws IOException {
+		 public List<MedicalRecords> getMedicalRecords()  {
 			 try {
 					logger.info("machin");
 					return medicalrecords;
 
 				}catch(Exception e) {
 					logger.error("Error : " + e);
-				   	throw new IOException();
+			        return new ArrayList<MedicalRecords>();
 				}
  			}
 
@@ -248,7 +260,7 @@ public class Data {
 			 * GET ONE MEDICAL RECORD
 			 * @return
 			 */
-			public static Optional<MedicalRecords> getMedicalRecordByName(String firstname, String lastname )throws IOException {
+			public Optional<MedicalRecords> getMedicalRecordByName(String firstname, String lastname )  {
 				try {
 					logger.info("machin");
 					return medicalrecords.stream()
@@ -256,7 +268,7 @@ public class Data {
 							.findFirst();
 				}catch(Exception e) {
 					logger.error("Error : " + e);
-				   	throw new IOException();
+			        return Optional.empty();
 				}
 				 
 			}
@@ -266,14 +278,14 @@ public class Data {
 			 * @param person
 			 * @return
 			 */
-			public static boolean deleteMedicalRecords(MedicalRecords medicalrecord)throws IOException {
+			public boolean deleteMedicalRecords(MedicalRecords medicalrecord)  {
 				try {
 					logger.info("machin");
 					return medicalrecords.remove(medicalrecord);
 
 				}catch(Exception e) {
 					logger.error("Error : " + e);
-				   	throw new IOException();
+					return false;
 				}
  			}
 			
@@ -282,7 +294,7 @@ public class Data {
 			 * @param person
 			 * @return
 			 */
-			 public static Optional<MedicalRecords> updateMedicalRecords (MedicalRecords medicalrecord)throws IOException {
+			 public Optional<MedicalRecords> updateMedicalRecords (MedicalRecords medicalrecord)  {
 				 try {
 						logger.info("machin");
 						 return medicalrecords.stream()
@@ -296,19 +308,19 @@ public class Data {
 								 });
 					}catch(Exception e) {
 						logger.error("Error : " + e);
-					   	throw new IOException();
+				        return Optional.empty();
 					}
 				 
 			 }			 
  
-			 public static List<MedicalRecords> getMedicalByName(String firstname, String lastname)throws IOException {
+			 public Optional<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
 				 try {
 					 return medicalrecords.stream()
 							 .filter(m -> m.getFirstName().equals(firstname) && m.getLastName().equals(lastname))
-								.collect(Collectors.toList());
+								.findFirst();
 				 }catch(Exception e) {
 						logger.error("Error : " + e);
-					   	throw new IOException();
+				        return Optional.empty();
 					}
 			 }
 			 
