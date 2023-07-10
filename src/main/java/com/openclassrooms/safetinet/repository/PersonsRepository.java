@@ -65,12 +65,12 @@ public class PersonsRepository{
 	 *  @param String firstName
 	 *  @return
 	 */
-	public Optional<Person> findByName(String firstname,String lastname) {
+	public List<Person> findByName(String firstname,String lastname) {
 		try {
 			return data.getPersonByName(lastname, lastname);
 	   	}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
+	        return new ArrayList<>();
 	   	}
 		 
 		
@@ -113,8 +113,6 @@ public class PersonsRepository{
 
 	public List<Person> getPersonByAddress(String address) {
 		try {
-			//System.out.println("address" + address);
-			//System.out.println("Data" +  Data.getPersonByAddress(address));
 			return data.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
@@ -123,8 +121,7 @@ public class PersonsRepository{
 	}
 	
 	public List<Person>findEmailByCity(String city){
-		try { return data.getEmailByCity(city);
-			
+		try { return data.getEmailByCity(city);	
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
 	        return new ArrayList<>();

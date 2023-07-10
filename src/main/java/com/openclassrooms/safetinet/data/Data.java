@@ -81,15 +81,15 @@ public class Data {
 	 * GET ONE PERSON
 	 * @return
 	 */
-	public  Optional<Person> getPersonByName(String firstname,String lastname)  {
+	public  List<Person> getPersonByName(String firstname,String lastname)  {
 		
 		try {
 			return persons.stream()
 					.filter(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname))
-					.findFirst();
+					.collect(Collectors.toList());
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
+	        return new ArrayList<>();
 		}
 		 
 	}
@@ -316,7 +316,7 @@ public class Data {
 			 public Optional<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
 				 try {
 					 return medicalrecords.stream()
-							 .filter(m -> m.getFirstName().equals(firstname) && m.getLastName().equals(lastname))
+							 .filter(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname))
 								.findFirst();
 				 }catch(Exception e) {
 						logger.error("Error : " + e);

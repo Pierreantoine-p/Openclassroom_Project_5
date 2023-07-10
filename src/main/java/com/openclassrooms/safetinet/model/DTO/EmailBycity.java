@@ -1,15 +1,17 @@
 package com.openclassrooms.safetinet.model.DTO;
 
+import java.util.List;
+
 public class EmailBycity {
 
-	private String email;
+	private List<String> email;
 
-	public String getEmail() {
+	public List<String> getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(List<String> emailList) {
+		this.email = emailList;
 	}
 	
 }

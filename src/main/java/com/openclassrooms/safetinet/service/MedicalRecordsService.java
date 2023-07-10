@@ -94,6 +94,7 @@ public class MedicalRecordsService {
 	}
 
 	public Optional<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
+		//MedicalRecords medicalRecords = new MedicalRecords();
 		try {
 			return medicalRecordsRepository.getMedicalByName(firstname, lastname);
 		}catch(Exception e) {

@@ -3,8 +3,6 @@ package com.openclassrooms.safetinet.model.DTO;
 import java.util.ArrayList;
 
 public class PersonByAdressWithFireStationDTO {
-
-	private String fireStation;
 	
 	private String lastName;
 	
@@ -16,13 +14,6 @@ public class PersonByAdressWithFireStationDTO {
 	
 	private ArrayList<String> allergies;
 	
-	public String getFireStation() {
-		return fireStation;
-	}
-
-	public void setFireStation(String fireStation) {
-		this.fireStation = fireStation;
-	}
 
 	public String getLastName() {
 		return lastName;

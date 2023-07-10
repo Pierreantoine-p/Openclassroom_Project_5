@@ -1,6 +1,8 @@
 package com.openclassrooms.safetinet.model;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import lombok.Data;

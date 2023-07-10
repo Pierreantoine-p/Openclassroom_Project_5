@@ -53,13 +53,13 @@ public class PersonsService {
 
 
 	//GET ONE
-	public Optional<Person> findByName(String firstname, String lastname)  {
+	public List<Person> findByName(String firstname, String lastname)  {
 		try {
 			return personsRepository.findByName(firstname,lastname);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
+	        return new ArrayList<>();
 	}
  	}
 
