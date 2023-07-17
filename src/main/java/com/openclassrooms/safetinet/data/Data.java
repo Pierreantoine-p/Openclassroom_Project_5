@@ -57,7 +57,7 @@ public class Data {
 					.collect(Collectors.toList());
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<Person>();
+	        return new ArrayList<>();
 		}
 		
 	}

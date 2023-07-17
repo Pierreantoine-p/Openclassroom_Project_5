@@ -8,7 +8,7 @@ public class PersonByFirstNameAndLastNameDTO {
 	
 	private String address;
 	
-	private String age;
+	private Integer age;
 	
 	private String email;
 	
@@ -32,11 +32,11 @@ public class PersonByFirstNameAndLastNameDTO {
 		this.address = address;
 	}
 
-	public String getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 

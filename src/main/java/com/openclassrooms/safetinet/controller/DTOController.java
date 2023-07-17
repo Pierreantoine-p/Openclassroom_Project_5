@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.model.DTO.ChildByAddressDTO;
 import com.openclassrooms.safetinet.model.DTO.EmailBycity;
 import com.openclassrooms.safetinet.model.DTO.HouseholdByStationDTO;
+import com.openclassrooms.safetinet.model.DTO.ListPersonByAddressDTO;
 import com.openclassrooms.safetinet.model.DTO.PersonByAdressWithFireStationDTO;
 import com.openclassrooms.safetinet.model.DTO.PersonByAdressWithFireStationListDTO;
 import com.openclassrooms.safetinet.model.DTO.PersonByFirstNameAndLastNameDTO;
@@ -86,9 +88,9 @@ public class DTOController {
 
 
 	@GetMapping("/personInfo")
-	public ResponseEntity<List<PersonByFirstNameAndLastNameDTO>> getPersondByStation(@RequestParam(value = "firstName")String firstName, @RequestParam(value = "lastName")String lastName){
+	public ResponseEntity<List<PersonByFirstNameAndLastNameDTO>> getPersondByStation(@RequestParam(value = "firstName") String firstname,@RequestParam(value = "lastName") String lastname){
 		try {
-			return new ResponseEntity<>(dTOService.getPersondByStation(firstName,lastName),HttpStatus.OK);
+			return new ResponseEntity<>(dTOService.getPersondByStation(firstname,lastname),HttpStatus.OK);
 		}catch (Exception e) {
 			logger.error("Error : " + e);
 	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -105,18 +107,10 @@ public class DTOController {
 		}
 	}
 	
-	
-	
-	
-	/**
-	 * Si !age -18  = "{}"
-	 * si age +18 => recherche par nom et adresse et crée l'objet 
-	 * 
-	 */
 
 
 	@GetMapping("/childAlert")
-	public ResponseEntity<List<ChildByAddressDTO>> getChildByAddress (@RequestParam(value = "address")String address) {
+	public ResponseEntity<ListPersonByAddressDTO> getChildByAddress (@RequestParam(value = "address")String address) {
 		try {
 			return new ResponseEntity<>(dTOService.getChildByAddress(address),HttpStatus.OK);
 		}catch (Exception e) {
@@ -125,11 +119,7 @@ public class DTOController {
 		}
 	}
 	
-	/*
-	 * Cette url doit retourner une liste d'enfants (tout individu âgé de 18 ans ou moins) habitant à cette adresse.
-		La liste doit comprendre le prénom et le nom de famille de chaque enfant, son âge et une liste des autres
-		membres du foyer. S'il n'y a pas d'enfant, cette url peut renvoyer une chaîne vide
-	 */
+	
 	
 
 	

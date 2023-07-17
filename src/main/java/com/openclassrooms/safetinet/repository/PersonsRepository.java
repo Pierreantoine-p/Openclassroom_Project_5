@@ -67,7 +67,7 @@ public class PersonsRepository{
 	 */
 	public List<Person> findByName(String firstname,String lastname) {
 		try {
-			return data.getPersonByName(lastname, lastname);
+			return data.getPersonByName(firstname, lastname);
 	   	}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<>();
@@ -116,7 +116,7 @@ public class PersonsRepository{
 			return data.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
-	        return new ArrayList<Person>();
+	        return new ArrayList<>();
 	   	}
 	}
 	

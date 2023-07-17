@@ -6,7 +6,7 @@ public class ChildByAddressDTO {
 	
 	private String lastName;
 	
-	private String age;
+	private Integer age;
 	
 	public String getFirstName() {
 		return firstName;
@@ -24,11 +24,11 @@ public class ChildByAddressDTO {
 		this.lastName = lastName;
 	}
 
-	public String getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
