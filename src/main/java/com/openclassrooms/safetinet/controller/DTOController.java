@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.safetinet.model.DTO.AddressByStationDTO;
 import com.openclassrooms.safetinet.model.DTO.ChildByAddressDTO;
 import com.openclassrooms.safetinet.model.DTO.EmailBycity;
 import com.openclassrooms.safetinet.model.DTO.HouseholdByStationDTO;
@@ -77,7 +78,7 @@ public class DTOController {
 	}
 	
 	@GetMapping("/flood/stations")
-	public ResponseEntity<List<HouseholdByStationDTO>> getHouseholdByStation(@RequestParam(value = "stationNumber")String stationNumber){
+	public ResponseEntity<AddressByStationDTO> getHouseholdByStation(@RequestParam(value = "stations")String stationNumber){
 		try {
 			return new ResponseEntity<>(dTOService.getHouseholdByStation(stationNumber),HttpStatus.OK);
 		}catch (Exception e) {

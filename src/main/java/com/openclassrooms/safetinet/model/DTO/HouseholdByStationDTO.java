@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 public class HouseholdByStationDTO {
 	
-	private String fireStation;
 	
 	private String lastname;
 	
 	private String phone;
 	
-	private String age;
+	private int age;
 	
 	private String firstname;
 	
@@ -18,13 +17,6 @@ public class HouseholdByStationDTO {
 	
 	private ArrayList<String> allergies;
 	
-	public String getFireStation() {
-		return fireStation;
-	}
-
-	public void setFireStation(String fireStation) {
-		this.fireStation = fireStation;
-	}
 
 	public String getLastname() {
 		return lastname;
@@ -42,11 +34,11 @@ public class HouseholdByStationDTO {
 		this.phone = phone;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 
@@ -73,6 +65,5 @@ public class HouseholdByStationDTO {
 	public void setAllergies(ArrayList<String> allergies) {
 		this.allergies = allergies;
 	}
-
 
 }

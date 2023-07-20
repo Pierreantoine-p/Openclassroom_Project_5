@@ -45,7 +45,3 @@ public class SafetinetApplication {
     
 
 }
-/**Logique controller dto dans service
- * Crée un service dto ? 
- * Crée class dto avec model dto + count 
- */ 

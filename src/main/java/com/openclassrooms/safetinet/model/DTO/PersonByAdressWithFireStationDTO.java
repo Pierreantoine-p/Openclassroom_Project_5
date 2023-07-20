@@ -8,7 +8,7 @@ public class PersonByAdressWithFireStationDTO {
 	
 	private String phone; 
 	
-	private String age;
+	private int age;
 
 	private ArrayList<String> medications;
 	
@@ -31,11 +31,11 @@ public class PersonByAdressWithFireStationDTO {
 		this.phone = phone;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 

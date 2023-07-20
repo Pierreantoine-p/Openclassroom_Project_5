@@ -4,32 +4,18 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassrooms.safetinet.model.FireStations;
-import com.openclassrooms.safetinet.model.MedicalRecords;
-import com.openclassrooms.safetinet.model.Person;
-import com.openclassrooms.safetinet.model.DTO.ChildByAddressDTO;
-import com.openclassrooms.safetinet.model.DTO.EmailBycity;
-import com.openclassrooms.safetinet.model.DTO.HouseholdByStationDTO;
-import com.openclassrooms.safetinet.model.DTO.ListPersonByAddressDTO;
-import com.openclassrooms.safetinet.model.DTO.PersonByAdressWithFireStationDTO;
-import com.openclassrooms.safetinet.model.DTO.PersonByAdressWithFireStationListDTO;
-import com.openclassrooms.safetinet.model.DTO.PersonByFirstNameAndLastNameDTO;
-import com.openclassrooms.safetinet.model.DTO.PersonByStationDTO;
-import com.openclassrooms.safetinet.model.DTO.PersonByStationWithCountDTO;
-import com.openclassrooms.safetinet.model.DTO.PhoneByFireStationDTO;
+import com.openclassrooms.safetinet.model.*;
+import com.openclassrooms.safetinet.model.DTO.*;
+import com.openclassrooms.safetinet.service.*;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
 
 @Service
@@ -56,8 +42,17 @@ public class DTOService {
 		this.medicalRecordsService = medicalRecordsService ;
 	}
 
+	public int getAge (String date) {
 
-	//OK
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		LocalDate formatterbirthDate = LocalDate.parse(date, formatter);
+		Period period = Period.between(formatterbirthDate, now);
+
+		int age = period.getYears();
+		return age;
+	}
+
 	public PersonByStationWithCountDTO getPersonByStation(String stationNumber){
 		PersonByStationWithCountDTO personByStationDTOWithCountList = new PersonByStationWithCountDTO();
 		List<PersonByStationDTO> personByStationDTOList = new ArrayList();
@@ -83,12 +78,8 @@ public class DTOService {
 
 					if(!medicalRecords.isEmpty()) {
 
-						LocalDate now = LocalDate.now();
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-						LocalDate formatterbirthDate = LocalDate.parse(medicalRecords.get().getBirthdate(), formatter);
-						Period period = Period.between(formatterbirthDate, now);
+						int age = getAge(medicalRecords.get().getBirthdate());
 
-						int age = period.getYears();
 						PersonByStationDTO personByStationDTO = new PersonByStationDTO();
 
 						personByStationDTO.setFirstName(person.getFirstName());
@@ -119,7 +110,6 @@ public class DTOService {
 		}
 	}
 
-	//OK
 	public List<String> getPhoneByStation(String stationNumber){
 
 		List<String> phoneList = new ArrayList();
@@ -145,7 +135,7 @@ public class DTOService {
 		}
 	}
 
-	//OK
+
 	public PersonByAdressWithFireStationListDTO getFireByAddress(String address){
 		PersonByAdressWithFireStationListDTO personByAdressWithFireStationListDTO = new PersonByAdressWithFireStationListDTO();
 		List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTOList = new ArrayList();
@@ -161,15 +151,7 @@ public class DTOService {
 				if(!medicalRecords.isEmpty()) {
 					PersonByAdressWithFireStationDTO personByAdressWithFireStationDTO = new PersonByAdressWithFireStationDTO();
 
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
-					LocalDate now = LocalDate.now();
-					LocalDate formatterbirthDate = LocalDate.parse(medicalRecords.get().getBirthdate(), formatter);
-
-					Period period = Period.between(formatterbirthDate, now);
-
-					int personAge = period.getYears();
-					String age = String.valueOf(personAge);
+					int age = getAge(medicalRecords.get().getBirthdate());
 
 
 					List <FireStations> fireStationList = fireStationsService.findByAdress(address);
@@ -223,14 +205,12 @@ public class DTOService {
 				String firstname = person.getFirstName();
 				String lastname = person.getLastName();
 
-				Optional<MedicalRecords> datebirths = medicalRecordsService.getMedicalByName(firstname, lastname);	
+				Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);	
 
-				LocalDate now = LocalDate.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-				LocalDate formatterbirthDate = LocalDate.parse(datebirths.get().getBirthdate(), formatter);
-				Period period = Period.between(formatterbirthDate, now);
 
-				int age = period.getYears();
+				int age = getAge(medicalRecords.get().getBirthdate());
+
+
 				ChildByAddressDTO childByAddressDTO = new ChildByAddressDTO();
 
 				childByAddressDTO.setFirstName(person.getFirstName());
@@ -257,19 +237,110 @@ public class DTOService {
 
 
 
-	public List<HouseholdByStationDTO>getHouseholdByStation(String stationNumber){
+	public AddressByStationDTO getHouseholdByStation(String stationNumber){
+		AddressByStationDTO addressByStationDTO = new AddressByStationDTO();
+		//AddressPersonByStationDTO addressPersonByStationDTO = new AddressPersonByStationDTO();
+
+		List<AddressPersonByStationDTO> addressPersonByStationListDTO = new ArrayList();
+		List<HouseholdByStationDTO> householdByStationDTOList = new ArrayList();
+
 		try {
-			return null;
+			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
+
+			//ajouter le numero de station 
+			addressByStationDTO.setStation(stationNumber);
+
+			if(fireStationsList.isEmpty()) {
+				return  null;
+			}
+			for (FireStations fireStationList : fireStationsList){
+
+
+				AddressPersonByStationDTO listAddressPersonByStationDTO = new AddressPersonByStationDTO();
+				String listAddressPersonByStationDT = objectMapper.writeValueAsString(listAddressPersonByStationDTO);
+				System.out.println("listAddressPersonByStationDT" + listAddressPersonByStationDT);
+
+
+				listAddressPersonByStationDTO.setAddress(fireStationList.getAddress());
+				String listAddressPersonByStation = objectMapper.writeValueAsString(listAddressPersonByStationDTO);
+				System.out.println("listAddressPersonByStationD" + listAddressPersonByStation);
+
+
+				System.out.println("address" + fireStationList.getAddress());
+
+				List<Person> personList = personsService.getPersonByAddress(fireStationList.getAddress());
+
+				//String json = objectMapper.writeValueAsString(personList);
+				//System.out.println("personList" + json);
+
+				for (Person person : personList) {
+					String personUnit = objectMapper.writeValueAsString(person);
+					System.out.println("AAAAAAAAAAAAAAAAAA" + personUnit);
+
+					Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());	
+					int age = getAge(medicalRecords.get().getBirthdate());
+
+
+					HouseholdByStationDTO householdByStationDTO = new HouseholdByStationDTO();
+					/**
+					 * contruit la person
+					 * add dans une liste
+					 * ajoute dans le set person
+					 * ajoute l'adresse
+					 * add dans une liste
+					 * ajouter le numero de station 
+					 * ajouter dans l'objet final
+					 * return
+					 */
+
+					// contruit la person
+
+					householdByStationDTO.setFirstname(person.getFirstName());
+					householdByStationDTO.setLastname(person.getLastName());
+					householdByStationDTO.setPhone(person.getPhone());
+					householdByStationDTO.setAge(age);
+					householdByStationDTO.setMedications(medicalRecords.get().getMedications());
+					householdByStationDTO.setAllergies(medicalRecords.get().getAllergies());
+
+					String householdByStationDT = objectMapper.writeValueAsString(householdByStationDTO);
+					System.out.println("householdByStationDT" + householdByStationDT);
+
+					householdByStationDTOList.add(householdByStationDTO);
+
+					//ajoute le set person
+					listAddressPersonByStationDTO.setHouseholdByStationDTO(householdByStationDTOList);
+					String listAddressPersonByStationD = objectMapper.writeValueAsString(listAddressPersonByStationDTO);
+					System.out.println("listAddressPersonByStationD" + listAddressPersonByStationD);
+
+
+				}
+
+
+
+				//ajoute l'adress
+
+				//add le tout dans une liste
+				addressPersonByStationListDTO.add(listAddressPersonByStationDTO);
+				String addressPersonByStationListD= objectMapper.writeValueAsString(addressPersonByStationListDTO);
+				System.out.println("addressPersonByStationListD" + addressPersonByStationListD);
+
+				// ajouter dans l'objet final
+				addressByStationDTO.setAddressPersonByStationDTO(addressPersonByStationListDTO);
+				String addressByStationD= objectMapper.writeValueAsString(addressByStationDTO);
+				System.out.println("addressByStationD" + addressByStationD);
+
+
+
+			}
+
+			return addressByStationDTO;
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-			return new ArrayList<>();
+			return new AddressByStationDTO();
 		}
-		/**
-		 * Cette url doit retourner une liste de tous les foyers desservis par la caserne. Cette liste doit regrouper les
-			personnes par adresse. Elle doit aussi inclure le nom, le numéro de téléphone et l'âge des habitants, et
-			faire figurer leurs antécédents médicaux (médicaments, posologie et allergies) à côté de chaque nom.
-		 */
+
+
 	}
 
 	public List<PersonByFirstNameAndLastNameDTO> getPersondByStation(String firstname, String lastname){
@@ -281,22 +352,18 @@ public class DTOService {
 			for (Person person : allPerson) {
 				PersonByFirstNameAndLastNameDTO personByFirstNameAndLastNameListDTO = new PersonByFirstNameAndLastNameDTO();
 
-				Optional<MedicalRecords> medical = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());
+				Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());
 
-				LocalDate now = LocalDate.now();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-				LocalDate formatterbirthDate = LocalDate.parse(medical.get().getBirthdate(), formatter);
-				Period period = Period.between(formatterbirthDate, now);
 
-				int age = period.getYears();
+				int age = getAge(medicalRecords.get().getBirthdate());
 
 
 				personByFirstNameAndLastNameListDTO.setLastName(person.getLastName());
 				personByFirstNameAndLastNameListDTO.setAddress(person.getAddress());
 				personByFirstNameAndLastNameListDTO.setEmail(person.getEmail());
 				personByFirstNameAndLastNameListDTO.setAge(age);
-				personByFirstNameAndLastNameListDTO.setMedications(medical.get().getMedications());
-				personByFirstNameAndLastNameListDTO.setAllergies(medical.get().getAllergies());
+				personByFirstNameAndLastNameListDTO.setMedications(medicalRecords.get().getMedications());
+				personByFirstNameAndLastNameListDTO.setAllergies(medicalRecords.get().getAllergies());
 
 				personByFirstNameAndLastNameDTO.add(personByFirstNameAndLastNameListDTO);
 
