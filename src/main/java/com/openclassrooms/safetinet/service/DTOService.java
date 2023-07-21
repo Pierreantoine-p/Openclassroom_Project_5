@@ -347,7 +347,7 @@ public class DTOService {
 
 		List<PersonByFirstNameAndLastNameDTO> personByFirstNameAndLastNameDTO = new ArrayList();
 		try {	
-			List<Person> allPerson = personsRepository.findByName(firstname, lastname);
+			List<Person> allPerson = personsRepository.getByName(firstname, lastname);
 
 			for (Person person : allPerson) {
 				PersonByFirstNameAndLastNameDTO personByFirstNameAndLastNameListDTO = new PersonByFirstNameAndLastNameDTO();

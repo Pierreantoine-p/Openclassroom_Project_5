@@ -65,7 +65,7 @@ public class PersonsRepository{
 	 *  @param String firstName
 	 *  @return
 	 */
-	public List<Person> findByName(String firstname,String lastname) {
+	public List<Person> getByName(String firstname,String lastname) {
 		try {
 			return data.getPersonByName(firstname, lastname);
 	   	}catch(Exception e) {
@@ -97,9 +97,9 @@ public class PersonsRepository{
 	 * @param String firstname
 	 * @return
 	 */
-	public boolean delete(Person person) {
+	public boolean delete(String firstname, String lastname) {
 		try {
-			data.deletePerson(person);
+			data.deletePerson(firstname,lastname);
 			return true;
 	   	}catch(Exception e) {
 			logger.error("Error delete person : " + e);

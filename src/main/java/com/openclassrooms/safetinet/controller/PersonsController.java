@@ -76,7 +76,7 @@ public class PersonsController {
 	@PutMapping("/{firstname}/{lastname}")
 	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person)  {
 		try {
-			List<Person> existingPerson = personsService.findByName(firstname,lastname);
+			List<Person> existingPerson = personsService.getByName(firstname,lastname);
 			if(!existingPerson.isEmpty()) {
 				personsService.update(firstname, lastname, person);
 	            return new ResponseEntity<>(HttpStatus.OK);
@@ -93,7 +93,7 @@ public class PersonsController {
 	@DeleteMapping("/{firstname}/{lastname}")
 	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)  {
 		try {
-			List<Person> existingPerson = personsService.findByName(firstname,lastname);
+			List<Person> existingPerson = personsService.getByName(firstname,lastname);
 			if(!existingPerson.isEmpty()) {
 			personsService.delete(firstname,lastname);
 			return ResponseEntity.ok("Suppression effectuer");

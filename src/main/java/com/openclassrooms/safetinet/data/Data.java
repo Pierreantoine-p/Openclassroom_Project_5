@@ -99,10 +99,10 @@ public class Data {
 	 * @param person
 	 * @return
 	 */
-	public  boolean deletePerson(Person person) {
+	public  boolean deletePerson(String firstname, String lastname) {
 		try {
-			logger.info("machin");
-			return persons.remove(person);
+			return persons.removeIf(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname));
+					
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);

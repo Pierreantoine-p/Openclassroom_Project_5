@@ -17,12 +17,12 @@ import com.openclassrooms.safetinet.repository.PersonsRepository;
 public class PersonsService {
 
 
-    public PersonsRepository personsRepository;
+	public PersonsRepository personsRepository;
 
-    private static final Logger logger = LogManager.getLogger(PersonsService.class);
+	private static final Logger logger = LogManager.getLogger(PersonsService.class);
 
 
-    public PersonsService(PersonsRepository personsRepository) {
+	public PersonsService(PersonsRepository personsRepository) {
 		this.personsRepository = personsRepository;
 	}
 
@@ -30,16 +30,17 @@ public class PersonsService {
 
 
 
-    //GET
+	//GET
 	public List<Person> getAll() {
 		try {
 			return personsRepository.getAll();
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<>();
+			return new ArrayList<>();
+		}
 	}
-	}
+	
 	public List<Person> getPersonByAddress(String address)  {
 		try {
 			//System.out.println("address" + address);
@@ -47,21 +48,21 @@ public class PersonsService {
 			return personsRepository.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<>();
+			return new ArrayList<>();
 		}
 	}
 
 
 	//GET ONE
-	public List<Person> findByName(String firstname, String lastname)  {
+	public List<Person> getByName(String firstname, String lastname)  {
 		try {
-			return personsRepository.findByName(firstname,lastname);
+			return personsRepository.getByName(firstname,lastname);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<>();
+			return new ArrayList<>();
+		}
 	}
- 	}
 
 	//POST
 	public Optional<Person> save(Person person)  {
@@ -69,10 +70,10 @@ public class PersonsService {
 			personsRepository.save(person);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
-	}
+			return Optional.empty();
+		}
 		return null;
- 	}
+	}
 
 	//DELETE
 	public Optional<Person>  delete(String firstname, String lastname)  {
@@ -80,15 +81,15 @@ public class PersonsService {
 			List<Person> persons = personsRepository.getAll();
 			for(Person person : persons) {
 				if(person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)) {
-					 personsRepository.delete(person);
+					personsRepository.delete(firstname, lastname);
 				}
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
+			return Optional.empty();
 		}
-	 return null;
-		}
+		return null;
+	}
 
 	//PATCH
 	public Optional<Person> update(String firstname, String lastname,Person person) {
@@ -101,24 +102,24 @@ public class PersonsService {
 			}
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return Optional.empty();
-	}
+			return Optional.empty();
+		}
 		return null;
 	}
 
-	
-	
+
+
 	public List<Person> findEmailByCity(String city){
-		
-	try {
-		return personsRepository.findEmailByCity(city);
-		
-	}catch(Exception e) {
-		logger.error("Error : " + e);
-        return new ArrayList<>();
-}
-}
-	
+
+		try {
+			return personsRepository.findEmailByCity(city);
+
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+			return new ArrayList<>();
+		}
+	}
+
 
 
 
