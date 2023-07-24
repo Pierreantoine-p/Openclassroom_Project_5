@@ -72,7 +72,7 @@
             <scope>test</scope>
         </dependency>
 		
-    	<!-- -->
+    	<!-- 
     	<dependency>
     		<groupId>com.openclassrooms</groupId>
     		<artifactId>api</artifactId>
@@ -84,7 +84,9 @@
     		<artifactId>api</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     	</dependency>
+    	-->
 	</dependencies>
+	
 	<build>
 		<plugins>
 			 <plugin>

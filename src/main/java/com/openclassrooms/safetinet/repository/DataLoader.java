@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 public class DataLoader {
 	
+	/*
     private final String filePath;
 	private static final  ObjectMapper objectMapper = new ObjectMapper();
 	
@@ -42,4 +43,33 @@ public class DataLoader {
 			}
 	        
 	    } 
+	  */
+private static final  ObjectMapper objectMapper = new ObjectMapper();
+	
+	private final String filePath;
+
+	public DataLoader(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public Data loadJsonData() {
+
+		Data data = null;
+		InputStream inputStream = null; 
+
+		try {
+			inputStream = getClass().getClassLoader().getResourceAsStream(this.filePath);
+			data = objectMapper.readValue(inputStream, Data.class);
+		} catch(IOException e){
+			e.printStackTrace();
+		} finally {
+			try {
+				if(inputStream != null) inputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return data;
+	} 
 }  

@@ -19,11 +19,9 @@ import java.lang.String;
 
 
 @Repository
-@Component
-//public interface PersonsRepository extends CrudRepository {
 public class PersonsRepository{
 	
-    private final List<Person> persons = new ArrayList<>();
+    //private final List<Person> persons = new ArrayList<>();
     
     private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
     Data data = new Data();

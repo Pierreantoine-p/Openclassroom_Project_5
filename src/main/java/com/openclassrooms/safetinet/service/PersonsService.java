@@ -13,7 +13,6 @@ import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
 
 @Service
-@Component
 public class PersonsService {
 
 

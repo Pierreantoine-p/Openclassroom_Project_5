@@ -1,17 +1,11 @@
 package com.openclassrooms.safetinet.model;
 
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter@Setter
+
 @Data
-@Component
 public class Person {
 	
 
@@ -29,6 +23,7 @@ public class Person {
 	
 	private String email;
 	
+
 	public Person(String firstName,String lastName, String address, String city, String zip,String phone, String email ) {
 		this.firstName = firstName;
 		this.lastName = lastName ;
@@ -39,6 +34,7 @@ public class Person {
 		this.email = email ;
 		
 	}
+	
 	
 	public String getFirstName() {
 		return firstName;

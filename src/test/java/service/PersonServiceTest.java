@@ -1,14 +1,19 @@
 package service;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import java.util.Optional;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
 import com.openclassrooms.safetinet.service.PersonsService;
@@ -165,18 +170,18 @@ public class PersonServiceTest {
 		verify(personsRepository, never()).delete(any(), null);
 
 	}
-	/*
+	
 	@Test
 	public void testFindEmailByCity() {
-		List<Person> expectedPersons = new ArrayList();
-		expectedPersons.add(new Person("John","Boyd","1509 Culver St","Culver","97451","841-874-6512","jaboyd@email.com"));
+		List<String> expectedEmails = new ArrayList();
+		expectedEmails.add("jaboyd@email.com");
 
-		doReturn(expectedPersons).when(personsRepository).findEmailByCity("Culver");
+		doReturn(expectedEmails).when(personsRepository).findEmailByCity("Culver");
 
-		List<Person> actualPersons = personService.getByName("John", "Boyd");
+		List<Person> actualEmail = personService.findEmailByCity("Culver");
 
-		assertEquals(expectedPersons, actualPersons);
+		assertEquals(expectedEmails, actualEmail);
 		
 	}
-	*/
+	
 }
