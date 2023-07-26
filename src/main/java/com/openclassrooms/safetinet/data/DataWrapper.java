@@ -11,17 +11,19 @@ import org.apache.logging.log4j.Logger;
 import com.openclassrooms.safetinet.model.FireStations;
 import com.openclassrooms.safetinet.model.MedicalRecords;
 import com.openclassrooms.safetinet.model.Person;
+import lombok.Data;
 
-public class Data {
+@Data
+public class DataWrapper {
 	
 	
-	
-    private static final Logger logger = LogManager.getLogger(Data.class);
+
+    private static final Logger logger = LogManager.getLogger(DataWrapper.class);
 
 	
-	private static List<Person> persons = new ArrayList<Person>();
-	private static List<MedicalRecords> medicalrecords = new ArrayList<MedicalRecords>();
-	private static List<FireStations> firestations = new ArrayList<FireStations>();
+	private ArrayList<Person> persons;
+	private List<MedicalRecords> medicalrecords;
+	private List<FireStations> firestations;
 	
 	
 	
@@ -72,8 +74,8 @@ public class Data {
 	 * POST PERSON
 	 * @return
 	 */
-	public void setPersons(List<Person> persons)  {
-		Data.persons = persons;
+	public void setPersons(ArrayList<Person> persons)  {
+		this.persons = persons;
 	}
 	
 	/**
@@ -157,7 +159,7 @@ public class Data {
  		}
 
 		public void setFirestations(List<FireStations> firestations)  {
-			Data.firestations = firestations;
+			this.firestations = firestations;
 		}
 		
 		/**
@@ -252,7 +254,7 @@ public class Data {
 
 
 		 public void setMedicalrecords(List<MedicalRecords> medicalrecords){
-				Data.medicalrecords = medicalrecords;
+				this.medicalrecords = medicalrecords;
 			}
 		 
 			/**

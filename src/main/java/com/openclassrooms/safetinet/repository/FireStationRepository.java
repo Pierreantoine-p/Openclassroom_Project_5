@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import com.openclassrooms.safetinet.data.Data;
+import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.FireStations;
 import com.openclassrooms.safetinet.model.Person;
 
@@ -20,7 +20,7 @@ public class FireStationRepository {
 
     private static final Logger logger = LogManager.getLogger(FireStationRepository.class);
     
-	Data data = new Data();
+	DataWrapper data = new DataWrapper();
 
     
     /**

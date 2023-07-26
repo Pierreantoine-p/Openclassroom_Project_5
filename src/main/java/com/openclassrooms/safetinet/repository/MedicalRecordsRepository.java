@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import com.openclassrooms.safetinet.data.Data;
+import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.MedicalRecords;
 
 @Repository
@@ -15,7 +15,7 @@ public class MedicalRecordsRepository {
 	
 	
     private final List<MedicalRecords> medicalRecord = new ArrayList<>();
-    Data data = new Data();
+    DataWrapper data = new DataWrapper();
     private static final Logger logger = LogManager.getLogger(MedicalRecordsRepository.class);
 
 

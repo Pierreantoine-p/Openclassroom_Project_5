@@ -2,10 +2,16 @@ package com.openclassrooms.safetinet.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+
+@NoArgsConstructor
 public class Person {
 	
 
@@ -23,7 +29,8 @@ public class Person {
 	
 	private String email;
 	
-
+	
+	@JsonCreator
 	public Person(String firstName,String lastName, String address, String city, String zip,String phone, String email ) {
 		this.firstName = firstName;
 		this.lastName = lastName ;

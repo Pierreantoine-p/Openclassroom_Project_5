@@ -1,17 +1,46 @@
 package com.openclassrooms.safetinet.repository;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.data.*;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
-import java.util.logging.Logger;
 
 public class DataLoader {
+	
+	private static final  ObjectMapper objectMapper = new ObjectMapper();
+	private final String filePath;
+
+	public DataLoader(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public DataWrapper loadJsonData() {
+	    System.out.println("path 1");
+
+		DataWrapper data = null;
+		InputStream inputStream = null; 
+
+		try {
+			inputStream = getClass().getClassLoader().getResourceAsStream(this.filePath);
+			//String json = objectMapper.writeValueAsString(inputStream);
+		    System.out.println("inputStream = " + inputStream);
+
+			data = objectMapper.readValue(inputStream, DataWrapper.class);
+		} catch(IOException e){
+			e.printStackTrace();
+		} finally {
+			try {
+				if(inputStream != null) inputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	    System.out.println("data = " + data);
+
+		return data;
+	} 
 	
 	/*
     private final String filePath;
@@ -44,32 +73,5 @@ public class DataLoader {
 	        
 	    } 
 	  */
-private static final  ObjectMapper objectMapper = new ObjectMapper();
-	
-	private final String filePath;
 
-	public DataLoader(String filePath) {
-		this.filePath = filePath;
-	}
-
-	public Data loadJsonData() {
-
-		Data data = null;
-		InputStream inputStream = null; 
-
-		try {
-			inputStream = getClass().getClassLoader().getResourceAsStream(this.filePath);
-			data = objectMapper.readValue(inputStream, Data.class);
-		} catch(IOException e){
-			e.printStackTrace();
-		} finally {
-			try {
-				if(inputStream != null) inputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return data;
-	} 
 }  

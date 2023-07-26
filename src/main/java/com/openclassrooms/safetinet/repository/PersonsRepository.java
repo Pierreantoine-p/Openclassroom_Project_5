@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.openclassrooms.safetinet.data.Data;
+import com.openclassrooms.safetinet.data.DataWrapper;
 
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.service.PersonsService;
@@ -24,7 +24,7 @@ public class PersonsRepository{
     //private final List<Person> persons = new ArrayList<>();
     
     private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
-    Data data = new Data();
+    DataWrapper data = new DataWrapper();
     
     
     /**
