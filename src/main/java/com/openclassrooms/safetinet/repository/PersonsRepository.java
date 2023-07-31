@@ -6,25 +6,25 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.safetinet.data.DataWrapper;
 
 import com.openclassrooms.safetinet.model.Person;
-import com.openclassrooms.safetinet.service.PersonsService;
 
-import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+
 import java.lang.String;
 
 
 @Repository
+@RequiredArgsConstructor
 public class PersonsRepository{
 	
-    //private final List<Person> persons = new ArrayList<>();
+    private final DataWrapper dataWrapper;
+
     
     private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
-    DataWrapper data = new DataWrapper();
     
     
     /**
@@ -34,7 +34,7 @@ public class PersonsRepository{
 	 */
 	public List<Person> getAll() {
 		try {
-			return data.getAllPersons();
+			return dataWrapper.getAllPersons();
 	   	}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<Person>();
@@ -49,7 +49,7 @@ public class PersonsRepository{
 	 */
 	public boolean save(Person person){
 		try {
-			return data.getAllPersons().add(person);
+			return dataWrapper.getAllPersons().add(person);
 	   	}catch(Exception e) {
 			logger.error("Error save : " + e);
 			return false;
@@ -65,7 +65,7 @@ public class PersonsRepository{
 	 */
 	public List<Person> getByName(String firstname,String lastname) {
 		try {
-			return data.getPersonByName(firstname, lastname);
+			return dataWrapper.getPersonByName(firstname, lastname);
 	   	}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<>();
@@ -82,7 +82,7 @@ public class PersonsRepository{
 	 */
 	public Optional<Person> update(Person person)  {
 		try {
-			return data.updatePerson(person);
+			return dataWrapper.updatePerson(person);
 	   	}catch(Exception e) {
 			logger.error("Error update person : " + e);
 	        return Optional.empty();
@@ -97,7 +97,7 @@ public class PersonsRepository{
 	 */
 	public boolean delete(String firstname, String lastname) {
 		try {
-			data.deletePerson(firstname,lastname);
+			dataWrapper.deletePerson(firstname,lastname);
 			return true;
 	   	}catch(Exception e) {
 			logger.error("Error delete person : " + e);
@@ -111,7 +111,7 @@ public class PersonsRepository{
 
 	public List<Person> getPersonByAddress(String address) {
 		try {
-			return data.getPersonByAddress(address);
+			return dataWrapper.getPersonByAddress(address);
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
 	        return new ArrayList<>();
@@ -119,7 +119,7 @@ public class PersonsRepository{
 	}
 	
 	public List<Person>findEmailByCity(String city){
-		try { return data.getEmailByCity(city);	
+		try { return dataWrapper.getEmailByCity(city);	
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
 	        return new ArrayList<>();

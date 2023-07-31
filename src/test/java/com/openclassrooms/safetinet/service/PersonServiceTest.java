@@ -1,6 +1,7 @@
-package service;
+package com.openclassrooms.safetinet.service;
 
 import static org.junit.Assert.assertFalse;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,34 +11,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
-import com.openclassrooms.safetinet.service.PersonsService;
-
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@AutoConfigureMockMvc
 public class PersonServiceTest {
 
+	@Mock
 	private PersonsRepository personsRepository;
 	private PersonsService personService;
-/*
-	@Before
+
+	@BeforeAll
 	public void setUp() {
-		personsRepository = mock(PersonsRepository.class);
 		personService = new PersonsService(personsRepository);
 	}
 
 	@Test
 	public void testGetAll() {
-		List<Person> expectedPersons = new ArrayList();
+		List<Person> expectedPersons = new ArrayList<Person>();
 		expectedPersons.add(new Person("John","Boyd","1509 Culver St","Culver","97451","841-874-6512","jaboyd@email.com"));
 		expectedPersons.add(new Person("Jacob","Boyd","1509 Culver St","Culver","97451","841-874-6513","drk@email.com"));
 
-		doReturn(expectedPersons).when(personsRepository).getAll();
+		when(personsRepository.getAll()).thenReturn(expectedPersons);
 
 		List<Person> actualPersons = personService.getAll();
 
@@ -56,14 +62,15 @@ public class PersonServiceTest {
 	}
 	@Test
 	public void testGetPersonByAddress() {
-		List<Person> expectedPersons = new ArrayList();
+		List<Person> expectedPersons = new ArrayList<Person>();
 		expectedPersons.add(new Person("John","Boyd","1509 Culver St","Culver","97451","841-874-6512","jaboyd@email.com"));
 
-		doReturn(expectedPersons).when(personsRepository).getPersonByAddress("1509 Culver St");
+		when(personsRepository.getPersonByAddress("1509 Culver St")).thenReturn(expectedPersons);
 
 		List<Person> actualPersons = personService.getPersonByAddress("1509 Culver St");
 
 		assertEquals(expectedPersons, actualPersons);
+		
 	}
 
 
@@ -80,10 +87,10 @@ public class PersonServiceTest {
 
 	@Test
 	public void testGetByName() {
-		List<Person> expectedPersons = new ArrayList();
+		List<Person> expectedPersons = new ArrayList<Person>();
 		expectedPersons.add(new Person("John","Boyd","1509 Culver St","Culver","97451","841-874-6512","jaboyd@email.com"));
 
-		doReturn(expectedPersons).when(personsRepository).getByName("John", "Boyd");
+		when(personsRepository.getByName("John", "Boyd")).thenReturn(expectedPersons);
 
 		List<Person> actualPersons = personService.getByName("John", "Boyd");
 
@@ -103,7 +110,7 @@ public class PersonServiceTest {
 	public void testSave() {
 		Person person = new Person("John","Boyd","1509 Culver St","Culver","97451","841-874-6512","jaboyd@email.com");
 
-		doNothing().when(personsRepository).save(person);
+		when(personsRepository.save(person));
 		Optional<Person> savedPerson = personService.save(person);
 
 		assertTrue(savedPerson.isPresent());
@@ -173,16 +180,28 @@ public class PersonServiceTest {
 	
 	@Test
 	public void testFindEmailByCity() {
-		List<String> expectedEmails = new ArrayList();
-		expectedEmails.add("jaboyd@email.com");
+		List<Person> expectedEmails = new ArrayList<Person>();
 
-		doReturn(expectedEmails).when(personsRepository).findEmailByCity("Culver");
+		expectedEmails.add(new Person("John","Boyd","1509 Culver St","Culver","97451","841-874-6512","jaboyd@email.com"));
+		when(personsRepository.findEmailByCity("Culver")).thenReturn(expectedEmails);
 
 		List<Person> actualEmail = personService.findEmailByCity("Culver");
 
 		assertEquals(expectedEmails, actualEmail);
 		
 	}
-	*/
+	
+	@Test
+	public void testFindEmailByCity_NotFound() {
+        String city = "Invalid City";
+        
+        when(personsRepository.findEmailByCity(city)).thenThrow(new RuntimeException("Database connection error"));
+		
+        List<Person> actualPersons = personService.findEmailByCity(city);
+        
+        assertNotNull(actualPersons);
+        assertTrue(actualPersons.isEmpty());
+	}
+	
 	
 }

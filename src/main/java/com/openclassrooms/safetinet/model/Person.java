@@ -3,14 +3,13 @@ package com.openclassrooms.safetinet.model;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Data
-
 @NoArgsConstructor
 public class Person {
 	
@@ -31,7 +30,7 @@ public class Person {
 	
 	
 	@JsonCreator
-	public Person(String firstName,String lastName, String address, String city, String zip,String phone, String email ) {
+	public Person( @JsonProperty("firstName")String firstName, @JsonProperty("lastName")String lastName,  @JsonProperty("address")String address,  @JsonProperty("city")String city, @JsonProperty("zip")String zip,@JsonProperty("phone")String phone, @JsonProperty("email")String email ) {
 		this.firstName = firstName;
 		this.lastName = lastName ;
 		this.address = address ;

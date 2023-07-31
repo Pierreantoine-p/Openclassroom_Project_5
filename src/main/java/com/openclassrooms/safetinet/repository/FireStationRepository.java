@@ -1,6 +1,5 @@
 package com.openclassrooms.safetinet.repository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.FireStations;
-import com.openclassrooms.safetinet.model.Person;
 
 
 @Repository
 public class FireStationRepository {
-
-    private final List<FireStations> fireStations = new ArrayList<>();
 
     private static final Logger logger = LogManager.getLogger(FireStationRepository.class);
     

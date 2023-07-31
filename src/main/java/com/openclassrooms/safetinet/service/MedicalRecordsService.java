@@ -78,7 +78,7 @@ public class MedicalRecordsService {
 
 	//PATCH
 
-	public Optional<Person> update(String firstname, String lastname, MedicalRecords medicalRecord)  {
+	public Optional<MedicalRecords> update(String firstname, String lastname, MedicalRecords medicalRecord)  {
 		try {
 			List<MedicalRecords> medicalRecords = medicalRecordsRepository.getAll();
 			for(MedicalRecords medicalRecord1 : medicalRecords) {

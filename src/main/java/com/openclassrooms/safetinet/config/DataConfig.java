@@ -1,27 +1,42 @@
 package com.openclassrooms.safetinet.config;
 
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.openclassrooms.safetinet.SafetinetApplication;
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.repository.DataLoader;
+
 
 @Configuration
 public class DataConfig {
 
 	@Bean
-	public DataWrapper data() {
-		System.out.println("ola");
+	public DataWrapper dataWrapper() {
 		DataLoader dataload = new DataLoader("FileData.json");
-		
-	    System.out.println("dataload = " + dataload);
-
 		return dataload.loadJsonData();
+	}
+}
+
+/*
+@Configuration
+public class DataConfig {
+
+	 private final DataLoader dataLoader;
+
+	    @Autowired
+	    public DataConfig(DataLoader dataLoader) {
+	        this.dataLoader = dataLoader;
+	    }
+	    
+	@Bean
+	public DataWrapper data() {
+		//DataLoader dataload = new DataLoader("FileData.json");
+		
+
+		return dataLoader.loadJsonData();
 	}
 	/*
 	 * private static final Logger logger = LogManager.getLogger(DataConfig.class);
@@ -40,6 +55,7 @@ public class DataConfig {
 	 * } catch (IOException e) { // TODO Auto-generated catch block
 	 * logger.info("Problème lors du lancement de l'application" + e);
 	 * e.printStackTrace(); }
-	 */
+
 
 }
+*/

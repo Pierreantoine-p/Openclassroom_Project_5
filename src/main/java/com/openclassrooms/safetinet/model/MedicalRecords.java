@@ -1,10 +1,12 @@
-package com.openclassrooms.safetinet.model;
+ package com.openclassrooms.safetinet.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+
+@Data
 public class MedicalRecords {
 	
 	
@@ -14,45 +16,16 @@ public class MedicalRecords {
 	private ArrayList<String> medications;
 	private ArrayList<String> allergies;
 	
-	public String getFirstName() {
-		return firstName;
+	public MedicalRecords() {
+		
+	}
+	
+	public MedicalRecords(String string, String string2, String string3, List<String> medications2,
+			List<String> allergies2) {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
-	}
-
-	public ArrayList<String> getMedications() {
-		return medications;
-	}
-
-	public void setMedications(ArrayList<String> medications) {
-		this.medications = medications;
-	}
-
-	public ArrayList<String> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(ArrayList<String> allergies) {
-		this.allergies = allergies;
-	}
+	
 	
 	
 }

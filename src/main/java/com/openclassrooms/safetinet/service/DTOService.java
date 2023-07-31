@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.model.*;
 import com.openclassrooms.safetinet.model.DTO.*;
-import com.openclassrooms.safetinet.service.*;
 import com.openclassrooms.safetinet.repository.PersonsRepository;
 
 @Service
@@ -55,7 +54,7 @@ public class DTOService {
 
 	public PersonByStationWithCountDTO getPersonByStation(String stationNumber){
 		PersonByStationWithCountDTO personByStationDTOWithCountList = new PersonByStationWithCountDTO();
-		List<PersonByStationDTO> personByStationDTOList = new ArrayList();
+		List<PersonByStationDTO> personByStationDTOList = new ArrayList<PersonByStationDTO>();
 		int countAdult = 0;
 		int countChild = 0;
 
@@ -112,7 +111,7 @@ public class DTOService {
 
 	public List<String> getPhoneByStation(String stationNumber){
 
-		List<String> phoneList = new ArrayList();
+		List<String> phoneList = new ArrayList<String>();
 		try {
 			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
 
@@ -138,7 +137,7 @@ public class DTOService {
 
 	public PersonByAdressWithFireStationListDTO getFireByAddress(String address){
 		PersonByAdressWithFireStationListDTO personByAdressWithFireStationListDTO = new PersonByAdressWithFireStationListDTO();
-		List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTOList = new ArrayList();
+		List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTOList = new ArrayList<PersonByAdressWithFireStationDTO>();
 
 		try {
 			List<Person> personsList = personsService.getPersonByAddress(address);
@@ -188,12 +187,10 @@ public class DTOService {
 	public ListPersonByAddressDTO getChildByAddress(String address){
 		ListPersonByAddressDTO ListPersonByAddressDTO = new ListPersonByAddressDTO();
 
-		List<ChildByAddressDTO> childByStationDTOList = new ArrayList();
-
 		List<Person> adressList = personsService.getPersonByAddress(address);
 
-		List<ChildByAddressDTO> adultList = new ArrayList();
-		List<ChildByAddressDTO> childList = new ArrayList();
+		List<ChildByAddressDTO> adultList = new ArrayList<ChildByAddressDTO>();
+		List<ChildByAddressDTO> childList = new ArrayList<ChildByAddressDTO>();
 
 		if(adressList.isEmpty()) {
 			return  ListPersonByAddressDTO;
@@ -241,8 +238,8 @@ public class DTOService {
 		AddressByStationDTO addressByStationDTO = new AddressByStationDTO();
 		//AddressPersonByStationDTO addressPersonByStationDTO = new AddressPersonByStationDTO();
 
-		List<AddressPersonByStationDTO> addressPersonByStationListDTO = new ArrayList();
-		List<HouseholdByStationDTO> householdByStationDTOList = new ArrayList();
+		List<AddressPersonByStationDTO> addressPersonByStationListDTO = new ArrayList<AddressPersonByStationDTO>();
+		List<HouseholdByStationDTO> householdByStationDTOList = new ArrayList<HouseholdByStationDTO>();
 
 		try {
 			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
@@ -345,7 +342,7 @@ public class DTOService {
 
 	public List<PersonByFirstNameAndLastNameDTO> getPersondByStation(String firstname, String lastname){
 
-		List<PersonByFirstNameAndLastNameDTO> personByFirstNameAndLastNameDTO = new ArrayList();
+		List<PersonByFirstNameAndLastNameDTO> personByFirstNameAndLastNameDTO = new ArrayList<PersonByFirstNameAndLastNameDTO>();
 		try {	
 			List<Person> allPerson = personsRepository.getByName(firstname, lastname);
 
@@ -377,7 +374,7 @@ public class DTOService {
 	}
 
 	public List<String>getEmailByCity(String city){
-		List<String> emailList = new ArrayList();
+		List<String> emailList = new ArrayList<String>();
 
 		try {
 			List<Person> personMails = personsService.findEmailByCity(city);	

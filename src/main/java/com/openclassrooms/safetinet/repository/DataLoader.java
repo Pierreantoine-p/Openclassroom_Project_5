@@ -3,26 +3,33 @@ package com.openclassrooms.safetinet.repository;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.data.*;
-
 
 public class DataLoader {
 	
 	private static final  ObjectMapper objectMapper = new ObjectMapper();
 	private final String filePath;
-
+	//private ResourceLoader resourceLoader;
+	
 	public DataLoader(String filePath) {
 		this.filePath = filePath;
 	}
 
 	public DataWrapper loadJsonData() {
-	    System.out.println("path 1");
+	    //System.out.println("path 1");
 
 		DataWrapper data = null;
 		InputStream inputStream = null; 
 
 		try {
+			//Resource resource = resourceLoader.getResource("classpath:FileData.json");
 			inputStream = getClass().getClassLoader().getResourceAsStream(this.filePath);
 			//String json = objectMapper.writeValueAsString(inputStream);
 		    System.out.println("inputStream = " + inputStream);

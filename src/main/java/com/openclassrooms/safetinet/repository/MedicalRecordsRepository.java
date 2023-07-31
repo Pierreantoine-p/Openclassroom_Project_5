@@ -14,7 +14,6 @@ import com.openclassrooms.safetinet.model.MedicalRecords;
 public class MedicalRecordsRepository {
 	
 	
-    private final List<MedicalRecords> medicalRecord = new ArrayList<>();
     DataWrapper data = new DataWrapper();
     private static final Logger logger = LogManager.getLogger(MedicalRecordsRepository.class);
 

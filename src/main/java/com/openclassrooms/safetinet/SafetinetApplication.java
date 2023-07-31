@@ -1,22 +1,16 @@
 package com.openclassrooms.safetinet;
 
-import java.io.IOException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.openclassrooms.safetinet.controller.PersonsController;
-import com.openclassrooms.safetinet.repository.DataLoader;
-
 @SpringBootApplication
-//@ComponentScan({"com.openclassrooms.safetinet"})
+@ComponentScan({"com.openclassrooms.safetinet"})
 public class SafetinetApplication {
 	
-    private static final Logger logger = LogManager.getLogger(SafetinetApplication.class);
-
+  
+//TODO logger entrer et parametre
 	
 	public static void main(String[] args) {
 		/*
