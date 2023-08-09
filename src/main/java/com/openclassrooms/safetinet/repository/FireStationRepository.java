@@ -10,14 +10,17 @@ import org.springframework.stereotype.Repository;
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.FireStations;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Repository
+@RequiredArgsConstructor
 public class FireStationRepository {
+	
+    private final DataWrapper dataWrapper;
 
     private static final Logger logger = LogManager.getLogger(FireStationRepository.class);
     
-	DataWrapper data = new DataWrapper();
-
     
     /**
 	 * GET ALL
@@ -26,7 +29,7 @@ public class FireStationRepository {
 	 */
 	public List<FireStations> getAll()  {
 		try {
-			return data.getFireStations();
+			return dataWrapper.getFireStations();
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
@@ -42,7 +45,7 @@ public class FireStationRepository {
 	 */
 	public boolean save(FireStations fireStation) {
 		try {
-			return data.getFireStations().add(fireStation);
+			return dataWrapper.getFireStations().add(fireStation);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 			return false;
@@ -58,7 +61,7 @@ public class FireStationRepository {
 	 */
 	public List<FireStations> findByAdress(String address)   {
 		try {
-			return data.getStationByAdress(address);
+			return dataWrapper.getStationByAdress(address);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<FireStations>();
@@ -70,8 +73,10 @@ public class FireStationRepository {
 	
 	public List<FireStations> findByNumber(String stationNumber)  {
 		try {
-			return data.getStationByNumber(stationNumber);
-
+			
+			List<FireStations> result = dataWrapper.getStationByNumber(stationNumber);
+			System.out.println("result" + result);
+			return result;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<FireStations>();
@@ -87,7 +92,7 @@ public class FireStationRepository {
 	 */
 	public boolean delete(FireStations fireStation)   {
 		try {
-			return data.deleteFireStation(fireStation);
+			return dataWrapper.deleteFireStation(fireStation);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 			return false;
@@ -104,7 +109,7 @@ public class FireStationRepository {
 	 */	
 	public Optional<FireStations> update(FireStations fireStation)   {
 		try {
-			return data.updateFireStation(fireStation);
+			return dataWrapper.updateFireStation(fireStation);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return Optional.empty();

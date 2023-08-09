@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.openclassrooms.safetinet"})
 public class SafetinetApplication {
 	
   
@@ -40,3 +39,8 @@ public class SafetinetApplication {
     */
 
 }
+
+//TODO retirer les try catch en trop (reposiroy)
+//TODO finir dernier url
+//TODO entrée, sorti et parametre dans les logs
+//TODO test

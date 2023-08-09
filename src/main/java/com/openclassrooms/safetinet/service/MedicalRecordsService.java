@@ -29,6 +29,7 @@ public class MedicalRecordsService {
     //GET
 	public List<MedicalRecords> getAll() {
 		try {
+			logger.info("MedicalRecordsService");
 			return medicalRecordsRepository.getAll();
 		}catch(Exception e) {
 			logger.error("Error : " + e);

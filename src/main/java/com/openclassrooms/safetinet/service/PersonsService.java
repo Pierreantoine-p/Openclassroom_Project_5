@@ -28,6 +28,7 @@ public class PersonsService {
 
 
 
+
 	//GET
 	public List<Person> getAll() {
 		try {
@@ -41,9 +42,9 @@ public class PersonsService {
 	
 	public List<Person> getPersonByAddress(String address)  {
 		try {
-			//System.out.println("address" + address);
-			//System.out.println("personsRepository" +  personsRepository.getPersonByAddress(address));
-			return personsRepository.getPersonByAddress(address);
+			List<Person> result = personsRepository.getPersonByAddress(address);
+			System.out.println("result + " + result);
+			return result;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 			return new ArrayList<>();
@@ -65,31 +66,29 @@ public class PersonsService {
 	//POST
 	public Optional<Person> save(Person person)  {
 		try {
-			personsRepository.save(person);
+			return personsRepository.save(person);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 			return Optional.empty();
 		}
-		return null;
 	}
 
 	//DELETE
-	public Optional<Person>  delete(String firstname, String lastname)  {
+	public boolean delete(String firstname, String lastname)  {
+
+		boolean result = false;
+
 		try {
-			List<Person> persons = personsRepository.getAll();
-			for(Person person : persons) {
-				if(person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)) {
-					personsRepository.delete(firstname, lastname);
-				}
-			}
-		}catch(Exception e) {
+			result = personsRepository.delete(firstname, lastname);
+		} catch(Exception e) {
 			logger.error("Error : " + e);
-			return Optional.empty();
 		}
-		return null;
+
+		return result;
 	}
 
 	//PATCH
+	/*
 	public Optional<Person> update(String firstname, String lastname,Person person) {
 		try {
 			List<Person> persons = personsRepository.getAll();
@@ -104,13 +103,26 @@ public class PersonsService {
 		}
 		return null;
 	}
+	*/
+	
+	public boolean update(String firstname, String lastname,Person person) {
+		
+		boolean result = false;
+		
+		try {
+			result = personsRepository.update(firstname,lastname, person);
+		}catch(Exception e) {
+			logger.error("Error : " + e);
+		}
+		return result;
 
+	}
 
 
 	public List<Person> findEmailByCity(String city){
 
 		try {
-			return personsRepository.findEmailByCity(city);
+			return personsRepository.getEmailByCity(city);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);

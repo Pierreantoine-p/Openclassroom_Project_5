@@ -20,9 +20,8 @@ public class DataWrapper {
 
     private static final Logger logger = LogManager.getLogger(DataWrapper.class);
 
-	
-	private ArrayList<Person> persons;
-	private List<MedicalRecords> medicalrecords;
+    private List<MedicalRecords> medicalrecords;
+	private List<Person> persons;
 	private List<FireStations> firestations;
 	
 	
@@ -42,7 +41,6 @@ public class DataWrapper {
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<Person>();
-
 		}
  	}
 	
@@ -74,7 +72,7 @@ public class DataWrapper {
 	 * POST PERSON
 	 * @return
 	 */
-	public void setPersons(ArrayList<Person> persons)  {
+	public void setPersons(List<Person> persons)  {
 		this.persons = persons;
 	}
 	
@@ -100,11 +98,10 @@ public class DataWrapper {
 	 * @param person
 	 * @return
 	 */
-	public  boolean deletePerson(String firstname, String lastname) {
+	public boolean deletePerson(String firstname, String lastname) {
 		try {
 			return persons.removeIf(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname));
 					
-
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 			return false;		
@@ -116,12 +113,13 @@ public class DataWrapper {
 	 * @param person
 	 * @return
 	 */
-	 public  Optional<Person> updatePerson (Person person)  {
+	 public boolean updatePerson (String firstname, String lastname,Person person)  {
 		 try {
-				logger.info("machin");
-				 return persons.stream()
-						  .filter(p -> p.getFirstName().equals(person.getFirstName()) &&
-						            p.getLastName().equals(person.getLastName()))
+				 
+						 Optional<Person> updatedPerson =
+						 persons.stream()
+						  .filter(p -> p.getFirstName().equals(firstname) &&
+						            p.getLastName().equals(lastname))
 						  .findFirst()
 						  .map(p ->{
 							 	p.setAddress(person.getAddress());
@@ -131,9 +129,10 @@ public class DataWrapper {
 								p.setEmail(person.getEmail()); 
 								return p;
 						 });
+			        return updatedPerson.isPresent();
 			}catch(Exception e) {
 				logger.error("Error : " + e);
-		        return Optional.empty();
+				return false;		
 			}
 		 
 		  
@@ -158,7 +157,7 @@ public class DataWrapper {
 			}
  		}
 
-		public void setFirestations(List<FireStations> firestations)  {
+		public void setFirestations(ArrayList<FireStations> firestations)  {
 			this.firestations = firestations;
 		}
 		
@@ -181,10 +180,15 @@ public class DataWrapper {
 		
 		public  List<FireStations> getStationByNumber(String stationNumber )  {
 			try {
-				logger.info("machin");
-				return firestations.stream()
+				List<FireStations> result = firestations.stream()
 						.filter(station -> station.getStation().equals(stationNumber))
 						.collect(Collectors.toList());
+				System.out.println("data result" + result);
+				
+				logger.info("machin");
+				return result;
+				
+				
 			}catch(Exception e) {
 				logger.error("Error : " + e);
 		        return new ArrayList<FireStations>();
@@ -243,7 +247,7 @@ public class DataWrapper {
 			 */
 		 public List<MedicalRecords> getMedicalRecords()  {
 			 try {
-					logger.info("machin");
+					logger.info("datawrapper");
 					return medicalrecords;
 
 				}catch(Exception e) {
@@ -253,7 +257,7 @@ public class DataWrapper {
  			}
 
 
-		 public void setMedicalrecords(List<MedicalRecords> medicalrecords){
+		 public void setMedicalrecords(ArrayList<MedicalRecords> medicalrecords){
 				this.medicalrecords = medicalrecords;
 			}
 		 

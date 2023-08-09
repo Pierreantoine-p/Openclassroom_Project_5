@@ -1,12 +1,15 @@
  package com.openclassrooms.safetinet.model;
 
 import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@NoArgsConstructor
 public class MedicalRecords {
 	
 	
@@ -16,16 +19,17 @@ public class MedicalRecords {
 	private ArrayList<String> medications;
 	private ArrayList<String> allergies;
 	
-	public MedicalRecords() {
-		
-	}
 	
-	public MedicalRecords(String string, String string2, String string3, List<String> medications2,
-			List<String> allergies2) {
-		// TODO Auto-generated constructor stub
-	}
+	
 
-	
+	@JsonCreator
+	public MedicalRecords(@JsonProperty("firstName")String firstName,@JsonProperty("lastName") String lastName,@JsonProperty("birthdate") String birthdate,@JsonProperty("medications") ArrayList<String> medications,@JsonProperty("allergies") ArrayList<String> allergies) {
+		this.firstName = firstName;
+		this.lastName = lastName;	
+		this.birthdate = birthdate;	
+		this.medications = medications;	
+		this.allergies = allergies;	
+	}
 	
 	
 }

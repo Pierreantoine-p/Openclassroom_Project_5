@@ -10,11 +10,14 @@ import org.springframework.stereotype.Repository;
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.MedicalRecords;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class MedicalRecordsRepository {
 	
-	
-    DataWrapper data = new DataWrapper();
+    private final DataWrapper dataWrapper;
+
     private static final Logger logger = LogManager.getLogger(MedicalRecordsRepository.class);
 
 
@@ -24,8 +27,9 @@ public class MedicalRecordsRepository {
 	 */
 	public List<MedicalRecords> getAll() {
 		try {
-			return data.getMedicalRecords();
+			logger.info("MedicalRecordsRepository");
 
+			return dataWrapper.getMedicalRecords();
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return new ArrayList<MedicalRecords>();
@@ -40,7 +44,7 @@ public class MedicalRecordsRepository {
 	 */
 	public Optional<MedicalRecords> findByName(String firstname, String lastname)  {
 		try {
-			return data.getMedicalRecordByName(firstname, lastname);
+			return dataWrapper.getMedicalRecordByName(firstname, lastname);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
@@ -56,7 +60,7 @@ public class MedicalRecordsRepository {
 	 */
 	public boolean save(MedicalRecords medicalRecord) {
 		try {
-			return data.getMedicalRecords().add(medicalRecord);
+			return dataWrapper.getMedicalRecords().add(medicalRecord);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 			return false;
@@ -73,7 +77,7 @@ public class MedicalRecordsRepository {
 	 */
 	public Optional<MedicalRecords> update (MedicalRecords medicalRecord)  {
 		try {
-			return data.updateMedicalRecords(medicalRecord);
+			return dataWrapper.updateMedicalRecords(medicalRecord);
 			
 		}catch(Exception e) {
 			logger.error("Error : " + e);
@@ -91,7 +95,7 @@ public class MedicalRecordsRepository {
 	public boolean delete(MedicalRecords medicalRecord)  {
 		try {
 			
-			data.deleteMedicalRecords(medicalRecord);
+			dataWrapper.deleteMedicalRecords(medicalRecord);
 			return true;
 		}catch(Exception e) {
 			logger.error("Error : " + e);
@@ -101,7 +105,7 @@ public class MedicalRecordsRepository {
 	
 	public Optional<MedicalRecords> getMedicalByName(String firtname, String lastname) {
 		try {
-			return data.getMedicalByName(firtname, lastname);
+			return dataWrapper.getMedicalByName(firtname, lastname);
 		}catch(Exception e) {
 			logger.error("Error : " + e);
 	        return Optional.empty();

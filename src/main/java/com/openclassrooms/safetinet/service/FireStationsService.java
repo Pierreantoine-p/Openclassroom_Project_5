@@ -50,7 +50,9 @@ public class FireStationsService {
 
 	public List<FireStations>findStationByNumber(String stationNumber)  {
 		try {
-			return fireStationRepository.findByNumber(stationNumber);
+			List<FireStations> result = fireStationRepository.findByNumber(stationNumber);
+			System.out.println("result" + result);
+			return result;
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);

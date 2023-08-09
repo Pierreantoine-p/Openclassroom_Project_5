@@ -114,7 +114,7 @@ public class DTOService {
 		List<String> phoneList = new ArrayList<String>();
 		try {
 			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
-
+			System.out.println("Nom de zeus " + fireStationsList);
 			if(fireStationsList.isEmpty()) {
 				return Collections.emptyList();
 			}else {

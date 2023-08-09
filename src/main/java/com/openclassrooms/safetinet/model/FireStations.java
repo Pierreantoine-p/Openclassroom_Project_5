@@ -1,8 +1,13 @@
 package com.openclassrooms.safetinet.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class FireStations {
 	
 	
@@ -10,11 +15,9 @@ public class FireStations {
 	
 	private String station;
 
-	public FireStations() {
-		
-	}
-	
-	public FireStations(String address, String station) {
+
+	@JsonCreator
+	public FireStations(@JsonProperty("address")String address,@JsonProperty("station") String station) {
 		this.address = address;
 		this.station = station;	
 	}

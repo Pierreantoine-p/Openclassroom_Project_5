@@ -20,14 +20,14 @@ import java.lang.String;
 @Repository
 @RequiredArgsConstructor
 public class PersonsRepository{
-	
-    private final DataWrapper dataWrapper;
 
-    
-    private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
-    
-    
-    /**
+	private final DataWrapper dataWrapper;
+
+
+	private static final Logger logger = LogManager.getLogger(PersonsRepository.class);
+
+
+	/**
 	 * GET ALL
 	 *  Get all person
 	 *  @return
@@ -35,28 +35,35 @@ public class PersonsRepository{
 	public List<Person> getAll() {
 		try {
 			return dataWrapper.getAllPersons();
-	   	}catch(Exception e) {
+		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<Person>();
-	   	}
-		 
+			return new ArrayList<Person>();
+		}
+
 	}
-	
+
+
+
 	/**
 	 * POST
 	 * add new person
 	 *  @param Person person
 	 */
-	public boolean save(Person person){
-		try {
-			return dataWrapper.getAllPersons().add(person);
-	   	}catch(Exception e) {
+	public Optional<Person> save(Person person){
+		try { 
+			boolean isAdded = dataWrapper.getAllPersons().add(person);
+			if (isAdded) {
+				return Optional.of(person);
+			} else {
+				return Optional.empty();
+			}
+		}catch(Exception e) {
 			logger.error("Error save : " + e);
-			return false;
-	   	}
+			return Optional.empty();
+		}
 	}
-	
-	
+
+
 	/**
 	 * GET ONE
 	 *  Get one person by firstname
@@ -66,29 +73,32 @@ public class PersonsRepository{
 	public List<Person> getByName(String firstname,String lastname) {
 		try {
 			return dataWrapper.getPersonByName(firstname, lastname);
-	   	}catch(Exception e) {
+		}catch(Exception e) {
 			logger.error("Error : " + e);
-	        return new ArrayList<>();
-	   	}
-		 
-		
+			return new ArrayList<>();
+		}
+
+
 	}
-	
+
 	/**
 	 * PUT
 	 * mettre à jour une personne existante (pour le moment, supposons que le prénom et le nom de famille ne changent pas, mais que les autres champs peuvent être modifiés)
 	 * @param Person person
 	 * @return
 	 */
-	public Optional<Person> update(Person person)  {
+	public boolean update(String firstname, String lastname,Person person)  {
+		boolean result = false;
+
 		try {
-			return dataWrapper.updatePerson(person);
-	   	}catch(Exception e) {
+			result = dataWrapper.updatePerson(firstname,lastname,person);
+		}catch(Exception e) {
 			logger.error("Error update person : " + e);
-	        return Optional.empty();
-	   	}
+		}
+		return result;
+
 	}
-	
+
 	/**
 	 * DELETE
 	 * supprimer une personne (utilisez une combinaison de prénom et de nom comme identificateur unique)
@@ -96,37 +106,41 @@ public class PersonsRepository{
 	 * @return
 	 */
 	public boolean delete(String firstname, String lastname) {
+
+		boolean result = false;
 		try {
-			dataWrapper.deletePerson(firstname,lastname);
-			return true;
-	   	}catch(Exception e) {
+			result = dataWrapper.deletePerson(firstname,lastname);
+		}catch(Exception e) {
 			logger.error("Error delete person : " + e);
-			return false;
-	   	}	 
+		}	 
+
+		return result;
 	}
-	
-	
-	
+
+
+
 	//DTO
 
 	public List<Person> getPersonByAddress(String address) {
 		try {
-			return dataWrapper.getPersonByAddress(address);
+			List<Person> result = dataWrapper.getPersonByAddress(address);
+			System.out.println("result repository : " + result);
+			return result;
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
-	        return new ArrayList<>();
-	   	}
+			return new ArrayList<>();
+		}
 	}
-	
-	public List<Person>findEmailByCity(String city){
+
+	public List<Person>getEmailByCity(String city){
 		try { return dataWrapper.getEmailByCity(city);	
 		}catch(Exception e) {
 			logger.error("Error get person : " + e);
-	        return new ArrayList<>();
-	   	}
+			return new ArrayList<>();
+		}
 	}
-	
-	
-	 
-	
+
+
+
+
 }

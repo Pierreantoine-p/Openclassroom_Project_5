@@ -35,17 +35,18 @@ public class FireStationsController {
 	  
 	/*
 	@GetMapping
-	public ResponseEntity <Iterable<FireStations>> getAll() throws IOException{
+	public ResponseEntity <Iterable<FireStations>> getAll() {
 
 		try {
 			return new ResponseEntity<>(fireStationsService.getAll(), HttpStatus.OK);
 
 		}catch(Exception e) {
 			logger.error("Error : " + e);
-		    throw new IOException();
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	*/
+	
 
     ObjectMapper objectMapper = new ObjectMapper();
 
