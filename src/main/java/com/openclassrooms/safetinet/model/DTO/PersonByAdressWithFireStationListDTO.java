@@ -2,26 +2,21 @@ package com.openclassrooms.safetinet.model.DTO;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PersonByAdressWithFireStationListDTO {
 
 	private String fireStation;
-	
+
 	private List <PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTO;
-
-	public List <PersonByAdressWithFireStationDTO> getPersonByAdressWithFireStationDTO() {
-		return personByAdressWithFireStationDTO;
-	}
-
-	public void setPersonByAdressWithFireStationDTO(List <PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTO) {
+	@JsonCreator
+	public PersonByAdressWithFireStationListDTO(String fireStation, List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTO) {
+		this.fireStation = fireStation;
 		this.personByAdressWithFireStationDTO = personByAdressWithFireStationDTO;
 	}
 
-	public String getFireStation() {
-		return fireStation;
-	}
-
-	public void setFireStation(String fireStation) {
-		this.fireStation = fireStation;
-	}
-	
 }

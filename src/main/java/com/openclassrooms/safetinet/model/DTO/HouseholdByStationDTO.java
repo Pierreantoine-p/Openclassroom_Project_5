@@ -1,7 +1,14 @@
 package com.openclassrooms.safetinet.model.DTO;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class HouseholdByStationDTO {
 	
 	
@@ -13,57 +20,20 @@ public class HouseholdByStationDTO {
 	
 	private String firstname;
 	
-	private ArrayList<String> medications;
+	private List<String> medications;
 	
-	private ArrayList<String> allergies;
+	private List<String> allergies;
 	
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
+	@JsonCreator
+	public HouseholdByStationDTO (String firstname, String lastname, String phone, int age, List<String> medications,List<String> allergies) {
+		
 		this.firstname = firstname;
-	}
-
-	public ArrayList<String> getMedications() {
-		return medications;
-	}
-
-	public void setMedications(ArrayList<String> medications) {
+		this.lastname = lastname;
+		this.phone = phone;
+		this.age = age;
 		this.medications = medications;
-	}
-
-	public ArrayList<String> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(ArrayList<String> allergies) {
 		this.allergies = allergies;
+
 	}
 
 }

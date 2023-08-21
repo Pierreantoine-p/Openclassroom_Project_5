@@ -29,7 +29,6 @@ public class DTOService {
 
 	private FireStationsService fireStationsService;
 
-	private static final Logger logger = LogManager.getLogger(DTOService.class);
 
 	ObjectMapper objectMapper = new ObjectMapper();
 
@@ -57,138 +56,99 @@ public class DTOService {
 		List<PersonByStationDTO> personByStationDTOList = new ArrayList<PersonByStationDTO>();
 		int countAdult = 0;
 		int countChild = 0;
+		List<FireStations> fireStationsList = fireStationsService.getStationByNumber(stationNumber);
 
-		try {
-			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
-			if(fireStationsList.isEmpty()) {
-				return  personByStationDTOWithCountList;
-			}
-			for (FireStations fireStationList : fireStationsList){						
-				String address = fireStationList.getAddress();
-
-				List<Person> persons = personsService.getPersonByAddress(address);
-
-				for (Person person : persons) {
-					String firstname = person.getFirstName();
-					String lastname = person.getLastName();
-
-					Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);					
-
-
-					if(!medicalRecords.isEmpty()) {
-
-						int age = getAge(medicalRecords.get().getBirthdate());
-
-						PersonByStationDTO personByStationDTO = new PersonByStationDTO();
-
-						personByStationDTO.setFirstName(person.getFirstName());
-						personByStationDTO.setLastName(person.getLastName());
-						personByStationDTO.setAddress(person.getAddress());
-						personByStationDTO.setPhone(person.getPhone());
-
-						if(age <= 18) {
-							countChild ++;
-						}else {
-							countAdult ++;
-						}
-						personByStationDTOList.add(personByStationDTO);
-					}else {
-						return new PersonByStationWithCountDTO();
-					}	
-				}										
-			}
-			personByStationDTOWithCountList.setPersonByStationDTO(personByStationDTOList);
-			personByStationDTOWithCountList.setCountChild(countChild) ;
-			personByStationDTOWithCountList.setCountAdult(countAdult) ;
-
-			return personByStationDTOWithCountList;
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return new PersonByStationWithCountDTO();
+		if(fireStationsList.isEmpty()) {
+			return  personByStationDTOWithCountList;
 		}
+
+		for (FireStations fireStationList : fireStationsList){						
+			String address = fireStationList.getAddress();
+			List<Person> persons = personsService.getPersonByAddress(address);
+
+			for (Person person : persons) {
+				String firstname = person.getFirstName();
+				String lastname = person.getLastName();
+				List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);	
+
+				if(!medicalRecords.isEmpty()) {
+					int age = getAge(medicalRecords.get(0).getBirthdate());
+					PersonByStationDTO personByStationDTO = new PersonByStationDTO();
+					personByStationDTO.setFirstName(person.getFirstName());
+					personByStationDTO.setLastName(person.getLastName());
+					personByStationDTO.setAddress(person.getAddress());
+					personByStationDTO.setPhone(person.getPhone());
+
+					if(age <= 18) {
+						countChild ++;
+					}else {
+						countAdult ++;
+					}
+					personByStationDTOList.add(personByStationDTO);
+				}else {
+					return new PersonByStationWithCountDTO();
+				}	
+			}										
+		}
+		personByStationDTOWithCountList.setPersonByStationDTO(personByStationDTOList);
+		personByStationDTOWithCountList.setCountChild(countChild) ;
+		personByStationDTOWithCountList.setCountAdult(countAdult) ;
+
+		return personByStationDTOWithCountList;
 	}
 
 	public List<String> getPhoneByStation(String stationNumber){
-
 		List<String> phoneList = new ArrayList<String>();
-		try {
-			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
-			System.out.println("Nom de zeus " + fireStationsList);
-			if(fireStationsList.isEmpty()) {
-				return Collections.emptyList();
-			}else {
-				for(FireStations fireStationList : fireStationsList) {
-					String address = fireStationList.getAddress();
+		List<FireStations> fireStationsList = fireStationsService.getStationByNumber(stationNumber);
+		System.out.println("Nom de zeus " + fireStationsList);
 
-					List<Person> persons = personsService.getPersonByAddress(address);
-					String phoneNumbers = persons.get(0).getPhone();
-					phoneList.add(phoneNumbers);
-
-				}
-				return phoneList;
+		if(fireStationsList.isEmpty()) {
+			return Collections.emptyList();
+		}else {
+			for(FireStations fireStationList : fireStationsList) {
+				String address = fireStationList.getAddress();
+				List<Person> persons = personsService.getPersonByAddress(address);
+				String phoneNumbers = persons.get(0).getPhone();
+				phoneList.add(phoneNumbers);
 			}
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return new ArrayList<>();
+			return phoneList;
 		}
 	}
-
 
 	public PersonByAdressWithFireStationListDTO getFireByAddress(String address){
 		PersonByAdressWithFireStationListDTO personByAdressWithFireStationListDTO = new PersonByAdressWithFireStationListDTO();
 		List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTOList = new ArrayList<PersonByAdressWithFireStationDTO>();
+		List<Person> personsList = personsService.getPersonByAddress(address);
 
-		try {
-			List<Person> personsList = personsService.getPersonByAddress(address);
-			for (Person person : personsList) {
-				String firstname = person.getFirstName();
-				String lastname = person.getLastName();
+		for (Person person : personsList) {
+			String firstname = person.getFirstName();
+			String lastname = person.getLastName();
+			List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);		
 
-				Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);					
-
-				if(!medicalRecords.isEmpty()) {
-					PersonByAdressWithFireStationDTO personByAdressWithFireStationDTO = new PersonByAdressWithFireStationDTO();
-
-					int age = getAge(medicalRecords.get().getBirthdate());
-
-
-					List <FireStations> fireStationList = fireStationsService.findByAdress(address);
-
-					personByAdressWithFireStationListDTO.setFireStation(fireStationList.get(0).getStation());
-
-
-					personByAdressWithFireStationDTO.setLastName(person.getLastName());
-					personByAdressWithFireStationDTO.setPhone(person.getPhone());
-					personByAdressWithFireStationDTO.setAge(age);
-					personByAdressWithFireStationDTO.setAllergies(medicalRecords.get().getAllergies());
-					personByAdressWithFireStationDTO.setMedications(medicalRecords.get().getMedications());
-
-					personByAdressWithFireStationDTOList.add(personByAdressWithFireStationDTO);
-					personByAdressWithFireStationListDTO.setPersonByAdressWithFireStationDTO(personByAdressWithFireStationDTOList);
-
-
-				}else {
-					return new PersonByAdressWithFireStationListDTO();
-				}
+			if(!medicalRecords.isEmpty()) {
+				PersonByAdressWithFireStationDTO personByAdressWithFireStationDTO = new PersonByAdressWithFireStationDTO();
+				int age = getAge(medicalRecords.get(0).getBirthdate());
+				List <FireStations> fireStationList = fireStationsService.findByAdress(address);
+				personByAdressWithFireStationListDTO.setFireStation(fireStationList.get(0).getStation());
+				personByAdressWithFireStationDTO.setLastName(person.getLastName());
+				personByAdressWithFireStationDTO.setPhone(person.getPhone());
+				personByAdressWithFireStationDTO.setAge(age);
+				personByAdressWithFireStationDTO.setAllergies(medicalRecords.get(0).getAllergies());
+				personByAdressWithFireStationDTO.setMedications(medicalRecords.get(0).getMedications());
+				personByAdressWithFireStationDTOList.add(personByAdressWithFireStationDTO);
+				personByAdressWithFireStationListDTO.setPersonByAdressWithFireStationDTO(personByAdressWithFireStationDTOList);
+			}else {
+				return new PersonByAdressWithFireStationListDTO();
 			}
-
-			return personByAdressWithFireStationListDTO;
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return new PersonByAdressWithFireStationListDTO();
 		}
+		return personByAdressWithFireStationListDTO;
+
 
 	}
 
-
-
 	public ListPersonByAddressDTO getChildByAddress(String address){
 		ListPersonByAddressDTO ListPersonByAddressDTO = new ListPersonByAddressDTO();
-
 		List<Person> adressList = personsService.getPersonByAddress(address);
-
 		List<ChildByAddressDTO> adultList = new ArrayList<ChildByAddressDTO>();
 		List<ChildByAddressDTO> childList = new ArrayList<ChildByAddressDTO>();
 
@@ -197,19 +157,11 @@ public class DTOService {
 		}else {					
 
 			for(Person person : adressList) {
-
-
 				String firstname = person.getFirstName();
 				String lastname = person.getLastName();
-
-				Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);	
-
-
-				int age = getAge(medicalRecords.get().getBirthdate());
-
-
+				List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);	
+				int age = getAge(medicalRecords.get(0).getBirthdate());
 				ChildByAddressDTO childByAddressDTO = new ChildByAddressDTO();
-
 				childByAddressDTO.setFirstName(person.getFirstName());
 				childByAddressDTO.setLastName(person.getLastName());
 				childByAddressDTO.setAge(age);
@@ -225,176 +177,80 @@ public class DTOService {
 		if(!childList.isEmpty()) {
 			ListPersonByAddressDTO.setAdultByAddressDTO(adultList);
 			ListPersonByAddressDTO.setChildByAddressDTO(childList);
-
 		}
 		return ListPersonByAddressDTO;
 	}
 
-
-
-
-
 	public AddressByStationDTO getHouseholdByStation(String stationNumber){
 		AddressByStationDTO addressByStationDTO = new AddressByStationDTO();
-		//AddressPersonByStationDTO addressPersonByStationDTO = new AddressPersonByStationDTO();
-
 		List<AddressPersonByStationDTO> addressPersonByStationListDTO = new ArrayList<AddressPersonByStationDTO>();
 		List<HouseholdByStationDTO> householdByStationDTOList = new ArrayList<HouseholdByStationDTO>();
+		List<FireStations> fireStationsList = fireStationsService.getStationByNumber(stationNumber);
+		addressByStationDTO.setStation(stationNumber);
 
-		try {
-			List<FireStations> fireStationsList = fireStationsService.findStationByNumber(stationNumber);
-
-			//ajouter le numero de station 
-			addressByStationDTO.setStation(stationNumber);
-
-			if(fireStationsList.isEmpty()) {
-				return  null;
-			}
-			for (FireStations fireStationList : fireStationsList){
-
-
-				AddressPersonByStationDTO listAddressPersonByStationDTO = new AddressPersonByStationDTO();
-				String listAddressPersonByStationDT = objectMapper.writeValueAsString(listAddressPersonByStationDTO);
-				System.out.println("listAddressPersonByStationDT" + listAddressPersonByStationDT);
-
-
-				listAddressPersonByStationDTO.setAddress(fireStationList.getAddress());
-				String listAddressPersonByStation = objectMapper.writeValueAsString(listAddressPersonByStationDTO);
-				System.out.println("listAddressPersonByStationD" + listAddressPersonByStation);
-
-
-				System.out.println("address" + fireStationList.getAddress());
-
-				List<Person> personList = personsService.getPersonByAddress(fireStationList.getAddress());
-
-				//String json = objectMapper.writeValueAsString(personList);
-				//System.out.println("personList" + json);
-
-				for (Person person : personList) {
-					String personUnit = objectMapper.writeValueAsString(person);
-					System.out.println("AAAAAAAAAAAAAAAAAA" + personUnit);
-
-					Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());	
-					int age = getAge(medicalRecords.get().getBirthdate());
-
-
-					HouseholdByStationDTO householdByStationDTO = new HouseholdByStationDTO();
-					/**
-					 * contruit la person
-					 * add dans une liste
-					 * ajoute dans le set person
-					 * ajoute l'adresse
-					 * add dans une liste
-					 * ajouter le numero de station 
-					 * ajouter dans l'objet final
-					 * return
-					 */
-
-					// contruit la person
-
-					householdByStationDTO.setFirstname(person.getFirstName());
-					householdByStationDTO.setLastname(person.getLastName());
-					householdByStationDTO.setPhone(person.getPhone());
-					householdByStationDTO.setAge(age);
-					householdByStationDTO.setMedications(medicalRecords.get().getMedications());
-					householdByStationDTO.setAllergies(medicalRecords.get().getAllergies());
-
-					String householdByStationDT = objectMapper.writeValueAsString(householdByStationDTO);
-					System.out.println("householdByStationDT" + householdByStationDT);
-
-					householdByStationDTOList.add(householdByStationDTO);
-
-					//ajoute le set person
-					listAddressPersonByStationDTO.setHouseholdByStationDTO(householdByStationDTOList);
-					String listAddressPersonByStationD = objectMapper.writeValueAsString(listAddressPersonByStationDTO);
-					System.out.println("listAddressPersonByStationD" + listAddressPersonByStationD);
-
-
-				}
-
-
-
-				//ajoute l'adress
-
-				//add le tout dans une liste
-				addressPersonByStationListDTO.add(listAddressPersonByStationDTO);
-				String addressPersonByStationListD= objectMapper.writeValueAsString(addressPersonByStationListDTO);
-				System.out.println("addressPersonByStationListD" + addressPersonByStationListD);
-
-				// ajouter dans l'objet final
-				addressByStationDTO.setAddressPersonByStationDTO(addressPersonByStationListDTO);
-				String addressByStationD= objectMapper.writeValueAsString(addressByStationDTO);
-				System.out.println("addressByStationD" + addressByStationD);
-
-
-
-			}
-
-			return addressByStationDTO;
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return new AddressByStationDTO();
+		if(fireStationsList.isEmpty()) {
+			return  null;
 		}
 
+		for (FireStations fireStationList : fireStationsList){
+			AddressPersonByStationDTO listAddressPersonByStationDTO = new AddressPersonByStationDTO();
+			listAddressPersonByStationDTO.setAddress(fireStationList.getAddress());
+			List<Person> personList = personsService.getPersonByAddress(fireStationList.getAddress());
 
+			for (Person person : personList) {
+				List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());	
+				int age = getAge(medicalRecords.get(0).getBirthdate());
+				HouseholdByStationDTO householdByStationDTO = new HouseholdByStationDTO();
+				householdByStationDTO.setFirstname(person.getFirstName());
+				householdByStationDTO.setLastname(person.getLastName());
+				householdByStationDTO.setPhone(person.getPhone());
+				householdByStationDTO.setAge(age);
+				householdByStationDTO.setMedications(medicalRecords.get(0).getMedications());
+				householdByStationDTO.setAllergies(medicalRecords.get(0).getAllergies());
+				householdByStationDTOList.add(householdByStationDTO);
+
+				listAddressPersonByStationDTO.setHouseholdByStationDTO(householdByStationDTOList);
+			}
+
+			addressPersonByStationListDTO.add(listAddressPersonByStationDTO);
+			addressByStationDTO.setAddressPersonByStationDTO(addressPersonByStationListDTO);
+			//String addressByStationD= objectMapper.writeValueAsString(addressByStationDTO);
+		}
+		return addressByStationDTO;
 	}
 
-	public List<PersonByFirstNameAndLastNameDTO> getPersondByStation(String firstname, String lastname){
+	public List<PersonByFirstNameAndLastNameDTO> getPersonByStation(String firstname, String lastname){
+		List<PersonByFirstNameAndLastNameDTO> personByFirstNameAndLastNameDTO = new ArrayList<PersonByFirstNameAndLastNameDTO>();	
+		List<Person> allPerson = personsRepository.getByName(firstname, lastname);
 
-		List<PersonByFirstNameAndLastNameDTO> personByFirstNameAndLastNameDTO = new ArrayList<PersonByFirstNameAndLastNameDTO>();
-		try {	
-			List<Person> allPerson = personsRepository.getByName(firstname, lastname);
-
-			for (Person person : allPerson) {
-				PersonByFirstNameAndLastNameDTO personByFirstNameAndLastNameListDTO = new PersonByFirstNameAndLastNameDTO();
-
-				Optional<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());
-
-
-				int age = getAge(medicalRecords.get().getBirthdate());
-
-
-				personByFirstNameAndLastNameListDTO.setLastName(person.getLastName());
-				personByFirstNameAndLastNameListDTO.setAddress(person.getAddress());
-				personByFirstNameAndLastNameListDTO.setEmail(person.getEmail());
-				personByFirstNameAndLastNameListDTO.setAge(age);
-				personByFirstNameAndLastNameListDTO.setMedications(medicalRecords.get().getMedications());
-				personByFirstNameAndLastNameListDTO.setAllergies(medicalRecords.get().getAllergies());
-
-				personByFirstNameAndLastNameDTO.add(personByFirstNameAndLastNameListDTO);
-
-			}
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return new ArrayList<>();
+		for (Person person : allPerson) {
+			PersonByFirstNameAndLastNameDTO personByFirstNameAndLastNameListDTO = new PersonByFirstNameAndLastNameDTO();
+			List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());
+			int age = getAge(medicalRecords.get(0).getBirthdate());
+			personByFirstNameAndLastNameListDTO.setLastName(person.getLastName());
+			personByFirstNameAndLastNameListDTO.setAddress(person.getAddress());
+			personByFirstNameAndLastNameListDTO.setEmail(person.getEmail());
+			personByFirstNameAndLastNameListDTO.setAge(age);
+			personByFirstNameAndLastNameListDTO.setMedications(medicalRecords.get(0).getMedications());
+			personByFirstNameAndLastNameListDTO.setAllergies(medicalRecords.get(0).getAllergies());
+			personByFirstNameAndLastNameDTO.add(personByFirstNameAndLastNameListDTO);
 		}
+
 		return personByFirstNameAndLastNameDTO;
 	}
 
 	public List<String>getEmailByCity(String city){
 		List<String> emailList = new ArrayList<String>();
+		List<Person> personMails = personsService.findEmailByCity(city);	
 
-		try {
-			List<Person> personMails = personsService.findEmailByCity(city);	
+		for(Person personMail : personMails ) {
+			String emailPerson = personMail.getEmail();
 
-			for(Person personMail : personMails ) {
-
-				String emailPerson = personMail.getEmail();
-
-				if(!emailList.contains(emailPerson)) {
-					emailList.add(emailPerson) ;
-				}	
-			}
-
-			return emailList;
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return new ArrayList<>();
+			if(!emailList.contains(emailPerson)) {
+				emailList.add(emailPerson) ;
+			}	
 		}
-
+		return emailList;
 	}
-
 
 }

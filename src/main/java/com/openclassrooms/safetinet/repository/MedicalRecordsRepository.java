@@ -1,11 +1,8 @@
 package com.openclassrooms.safetinet.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.MedicalRecords;
@@ -18,7 +15,6 @@ public class MedicalRecordsRepository {
 	
     private final DataWrapper dataWrapper;
 
-    private static final Logger logger = LogManager.getLogger(MedicalRecordsRepository.class);
 
 
 	/**
@@ -26,14 +22,7 @@ public class MedicalRecordsRepository {
 	 * @return
 	 */
 	public List<MedicalRecords> getAll() {
-		try {
-			logger.info("MedicalRecordsRepository");
-
 			return dataWrapper.getMedicalRecords();
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ArrayList<MedicalRecords>();
-		}
  	}
 
 	/**
@@ -42,14 +31,8 @@ public class MedicalRecordsRepository {
 	 * @param String firstName
 	 * @return
 	 */
-	public Optional<MedicalRecords> findByName(String firstname, String lastname)  {
-		try {
+	public List<MedicalRecords> findByName(String firstname, String lastname)  {
 			return dataWrapper.getMedicalRecordByName(firstname, lastname);
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return Optional.empty();
-		}
  	}
 	
 	
@@ -58,59 +41,39 @@ public class MedicalRecordsRepository {
 	 * ajouter un dossier médical ;
 	 * @param medicalRecords
 	 */
-	public boolean save(MedicalRecords medicalRecord) {
-		try {
-			return dataWrapper.getMedicalRecords().add(medicalRecord);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return false;
+	public Optional<MedicalRecords> save(MedicalRecords medicalRecord) {
+		boolean isAdded = dataWrapper.getMedicalRecords().add(medicalRecord);
+		if (isAdded) {
+			return Optional.of(medicalRecord);
+		} else {
+			return Optional.empty();
 		}
-		 
 	}
-	
-	
 	
 	/**
 	 * PUT
 	 *  mettre à jour un dossier médical existant (comme évoqué précédemment, supposer que le prénom et le nom de famille ne changent pas)
 	 *  @param MedicalRecords medicalRecords
 	 */
-	public Optional<MedicalRecords> update (MedicalRecords medicalRecord)  {
-		try {
-			return dataWrapper.updateMedicalRecords(medicalRecord);
-			
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return Optional.empty();
-		}
-	 
+	public boolean update (String firstname, String lastname,MedicalRecords medicalRecord)  {
+		boolean result = false;
+		result = dataWrapper.updateMedicalRecords(firstname, lastname, medicalRecord);
+		return result;
 	}
-	
 	
 	/**
 	 * DELETE
 	 * supprimer un dossier médical (utilisez une combinaison de prénom et de nom comme identificateur unique)
 	 * @param String firstname
 	 */
-	public boolean delete(MedicalRecords medicalRecord)  {
-		try {
-			
-			dataWrapper.deleteMedicalRecords(medicalRecord);
-			return true;
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return false;
-		}
+	public boolean delete(String firstname, String lastname)  {
+		boolean result = false;
+		result = dataWrapper.deleteMedicalRecords(firstname,lastname);
+		return result;
 	}
 	
-	public Optional<MedicalRecords> getMedicalByName(String firtname, String lastname) {
-		try {
+	public List<MedicalRecords> getMedicalByName(String firtname, String lastname) {
 			return dataWrapper.getMedicalByName(firtname, lastname);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return Optional.empty();
-		}
 	}
-	
 	
 }

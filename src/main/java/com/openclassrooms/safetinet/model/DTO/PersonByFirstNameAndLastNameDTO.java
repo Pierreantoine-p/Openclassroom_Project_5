@@ -1,68 +1,40 @@
 package com.openclassrooms.safetinet.model.DTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PersonByFirstNameAndLastNameDTO {
-	
+
 	private String lastName;
-	
+
 	private String address;
-	
+
 	private Integer age;
-	
+
 	private String email;
-	
-	private ArrayList<String> medications;
-	
-	private ArrayList<String> allergies;
 
-	public String getLastName() {
-		return lastName;
-	}
+	private List<String> medications;
 
-	public void setLastName(String lastName) {
+	private List<String> allergies;
+
+	@JsonCreator
+	public PersonByFirstNameAndLastNameDTO(String lastName, String address, Integer age, String email, List<String> medications, List<String> allergies) {
 		this.lastName = lastName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
 		this.age = age;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public ArrayList<String> getMedications() {
-		return medications;
-	}
-
-	public void setMedications(ArrayList<String> medications) {
 		this.medications = medications;
-	}
-
-	public ArrayList<String> getAllergies() {
-		return allergies;
-	}
-
-	public void setAllergies(ArrayList<String> allergies) {
 		this.allergies = allergies;
+
 	}
 
-	
+
+
+
 }

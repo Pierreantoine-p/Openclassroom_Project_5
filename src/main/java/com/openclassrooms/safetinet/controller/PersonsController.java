@@ -32,81 +32,45 @@ public class PersonsController {
 	}
 	
 	
-
-	
 	@GetMapping
-	public ResponseEntity <List<Person>> getAll(){
-		try {
+	public ResponseEntity <List<Person>> getPersons(){
+		logger.info("getPersons");
 			return new ResponseEntity<>(personsService.getAll(), HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
  	}
 	
-	/*
-	@GetMapping("/{firstname}/{lastname}")
-	public ResponseEntity<Person> getOne(@PathVariable String firstname, @PathVariable String lastname)  {
-		try {
-			return personsService.findByName(firstname, lastname)
-					.first(person -> new ResponseEntity<>(person, HttpStatus.OK))
-					.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		 
-	}
-	*/
 	
 	@PostMapping
 	public  ResponseEntity<Person> save(@RequestBody Person person)  {
-		try {
+		logger.info("save, RequestBody: person={} ", person );
 			 personsService.save(person);
-			 return new ResponseEntity<>(person,HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}	 
+			 return new ResponseEntity<>(person,HttpStatus.OK);	 
 	}
 	
 	
 	
 	@PutMapping("/{firstname}/{lastname}")
 	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person)  {
-		try {
-			List<Person> existingPerson = personsService.getByName(firstname,lastname);
+		logger.info("update, params: firstname={}, lastname={}, RequestBody: person={} ", firstname, lastname, person );
+            List<Person> existingPerson = personsService.getByName(firstname,lastname);
 			if(!existingPerson.isEmpty()) {
 				personsService.update(firstname, lastname, person);
 	            return new ResponseEntity<>(HttpStatus.OK);
 			}else {
 				return new ResponseEntity <>(HttpStatus.NOT_FOUND);
 			}
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		 
 	}
 	
 	@DeleteMapping("/{firstname}/{lastname}")
 	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)  {
-		try {
+		logger.info("delete, params: firstname={}, lastname={}", firstname, lastname);
 			List<Person> existingPerson = personsService.getByName(firstname,lastname);
 			if(!existingPerson.isEmpty()) {
 			personsService.delete(firstname,lastname);
 			return ResponseEntity.ok("Suppression effectuer");
 			}else{
 				return ResponseEntity.ok("Not found");
-			}
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		 
+			} 
 	}
-	
-	
-	
+
 
 }

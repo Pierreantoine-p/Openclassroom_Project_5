@@ -22,97 +22,57 @@ import com.openclassrooms.safetinet.service.FireStationsService;
 @RestController
 @RequestMapping("/firestation")
 public class FireStationsController {
-	
+
 	private FireStationsService fireStationsService;
-	
-    private static final Logger logger = LogManager.getLogger(FireStationsController.class);
-	
-    
+
+	private static final Logger logger = LogManager.getLogger(FireStationsController.class);
+
+
 	public FireStationsController(FireStationsService fireStationsService) {
 		this.fireStationsService = fireStationsService;
 	}
-	
-	  
-	/*
-	@GetMapping
-	public ResponseEntity <Iterable<FireStations>> getAll() {
 
-		try {
-			return new ResponseEntity<>(fireStationsService.getAll(), HttpStatus.OK);
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	*/
-	
-
-    ObjectMapper objectMapper = new ObjectMapper();
-
-	
 	@GetMapping("/{address}")
-	public ResponseEntity<String> getOne(@PathVariable String address )   {
-		try {
-			List<FireStations> station = fireStationsService.findByAdress(address);
-			if(!station.isEmpty()) {
-				//FireStations fireStations = station ;
-				return new ResponseEntity<>(HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>("{}",HttpStatus.OK);
-			}
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> getAddress(@PathVariable String address )   {
+		logger.info("getOne, params: address={}", address);
+		List<FireStations> station = fireStationsService.findByAdress(address);
+		if(!station.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("{}",HttpStatus.OK);
 		}
 	}
 
-	
+
 	@PostMapping
 	public ResponseEntity<FireStations> save(@RequestBody FireStations fireStations)  {
-		try {
-			fireStationsService.save(fireStations);
-			return new ResponseEntity<>( fireStations,HttpStatus.OK);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	
+		logger.info("save, RequestBody: fireStations={}", fireStations);
+		fireStationsService.save(fireStations);
+		return new ResponseEntity<>( fireStations,HttpStatus.OK);
 	}
-	
-	
+
+	@PutMapping("/{address}")
+	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation)  {
+		logger.info("update, params: address={}, RequestBody: fireStation={} ", address, fireStation );
+		List<FireStations> existingFireStations = fireStationsService.findByAdress(address);
+		if(!existingFireStations.isEmpty()) {
+			fireStationsService.update(address, fireStation);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+		}	
+	}
+
 	@DeleteMapping("/{address}")
-	public ResponseEntity<Void> delete (@PathVariable String address)   {
-		try {
-			List<FireStations> existingFireStations = fireStationsService.findByAdress(address);
-			if(!existingFireStations.isEmpty()) {
-				fireStationsService.delete(address);
-			return new ResponseEntity <>(HttpStatus.NO_CONTENT);
-			}else{
-				return new ResponseEntity <>(HttpStatus.NOT_FOUND);
-			}
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> delete (@PathVariable String address)   {
+		logger.info("delete, params: address={}", address);
+		List<FireStations> existingFireStations = fireStationsService.findByAdress(address);
+		if(!existingFireStations.isEmpty()) {
+			fireStationsService.delete(address);
+			return ResponseEntity.ok("Suppression effectuer");
+		}else{
+			return ResponseEntity.ok("Not found");
 		}
 	}
 
-	
-	
-	@PutMapping("/{address}")
-	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation)  {
-		try {
-			List<FireStations> existingFireStations = fireStationsService.findByAdress(address);
-			if(!existingFireStations.isEmpty()) {
-				fireStationsService.update(address, fireStation);
-	            return new ResponseEntity<>(HttpStatus.OK);
-			}else {
-				return new ResponseEntity <>(HttpStatus.NOT_FOUND);
-			}	
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
 }

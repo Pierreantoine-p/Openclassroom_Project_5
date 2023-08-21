@@ -1,6 +1,5 @@
 package com.openclassrooms.safetinet.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,89 +16,51 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FireStationRepository {
 	
-    private final DataWrapper dataWrapper;
-
-    private static final Logger logger = LogManager.getLogger(FireStationRepository.class);
-    
+    private final DataWrapper dataWrapper;    
     
     /**
 	 * GET ALL
 	 *  Get all fireStations
 	 *  @return
 	 */
-	public List<FireStations> getAll()  {
-		try {
+	public List<FireStations> getAll()  {	
 			return dataWrapper.getFireStations();
-
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ArrayList<FireStations>();
-		}
 	}
 	
+	/**
+	 * Find By Adress
+	 *  Get one person by firstname
+	 *  @param String firstName
+	 *  @return
+	 */
+	public List<FireStations> findByAdress(String address)   {
+			return dataWrapper.getStationByAdress(address);	
+	}
+	
+	/**
+	 * Find Station By Number
+	 *  Get one station by number
+	 *  @param String firstName
+	 *  @return
+	 */
+	public List<FireStations> getStationByNumber(String stationNumber)  {
+		List<FireStations> result = dataWrapper.getStationByNumber(stationNumber);
+			return result;
+	}
 
 	/**
 	 * POST
 	 *  ajout d'un mapping caserne/adresse ;
 	 *  @param Person person
 	 */
-	public boolean save(FireStations fireStation) {
-		try {
-			return dataWrapper.getFireStations().add(fireStation);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return false;
-		}
-		
-	}
-	
-	/**
-	 * GET ONE
-	 *  Get one person by firstname
-	 *  @param String firstName
-	 *  @return
-	 */
-	public List<FireStations> findByAdress(String address)   {
-		try {
-			return dataWrapper.getStationByAdress(address);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ArrayList<FireStations>();
-		}
-		
-	}
-	
-	
-	
-	public List<FireStations> findByNumber(String stationNumber)  {
-		try {
-			
-			List<FireStations> result = dataWrapper.getStationByNumber(stationNumber);
-			System.out.println("result" + result);
-			return result;
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return new ArrayList<FireStations>();
+	public Optional<FireStations> save(FireStations fireStation) {
+		boolean isAdded = dataWrapper.getFireStations().add(fireStation);
+		if (isAdded) {
+			return Optional.of(fireStation);
+		} else {
+			return Optional.empty();
 		}
 	}
-	
-	
-	/**
-	 * DELETE
-	 * supprimer le mapping d'une caserne ou d'une adresse
-	 * @param String firstname
-	 * @return
-	 */
-	public boolean delete(FireStations fireStation)   {
-		try {
-			return dataWrapper.deleteFireStation(fireStation);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-			return false;
-		}
-		
-	}
-	
 	
 	/**
 	 * PUT
@@ -107,18 +68,21 @@ public class FireStationRepository {
 	 * @param Person person
 	 * @return
 	 */	
-	public Optional<FireStations> update(FireStations fireStation)   {
-		try {
-			return dataWrapper.updateFireStation(fireStation);
-		}catch(Exception e) {
-			logger.error("Error : " + e);
-	        return Optional.empty();
-		}
+	public boolean update(String address, FireStations fireStation)   {
+		boolean result = false;
+		result = dataWrapper.updateFireStation(address, fireStation);
+		return result;
 	}
 	
-
-	
-
-	
-	
+	/**
+	 * DELETE
+	 * supprimer le mapping d'une caserne ou d'une adresse
+	 * @param String firstname
+	 * @return
+	 */
+	public boolean delete(String address )   {
+		boolean result = false;
+		result = dataWrapper.deleteFireStation(address);
+		return result;		
+	}
 }

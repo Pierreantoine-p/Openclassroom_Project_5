@@ -2,26 +2,22 @@ package com.openclassrooms.safetinet.model.DTO;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class ListPersonByAddressDTO {
 
-	public List<ChildByAddressDTO> getChildByAddressDTO() {
-		return ChildByAddressDTO;
+	private List<ChildByAddressDTO> childByAddressDTO;
+
+	private List<ChildByAddressDTO> adultByAddressDTO;
+
+	@JsonCreator
+	public ListPersonByAddressDTO(@JsonProperty("childByAddressDTO")List<ChildByAddressDTO> childByAddressDTO, @JsonProperty("adultByAddressDTO")List<ChildByAddressDTO> adultByAddressDTO) {
+		this.childByAddressDTO = childByAddressDTO;
+		this .adultByAddressDTO = adultByAddressDTO;
 	}
-
-	public void setChildByAddressDTO(List<ChildByAddressDTO> childByAddressDTO) {
-		ChildByAddressDTO = childByAddressDTO;
-	}
-
-	public List<ChildByAddressDTO> getAdultByAddressDTO() {
-		return AdultByAddressDTO;
-	}
-
-	public void setAdultByAddressDTO(List<ChildByAddressDTO> adultByAddressDTO) {
-		AdultByAddressDTO = adultByAddressDTO;
-	}
-
-	private List<ChildByAddressDTO> ChildByAddressDTO;
-	
-	private List<ChildByAddressDTO> AdultByAddressDTO;
-
 }

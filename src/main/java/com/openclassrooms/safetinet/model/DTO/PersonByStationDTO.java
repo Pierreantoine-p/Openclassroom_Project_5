@@ -1,5 +1,15 @@
 package com.openclassrooms.safetinet.model.DTO;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PersonByStationDTO {
 
 	private String firstName;
@@ -10,35 +20,11 @@ public class PersonByStationDTO {
 	
 	private String phone;
 		
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
+	@JsonCreator
+	public PersonByStationDTO(@JsonProperty("address")String address,@JsonProperty("firstName") String firstName,@JsonProperty("lastName") String lastName,@JsonProperty("phone") String phone) {
 		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

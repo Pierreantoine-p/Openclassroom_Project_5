@@ -24,91 +24,59 @@ import com.openclassrooms.safetinet.service.PersonsService;
 public class DTOController {
 
 	private DTOService dTOService;
-	
+
 	ObjectMapper objectMapper = new ObjectMapper();
-	
-    private static final Logger logger = LogManager.getLogger(DTOController.class);
-    
-    public DTOController(FireStationsService fireStationsService, PersonsService personsService, MedicalRecordsService medicalRecordsService, DTOService dTOService) {
+
+	private static final Logger logger = LogManager.getLogger(DTOController.class);
+
+	public DTOController(FireStationsService fireStationsService, PersonsService personsService, MedicalRecordsService medicalRecordsService, DTOService dTOService) {
 		this.dTOService = dTOService;
-    }
-   
-    //logger entree sortie
-    
+	}
+
+
 	@GetMapping("/firestation")
 	public ResponseEntity<PersonByStationWithCountDTO> getPersonByFireStation(@RequestParam(value = "stationNumber")String stationNumber)   {
-		try {
-			return new ResponseEntity<>(dTOService.getPersonByStation(stationNumber), HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getPersonByFireStation, params: stationNumber={}", stationNumber);
+		return new ResponseEntity<>(dTOService.getPersonByStation(stationNumber), HttpStatus.OK);
 	}
+
 	@GetMapping("/phoneAlert")
 	public ResponseEntity<List<String>> getPhoneByStation(@RequestParam(value = "stationNumber")String stationNumber){
-		try {
-			return new ResponseEntity<>(dTOService.getPhoneByStation(stationNumber),HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getPhoneByStation, params: stationNumber={}", stationNumber);
+		return new ResponseEntity<>(dTOService.getPhoneByStation(stationNumber),HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/fire")
 	public ResponseEntity<PersonByAdressWithFireStationListDTO> getFireByAddress(@RequestParam(value = "address")String address){
-		try {
-			return new ResponseEntity<>(dTOService.getFireByAddress(address),HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getFireByAddress, params: address={}", address);
+		return new ResponseEntity<>(dTOService.getFireByAddress(address),HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/flood/stations")
 	public ResponseEntity<AddressByStationDTO> getHouseholdByStation(@RequestParam(value = "stations")String stationNumber){
-		try {
-			return new ResponseEntity<>(dTOService.getHouseholdByStation(stationNumber),HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getHouseholdByStation, params: stationNumber={}", stationNumber);
+		return new ResponseEntity<>(dTOService.getHouseholdByStation(stationNumber),HttpStatus.OK);
 	}
 
 
 	@GetMapping("/personInfo")
 	public ResponseEntity<List<PersonByFirstNameAndLastNameDTO>> getPersondByStation(@RequestParam(value = "firstName") String firstname,@RequestParam(value = "lastName") String lastname){
-		try {
-			return new ResponseEntity<>(dTOService.getPersondByStation(firstname,lastname),HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getPersondByStation, params: firstname={},  lastname={}", firstname, lastname);
+		return new ResponseEntity<>(dTOService.getPersonByStation(firstname,lastname),HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/communityEmail")
 	public ResponseEntity<List<String>> getEmailByCity(@RequestParam(value = "city")String city){
-		try {
-			return new ResponseEntity<>(dTOService.getEmailByCity(city),HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getEmailByCity, params: city={}", city);
+		return new ResponseEntity<>(dTOService.getEmailByCity(city),HttpStatus.OK);
 	}
-	
+
 
 
 	@GetMapping("/childAlert")
 	public ResponseEntity<ListPersonByAddressDTO> getChildByAddress (@RequestParam(value = "address")String address) {
-		try {
-			return new ResponseEntity<>(dTOService.getChildByAddress(address),HttpStatus.OK);
-		}catch (Exception e) {
-			logger.error("Error : " + e);
-	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		logger.info("getChildByAddress, params: address={}", address);
+		return new ResponseEntity<>(dTOService.getChildByAddress(address),HttpStatus.OK);
 	}
-	
-	
-	
 
-	
 }

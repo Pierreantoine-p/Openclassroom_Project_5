@@ -1,5 +1,14 @@
 package com.openclassrooms.safetinet.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.safetinet.model.FireStations;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class ChildByAddressDTO {
 	
 	private String firstName;
@@ -8,31 +17,15 @@ public class ChildByAddressDTO {
 	
 	private Integer age;
 	
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
 	
+
+	@JsonCreator
+	public ChildByAddressDTO(@JsonProperty("firstName")String firstName,@JsonProperty("lastName") String lastName,@JsonProperty("age") Integer age) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+
+	}
 
 	
 

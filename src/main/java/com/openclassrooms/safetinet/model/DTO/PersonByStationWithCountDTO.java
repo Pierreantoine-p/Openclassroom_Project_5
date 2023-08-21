@@ -2,33 +2,24 @@ package com.openclassrooms.safetinet.model.DTO;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PersonByStationWithCountDTO {
 
 	private List< PersonByStationDTO> personByStationDTO;
 	private int countAdult;
 	private int countChild;
 	
-	public int getCountAdult() {
-		return countAdult;
-	}
-	public void setCountAdult(int countAdult) {
-		this.countAdult = countAdult;
-	}
-	public int getCountChild() {
-		return countChild;
-	}
-	public void setCountChild(int countChild) {
-		this.countChild = countChild;
-	}
-	public List<PersonByStationDTO> getPersonByStationDTO() {
-		return personByStationDTO;
-	}
-	public void setPersonByStationDTO(List<PersonByStationDTO> personByStationDTO) {
+	@JsonCreator
+	public PersonByStationWithCountDTO(@JsonProperty("personByStationDTO")List< PersonByStationDTO> personByStationDTO,@JsonProperty("countAdult")Integer countAdult,@JsonProperty("countChild")Integer countChild) {
 		this.personByStationDTO = personByStationDTO;
-	}
-	public static void add(List<PersonByStationDTO> personByStationDTOList, PersonByStationWithCountDTO personByStationDTOWithCount) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+		this.countAdult = countAdult;
+		this.countChild = countChild;
+	}	
 }

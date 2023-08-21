@@ -1,6 +1,8 @@
  package com.openclassrooms.safetinet.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,20 +18,19 @@ public class MedicalRecords {
 	private String firstName;
 	private String lastName;
 	private String birthdate;
-	private ArrayList<String> medications;
-	private ArrayList<String> allergies;
+	private List<String> medications;
+	private List<String> allergies;
 	
 	
 	
 
 	@JsonCreator
-	public MedicalRecords(@JsonProperty("firstName")String firstName,@JsonProperty("lastName") String lastName,@JsonProperty("birthdate") String birthdate,@JsonProperty("medications") ArrayList<String> medications,@JsonProperty("allergies") ArrayList<String> allergies) {
+	public MedicalRecords(@JsonProperty("firstName")String firstName,@JsonProperty("lastName") String lastName,@JsonProperty("birthdate") String birthdate,@JsonProperty("medications") List<String> medications,@JsonProperty("allergies") List<String> allergies) {
 		this.firstName = firstName;
 		this.lastName = lastName;	
 		this.birthdate = birthdate;	
 		this.medications = medications;	
 		this.allergies = allergies;	
 	}
-	
-	
+
 }

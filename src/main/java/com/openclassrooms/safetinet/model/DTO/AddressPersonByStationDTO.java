@@ -1,28 +1,24 @@
 package com.openclassrooms.safetinet.model.DTO;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openclassrooms.safetinet.model.FireStations;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class AddressPersonByStationDTO {
 
 	private List<HouseholdByStationDTO> householdByStationDTO;
 
-	private String Address;
-
-	
-	public String getAddress() {
-		return Address;
-	}
-
-	public void setAddress(String address) {
-		Address = address;
-	}
+	private String address;
 
 
-	public List<HouseholdByStationDTO> getHouseholdByStationDTO() {
-		return householdByStationDTO;
-	}
-
-	public void setHouseholdByStationDTO(List<HouseholdByStationDTO> householdByStationDTO) {
+	@JsonCreator
+	public AddressPersonByStationDTO (@JsonProperty("address")String address,@JsonProperty("householdByStationDTO")  List<HouseholdByStationDTO> householdByStationDTO) {
+		this.address=address;
 		this.householdByStationDTO = householdByStationDTO;
 	}
 
