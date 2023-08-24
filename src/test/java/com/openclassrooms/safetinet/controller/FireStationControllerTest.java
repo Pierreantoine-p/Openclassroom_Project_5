@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.FireStations;
-import com.openclassrooms.safetinet.model.Person;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

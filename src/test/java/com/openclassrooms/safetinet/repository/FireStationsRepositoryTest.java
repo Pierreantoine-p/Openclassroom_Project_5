@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.FireStations;
-import com.openclassrooms.safetinet.service.FireStationsService;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

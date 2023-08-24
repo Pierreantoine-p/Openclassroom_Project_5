@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetinet.model.FireStations;
 import com.openclassrooms.safetinet.service.FireStationsService;
 
@@ -31,7 +30,12 @@ public class FireStationsController {
 	public FireStationsController(FireStationsService fireStationsService) {
 		this.fireStationsService = fireStationsService;
 	}
-
+	
+	/**
+	 * Get one FireStations by address
+	 * @Param String : address
+	 * @return One FireStations
+	 */
 	@GetMapping("/{address}")
 	public ResponseEntity<String> getAddress(@PathVariable String address )   {
 		logger.info("getOne, params: address={}", address);
@@ -43,14 +47,24 @@ public class FireStationsController {
 		}
 	}
 
-
+	/**
+	 * Created FireStations 
+	 * @RequestBody fireStations
+	 * @return New FireStations
+	 */
 	@PostMapping
 	public ResponseEntity<FireStations> save(@RequestBody FireStations fireStations)  {
 		logger.info("save, RequestBody: fireStations={}", fireStations);
 		fireStationsService.save(fireStations);
 		return new ResponseEntity<>( fireStations,HttpStatus.OK);
 	}
-
+	
+	/**
+	 * Update FireStations
+	 * @RequestBody fireStation
+	 * @Param String : address
+	 * @return FireStations update
+	 */
 	@PutMapping("/{address}")
 	public ResponseEntity<Void> update(@PathVariable String address, @RequestBody FireStations fireStation)  {
 		logger.info("update, params: address={}, RequestBody: fireStation={} ", address, fireStation );
@@ -62,7 +76,11 @@ public class FireStationsController {
 			return new ResponseEntity <>(HttpStatus.NOT_FOUND);
 		}	
 	}
-
+	
+	/**
+	 * Delete FireStations
+	 * @Param address
+	 */
 	@DeleteMapping("/{address}")
 	public ResponseEntity<String> delete (@PathVariable String address)   {
 		logger.info("delete, params: address={}", address);

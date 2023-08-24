@@ -31,14 +31,20 @@ public class PersonsController {
 		this.personsService = personsService;
 	}
 	
-	
+	/**
+	 *Get a list of all people
+	 * @return List of all persons
+	 */
 	@GetMapping
 	public ResponseEntity <List<Person>> getPersons(){
 		logger.info("getPersons");
 			return new ResponseEntity<>(personsService.getAll(), HttpStatus.OK);
  	}
 	
-	
+	/**
+	 * Created new person
+	 * @RequestBody Person
+	 */
 	@PostMapping
 	public  ResponseEntity<Person> save(@RequestBody Person person)  {
 		logger.info("save, RequestBody: person={} ", person );
@@ -47,7 +53,12 @@ public class PersonsController {
 	}
 	
 	
-	
+	/**
+	 * Update a person
+	 * @Param String : firstName, 
+	 * @Param String : lastName
+	 * @return Person update 
+	 */
 	@PutMapping("/{firstname}/{lastname}")
 	public ResponseEntity<Void> update(@PathVariable String firstname,@PathVariable String lastname, @RequestBody Person person)  {
 		logger.info("update, params: firstname={}, lastname={}, RequestBody: person={} ", firstname, lastname, person );
@@ -60,12 +71,17 @@ public class PersonsController {
 			}
 	}
 	
+	/**
+	 * Delete a person
+	 * @Param String : firstName, 
+	 * @Param String : lastName
+	 */
 	@DeleteMapping("/{firstname}/{lastname}")
-	public ResponseEntity<String> delete (@PathVariable String firstname, @PathVariable String lastname)  {
-		logger.info("delete, params: firstname={}, lastname={}", firstname, lastname);
-			List<Person> existingPerson = personsService.getByName(firstname,lastname);
+	public ResponseEntity<String> delete (@PathVariable String firstName, @PathVariable String lastName)  {
+		logger.info("delete, params: firstname={}, lastname={}", firstName, lastName);
+			List<Person> existingPerson = personsService.getByName(firstName,lastName);
 			if(!existingPerson.isEmpty()) {
-			personsService.delete(firstname,lastname);
+			personsService.delete(firstName,lastName);
 			return ResponseEntity.ok("Suppression effectuer");
 			}else{
 				return ResponseEntity.ok("Not found");

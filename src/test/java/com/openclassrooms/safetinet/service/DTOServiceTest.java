@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,11 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.openclassrooms.safetinet.controller.PersonsController;
-import com.openclassrooms.safetinet.data.DataWrapper;
-import com.openclassrooms.safetinet.model.Person;
 import com.openclassrooms.safetinet.model.DTO.PersonByAdressWithFireStationListDTO;
-import com.openclassrooms.safetinet.model.DTO.PersonByStationDTO;
 import com.openclassrooms.safetinet.model.DTO.PersonByStationWithCountDTO;
 
 @SpringBootTest
@@ -25,20 +20,9 @@ import com.openclassrooms.safetinet.model.DTO.PersonByStationWithCountDTO;
 @AutoConfigureMockMvc
 public class DTOServiceTest {
 
-/*
-	@Autowired
-	private DataWrapper dataWrapper;
-	*/
 	@Autowired
 	private DTOService dTOService;
 	
-	/*
-	@BeforeAll
-	void before() {
-		dataWrapper.setPersons(new ArrayList<>());
-	}
-	
-*/
 	@Test
 	@Order(1)
 	public void testGetPersonByStation() {

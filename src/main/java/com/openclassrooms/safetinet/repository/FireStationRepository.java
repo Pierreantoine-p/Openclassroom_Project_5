@@ -3,8 +3,6 @@ package com.openclassrooms.safetinet.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.FireStations;

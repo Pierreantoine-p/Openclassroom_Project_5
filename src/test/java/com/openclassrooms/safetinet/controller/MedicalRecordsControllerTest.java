@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.openclassrooms.safetinet.data.DataWrapper;
 import com.openclassrooms.safetinet.model.MedicalRecords;
-import com.openclassrooms.safetinet.model.Person;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

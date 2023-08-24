@@ -3,7 +3,6 @@ package com.openclassrooms.safetinet.model.DTO;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.openclassrooms.safetinet.model.FireStations;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

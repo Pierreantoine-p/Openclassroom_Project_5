@@ -20,10 +20,10 @@ public class PersonsRepository{
 
 	private final DataWrapper dataWrapper;
 
+
 	/**
-	 * GET ALL
-	 *  Get all person
-	 *  @return
+	 *Get a list of all people
+	 * @return All persons
 	 */
 	public List<Person> getAll() {
 		return dataWrapper.getAllPersons();
