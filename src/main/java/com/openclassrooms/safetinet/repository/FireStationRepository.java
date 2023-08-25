@@ -17,29 +17,26 @@ public class FireStationRepository {
     private final DataWrapper dataWrapper;    
     
     /**
-	 * GET ALL
-	 *  Get all fireStations
-	 *  @return
+	 * Get FireStations
+	 * @return List of FireStations 
 	 */
 	public List<FireStations> getAll()  {	
 			return dataWrapper.getFireStations();
 	}
 	
 	/**
-	 * Find By Adress
-	 *  Get one person by firstname
-	 *  @param String firstName
-	 *  @return
+	 * Get FireStations by  address 
+	 * @Param String : address
+	 * @return List of FireStations
 	 */
 	public List<FireStations> findByAdress(String address)   {
 			return dataWrapper.getStationByAdress(address);	
 	}
 	
 	/**
-	 * Find Station By Number
-	 *  Get one station by number
-	 *  @param String firstName
-	 *  @return
+	 * Get FireStations by  stationNumber 
+	 * @Param String : stationNumber
+	 * @return List of FireStations
 	 */
 	public List<FireStations> getStationByNumber(String stationNumber)  {
 		List<FireStations> result = dataWrapper.getStationByNumber(stationNumber);
@@ -47,9 +44,8 @@ public class FireStationRepository {
 	}
 
 	/**
-	 * POST
-	 *  ajout d'un mapping caserne/adresse ;
-	 *  @param Person person
+	 * Created fireStations 
+	 * @RequestBody fireStations
 	 */
 	public Optional<FireStations> save(FireStations fireStation) {
 		boolean isAdded = dataWrapper.getFireStations().add(fireStation);
@@ -61,11 +57,11 @@ public class FireStationRepository {
 	}
 	
 	/**
-	 * PUT
-	 * mettre à jour le numéro de la caserne de pompiers d'une adresse ;
-	 * @param Person person
-	 * @return
-	 */	
+	 * Update FireStations
+	 * @Param String : address
+	 * @RequestBody fireStation
+	 * @return FireStations update
+	 */
 	public boolean update(String address, FireStations fireStation)   {
 		boolean result = false;
 		result = dataWrapper.updateFireStation(address, fireStation);
@@ -73,10 +69,8 @@ public class FireStationRepository {
 	}
 	
 	/**
-	 * DELETE
-	 * supprimer le mapping d'une caserne ou d'une adresse
-	 * @param String firstname
-	 * @return
+	 * Delete FireStations
+	 * @Param String : address
 	 */
 	public boolean delete(String address )   {
 		boolean result = false;

@@ -15,20 +15,15 @@ import lombok.Data;
 @Data
 public class DataWrapper {
 
-
-
 	private static final Logger logger = LogManager.getLogger(DataWrapper.class);
 
 	private List<MedicalRecords> medicalrecords;
 	private List<Person> persons;
 	private List<FireStations> firestations;
 
-
-
-
 	/**
-	 * GET ALL PERSONS
-	 * @return
+	 *Get a list of all people
+	 * @return List of all persons
 	 */
 	public  List<Person> getAllPersons()  {
 		List<Person> result =
@@ -37,6 +32,11 @@ public class DataWrapper {
 		return result;
 	}
 
+	/**
+	 *Get a list of person by address
+	 *@Param String : address
+	 * @return List of persons
+	 */
 	public List<Person> getPersonByAddress(String address)   {
 		List<Person> result =
 				persons.stream()
@@ -47,8 +47,22 @@ public class DataWrapper {
 	}
 
 	/**
-	 * POST PERSON
-	 * @return
+	 *Get a list of email sort by city
+	 *@Param String : city
+	 * @return List String : email
+	 */
+	public List<Person>getEmailByCity(String city){
+		List<Person> result =
+				persons.stream()
+				.filter(c ->c.getCity().equals(city))
+				.collect(Collectors.toList());
+		logger.info("result: result={}", result );
+		return result;
+	}
+
+	/**
+	 * Created new person
+	 * @RequestBody Person
 	 */
 	public void setPersons(List<Person> persons)  {
 		logger.info("Person created: persons={}", persons );
@@ -56,8 +70,10 @@ public class DataWrapper {
 	}
 
 	/**
-	 * GET ONE PERSON
-	 * @return
+	 *Get a list of person by firstName and lastName
+	 *@Param String : firstName
+	 *@Param String : lastName
+	 * @return List of person
 	 */
 	public  List<Person> getPersonByName(String firstname,String lastname)  {
 		List<Person> result =
@@ -69,9 +85,9 @@ public class DataWrapper {
 	}
 
 	/**
-	 * DELETE PERSON
-	 * @param person
-	 * @return
+	 * Delete a person
+	 * @Param String : firstName, 
+	 * @Param String : lastName
 	 */
 	public boolean deletePerson(String firstname, String lastname) {
 		logger.info("Person deleted");
@@ -80,9 +96,10 @@ public class DataWrapper {
 	}
 
 	/**
-	 * UPDATE PERSON
-	 * @param person
-	 * @return
+	 * Update a person
+	 * @Param String : firstName, 
+	 * @Param String : lastName
+	 * @return Person update 
 	 */
 	public boolean updatePerson (String firstname, String lastname,Person person)  {
 		Optional<Person> updatedPerson =
@@ -102,13 +119,9 @@ public class DataWrapper {
 		return updatedPerson.isPresent();
 	}
 
-
-
-	//FIRE STATION
-
 	/**
-	 * GET ALL FIRE STATION
-	 * @return
+	 * Get FireStations
+	 * @return List of FireStations 
 	 */
 	public List<FireStations> getFireStations()  {
 		List<FireStations> result =
@@ -116,14 +129,19 @@ public class DataWrapper {
 		return result;
 	}
 
+	/**
+	 * Created fireStations 
+	 * @RequestBody fireStations
+	 */
 	public void setFirestations(List<FireStations> firestations)  {
 		logger.info("FireStation created");
 		this.firestations = firestations;
 	}
 
 	/**
-	 * GET ONE FIRE STATION
-	 * @return
+	 * Get FireStations by  stationNumber 
+	 * @Param String : stationNumber
+	 * @return List of FireStations
 	 */
 	public  List<FireStations> getStationByAdress(String address )  {
 		List<FireStations> result = 
@@ -134,6 +152,11 @@ public class DataWrapper {
 		return result;
 	}
 
+	/**
+	 * Get FireStations by  stationNumber 
+	 * @Param String : stationNumber
+	 * @return List of FireStations
+	 */
 	public  List<FireStations> getStationByNumber(String stationNumber )  {
 		List<FireStations> result = firestations.stream()
 				.filter(station -> station.getStation().equals(stationNumber))
@@ -142,23 +165,20 @@ public class DataWrapper {
 		return result;
 	}
 
-
 	/**
-	 * DELETE FIRE STATION
-	 * @param person
-	 * @return
+	 * Delete FireStations
+	 * @Param String : address
 	 */
 	public boolean deleteFireStation(String address)  {
 		logger.info("FireStation deleted");
 		return firestations.removeIf(p -> p.getAddress().equals(address));
 	}
 
-
-
 	/**
-	 * UPDATE FIRE STATION
-	 * @param person
-	 * @return
+	 * Update FireStations
+	 * @Param String : address
+	 * @RequestBody fireStation
+	 * @return FireStations update
 	 */
 	public boolean updateFireStation (String address, FireStations fireStation)  {
 		Optional<FireStations> updated =
@@ -173,14 +193,9 @@ public class DataWrapper {
 		return updated.isPresent();
 	}
 
-
-
-
-	//MEDICAL RECORD
-
 	/**
-	 * GET ALL MEDICAL RECORD
-	 * @return
+	 * Get medicalRecords
+	 * @return List of MedicalRecords 
 	 */
 	public List<MedicalRecords> getMedicalRecords()  {
 		List<MedicalRecords> result = 
@@ -189,15 +204,20 @@ public class DataWrapper {
 		return result;
 	}
 
-
+	/**
+	 * Created medicalRecords 
+	 * @RequestBody medicalRecords
+	 */
 	public void setMedicalrecords(List<MedicalRecords> medicalrecords){
 		logger.info("MedicalRecord created");
 		this.medicalrecords = medicalrecords;
 	}
 
 	/**
-	 * GET ONE MEDICAL RECORD
-	 * @return
+	 * Get medicalRecords by  firstName and lastName
+	 * @Param String : firstName
+	 * @Param String : lastName
+	 * @return List of MedicalRecord
 	 */
 	public List<MedicalRecords> getMedicalRecordByName(String firstname, String lastname )  {
 		List<MedicalRecords> result =
@@ -209,9 +229,25 @@ public class DataWrapper {
 	}
 
 	/**
-	 * DELETE MEDICAL RECORD
-	 * @param person
-	 * @return
+	 * Get medicalRecords by  firstName and lastName
+	 * @Param String : firstName
+	 * @Param String : lastName
+	 * @return List of MedicalRecord
+	 */
+	public List<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
+
+		List<MedicalRecords> result =
+				medicalrecords.stream()
+				.filter(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname))
+				.collect(Collectors.toList());
+		logger.info("result: result={}", result );
+		return result;
+	}
+
+	/**
+	 * Delete MedicalRecords
+	 * @Param String : lastName
+	 * @Param String : firstName
 	 */
 	public boolean deleteMedicalRecords(String firstname, String lastname)  {
 		logger.info("MedicalRecord deleted");
@@ -219,12 +255,12 @@ public class DataWrapper {
 				p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname));
 	}
 
-
-
 	/**
-	 * UPDATE MEDICAL RECORD
-	 * @param person
-	 * @return
+	 * Update MedicalRecords
+	 * @Param String : lastName
+	 * @Param String : firstName
+	 * @RequestBody medicalRecords
+	 * @return MedicalRecord update
 	 */
 	public boolean updateMedicalRecords (String firstname, String lastname, MedicalRecords medicalrecord)  {
 		Optional<MedicalRecords> updated =
@@ -241,28 +277,5 @@ public class DataWrapper {
 		return updated.isPresent();
 
 	}
-
-
-	public List<MedicalRecords> getMedicalByName(String firstname, String lastname)  {
-
-		List<MedicalRecords> result =
-				medicalrecords.stream()
-				.filter(p -> p.getFirstName().equals(firstname) && p.getLastName().equals(lastname))
-				.collect(Collectors.toList());
-		logger.info("result: result={}", result );
-		return result;
-	}
-
-	public List<Person>getEmailByCity(String city){
-		List<Person> result =
-				persons.stream()
-				.filter(c ->c.getCity().equals(city))
-				.collect(Collectors.toList());
-		logger.info("result: result={}", result );
-		return result;
-
-	}
-
-
 
 }

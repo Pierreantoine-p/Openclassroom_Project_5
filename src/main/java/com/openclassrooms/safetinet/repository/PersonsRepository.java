@@ -23,16 +23,43 @@ public class PersonsRepository{
 
 	/**
 	 *Get a list of all people
-	 * @return All persons
+	 * @return List of all persons
 	 */
 	public List<Person> getAll() {
 		return dataWrapper.getAllPersons();
 	}
-
+	
 	/**
-	 * POST
-	 * add new person
-	 *  @param Person person
+	 *Get a list of person by address
+	 *@Param String : address
+	 * @return List of persons
+	 */
+	public List<Person> getPersonByAddress(String address) {
+		return dataWrapper.getPersonByAddress(address);
+	}
+	
+	/**
+	 *Get a list of email sort by city
+	 *@Param String : city
+	 * @return List String : email
+	 */
+	public List<Person>getEmailByCity(String city){
+		return dataWrapper.getEmailByCity(city);	
+	}
+	
+	/**
+	 *Get a list of person by firstName and lastName
+	 *@Param String : firstName
+	 *@Param String : lastName
+	 * @return List of person
+	 */
+	public List<Person> getByName(String firstname,String lastname) {
+		return dataWrapper.getPersonByName(firstname, lastname);
+	}
+	
+	/**
+	 * Created new person
+	 * @RequestBody Person
 	 */
 	public Optional<Person> save(Person person){
 		boolean isAdded = dataWrapper.getAllPersons().add(person);
@@ -44,19 +71,10 @@ public class PersonsRepository{
 	}
 
 	/**
-	 * GET ONE
-	 *  Get one person by firstname
-	 *  @param String firstName
-	 *  @return
-	 */
-	public List<Person> getByName(String firstname,String lastname) {
-		return dataWrapper.getPersonByName(firstname, lastname);
-	}
-
-	/**
-	 * PUT
-	 * @param Person person
-	 * @return
+	 * Update a person
+	 * @Param String : firstName, 
+	 * @Param String : lastName
+	 * @return Person update 
 	 */
 	public boolean update(String firstname, String lastname,Person person)  {
 		boolean result = false;
@@ -65,9 +83,9 @@ public class PersonsRepository{
 	}
 
 	/**
-	 * DELETE
-	 * @param String firstname
-	 * @return
+	 * Delete a person
+	 * @Param String : firstName, 
+	 * @Param String : lastName
 	 */
 	public boolean delete(String firstname, String lastname) {
 		boolean result = false;
@@ -75,13 +93,7 @@ public class PersonsRepository{
 		return result;
 	}
 
-	public List<Person> getPersonByAddress(String address) {
-		return dataWrapper.getPersonByAddress(address);
-	}
-
-	public List<Person>getEmailByCity(String city){
-		return dataWrapper.getEmailByCity(city);	
-	}
+	
 
 
 }

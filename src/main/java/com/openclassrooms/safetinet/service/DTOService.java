@@ -1,8 +1,5 @@
 package com.openclassrooms.safetinet.service;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,29 +22,26 @@ public class DTOService {
 	private MedicalRecordsService medicalRecordsService;
 
 	private FireStationsService fireStationsService;
-
+	
+	private AgeService ageService;
 
 	ObjectMapper objectMapper = new ObjectMapper();
 
 
-	public DTOService(PersonsRepository personsRepository, PersonsService personsService,FireStationsService fireStationsService, MedicalRecordsService medicalRecordsService) {
+	public DTOService(PersonsRepository personsRepository, PersonsService personsService,FireStationsService fireStationsService, MedicalRecordsService medicalRecordsService, AgeService ageService) {
 		this.personsRepository = personsRepository;
 		this.personsService = personsService;
 		this.fireStationsService = fireStationsService;
 		this.medicalRecordsService = medicalRecordsService ;
+		this.ageService = ageService;
 	}
 
-	public int getAge (String date) {
 
-		LocalDate now = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		LocalDate formatterbirthDate = LocalDate.parse(date, formatter);
-		Period period = Period.between(formatterbirthDate, now);
-
-		int age = period.getYears();
-		return age;
-	}
-
+	/**
+	 * Get a list of people covered by the corresponding fire station, the list includes the first name, name, address, telephone number and a counter of the number of adults and children
+	 * @Param Integer : stationNumber
+	 * @return List Person
+	 */
 	public PersonByStationWithCountDTO getPersonByStation(String stationNumber){
 		PersonByStationWithCountDTO personByStationDTOWithCountList = new PersonByStationWithCountDTO();
 		List<PersonByStationDTO> personByStationDTOList = new ArrayList<PersonByStationDTO>();
@@ -69,7 +63,7 @@ public class DTOService {
 				List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);	
 
 				if(!medicalRecords.isEmpty()) {
-					int age = getAge(medicalRecords.get(0).getBirthdate());
+					int age = ageService.getAge(medicalRecords.get(0).getBirthdate());
 					PersonByStationDTO personByStationDTO = new PersonByStationDTO();
 					personByStationDTO.setFirstName(person.getFirstName());
 					personByStationDTO.setLastName(person.getLastName());
@@ -93,7 +87,12 @@ public class DTOService {
 
 		return personByStationDTOWithCountList;
 	}
-
+	
+	/**
+	 * Get a list of telephone numbers of residents served by the fire station
+	 * @Param Integer : stationNumber
+	 * @return List phone number
+	 */
 	public List<String> getPhoneByStation(String stationNumber){
 		List<String> phoneList = new ArrayList<String>();
 		List<FireStations> fireStationsList = fireStationsService.getStationByNumber(stationNumber);
@@ -111,7 +110,12 @@ public class DTOService {
 			return phoneList;
 		}
 	}
-
+	
+	/**
+	 * Get a list of residents living at the given address and the number of the fire station serving it
+	 * @Param String : address
+	 * @return List Person
+	 */
 	public PersonByAdressWithFireStationListDTO getFireByAddress(String address){
 		PersonByAdressWithFireStationListDTO personByAdressWithFireStationListDTO = new PersonByAdressWithFireStationListDTO();
 		List<PersonByAdressWithFireStationDTO> personByAdressWithFireStationDTOList = new ArrayList<PersonByAdressWithFireStationDTO>();
@@ -124,7 +128,7 @@ public class DTOService {
 
 			if(!medicalRecords.isEmpty()) {
 				PersonByAdressWithFireStationDTO personByAdressWithFireStationDTO = new PersonByAdressWithFireStationDTO();
-				int age = getAge(medicalRecords.get(0).getBirthdate());
+				int age = ageService.getAge(medicalRecords.get(0).getBirthdate());
 				List <FireStations> fireStationList = fireStationsService.findByAdress(address);
 				personByAdressWithFireStationListDTO.setFireStation(fireStationList.get(0).getStation());
 				personByAdressWithFireStationDTO.setLastName(person.getLastName());
@@ -139,10 +143,13 @@ public class DTOService {
 			}
 		}
 		return personByAdressWithFireStationListDTO;
-
-
 	}
-
+	
+	/**
+	 * Get a list of children living at the address, this list must have first name, last name, age and a list of other household members, if there is no child, returns an empty string
+	 * @Param String : city
+	 * @return List String child
+	 */
 	public ListPersonByAddressDTO getChildByAddress(String address){
 		ListPersonByAddressDTO ListPersonByAddressDTO = new ListPersonByAddressDTO();
 		List<Person> adressList = personsService.getPersonByAddress(address);
@@ -157,7 +164,7 @@ public class DTOService {
 				String firstname = person.getFirstName();
 				String lastname = person.getLastName();
 				List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(firstname, lastname);	
-				int age = getAge(medicalRecords.get(0).getBirthdate());
+				int age = ageService.getAge(medicalRecords.get(0).getBirthdate());
 				ChildByAddressDTO childByAddressDTO = new ChildByAddressDTO();
 				childByAddressDTO.setFirstName(person.getFirstName());
 				childByAddressDTO.setLastName(person.getLastName());
@@ -177,7 +184,12 @@ public class DTOService {
 		}
 		return ListPersonByAddressDTO;
 	}
-
+	
+	/**
+	 * Get a list of households served by the barracks, there must be the nim, telephone number, age and medical history
+	 * @Param Integer : stationNumber
+	 * @return List Person
+	 */
 	public AddressByStationDTO getHouseholdByStation(String stationNumber){
 		AddressByStationDTO addressByStationDTO = new AddressByStationDTO();
 		List<AddressPersonByStationDTO> addressPersonByStationListDTO = new ArrayList<AddressPersonByStationDTO>();
@@ -196,7 +208,7 @@ public class DTOService {
 
 			for (Person person : personList) {
 				List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());	
-				int age = getAge(medicalRecords.get(0).getBirthdate());
+				int age = ageService.getAge(medicalRecords.get(0).getBirthdate());
 				HouseholdByStationDTO householdByStationDTO = new HouseholdByStationDTO();
 				householdByStationDTO.setFirstname(person.getFirstName());
 				householdByStationDTO.setLastname(person.getLastName());
@@ -215,7 +227,13 @@ public class DTOService {
 		}
 		return addressByStationDTO;
 	}
-
+	
+	/**
+	 * Get the name, address, age, email address and medical history if several people have the same name, they appear
+	 * @Param String : lastName
+	 * @Param String : firstName
+	 * @return List Person
+	 */
 	public List<PersonByFirstNameAndLastNameDTO> getPersonByStation(String firstname, String lastname){
 		List<PersonByFirstNameAndLastNameDTO> personByFirstNameAndLastNameDTO = new ArrayList<PersonByFirstNameAndLastNameDTO>();	
 		List<Person> allPerson = personsRepository.getByName(firstname, lastname);
@@ -223,7 +241,7 @@ public class DTOService {
 		for (Person person : allPerson) {
 			PersonByFirstNameAndLastNameDTO personByFirstNameAndLastNameListDTO = new PersonByFirstNameAndLastNameDTO();
 			List<MedicalRecords> medicalRecords = medicalRecordsService.getMedicalByName(person.getFirstName(), person.getLastName());
-			int age = getAge(medicalRecords.get(0).getBirthdate());
+			int age = ageService.getAge(medicalRecords.get(0).getBirthdate());
 			personByFirstNameAndLastNameListDTO.setLastName(person.getLastName());
 			personByFirstNameAndLastNameListDTO.setAddress(person.getAddress());
 			personByFirstNameAndLastNameListDTO.setEmail(person.getEmail());
@@ -235,7 +253,12 @@ public class DTOService {
 
 		return personByFirstNameAndLastNameDTO;
 	}
-
+	
+	/**
+	 * Get email addresses of all the inhabitants of the city
+	 * @Param city
+	 * @return List String email
+	 */
 	public List<String>getEmailByCity(String city){
 		List<String> emailList = new ArrayList<String>();
 		List<Person> personMails = personsService.findEmailByCity(city);	

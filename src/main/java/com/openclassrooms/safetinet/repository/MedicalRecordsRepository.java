@@ -16,30 +16,37 @@ public class MedicalRecordsRepository {
     private final DataWrapper dataWrapper;
 
 
-
-	/**
-	 * GET ALL
-	 * @return
+    /**
+	 * Get medicalRecords
+	 * @return List of MedicalRecords 
 	 */
 	public List<MedicalRecords> getAll() {
 			return dataWrapper.getMedicalRecords();
  	}
 
 	/**
-	 * GET
-	 * get on medicalRecord by firstName
-	 * @param String firstName
-	 * @return
+	 * Get medicalRecords by  firstName and lastName
+	 * @Param String : firstName
+	 * @Param String : lastName
+	 * @return List of MedicalRecord
 	 */
 	public List<MedicalRecords> findByName(String firstname, String lastname)  {
 			return dataWrapper.getMedicalRecordByName(firstname, lastname);
  	}
 	
+	/**
+	 * Get medicalRecords by  firstName and lastName
+	 * @Param String : firstName
+	 * @Param String : lastName
+	 * @return List of MedicalRecord
+	 */
+	public List<MedicalRecords> getMedicalByName(String firtname, String lastname) {
+		return dataWrapper.getMedicalByName(firtname, lastname);
+}
 	
 	/**
-	 * POST
-	 * ajouter un dossier médical ;
-	 * @param medicalRecords
+	 * Created medicalRecords 
+	 * @RequestBody medicalRecords
 	 */
 	public Optional<MedicalRecords> save(MedicalRecords medicalRecord) {
 		boolean isAdded = dataWrapper.getMedicalRecords().add(medicalRecord);
@@ -51,9 +58,11 @@ public class MedicalRecordsRepository {
 	}
 	
 	/**
-	 * PUT
-	 *  mettre à jour un dossier médical existant (comme évoqué précédemment, supposer que le prénom et le nom de famille ne changent pas)
-	 *  @param MedicalRecords medicalRecords
+	 * Update MedicalRecords
+	 * @Param String : lastName
+	 * @Param String : firstName
+	 * @RequestBody medicalRecords
+	 * @return MedicalRecord update
 	 */
 	public boolean update (String firstname, String lastname,MedicalRecords medicalRecord)  {
 		boolean result = false;
@@ -62,9 +71,9 @@ public class MedicalRecordsRepository {
 	}
 	
 	/**
-	 * DELETE
-	 * supprimer un dossier médical (utilisez une combinaison de prénom et de nom comme identificateur unique)
-	 * @param String firstname
+	 * Delete MedicalRecords
+	 * @Param String : lastName
+	 * @Param String : firstName
 	 */
 	public boolean delete(String firstname, String lastname)  {
 		boolean result = false;
@@ -72,8 +81,6 @@ public class MedicalRecordsRepository {
 		return result;
 	}
 	
-	public List<MedicalRecords> getMedicalByName(String firtname, String lastname) {
-			return dataWrapper.getMedicalByName(firtname, lastname);
-	}
+	
 	
 }

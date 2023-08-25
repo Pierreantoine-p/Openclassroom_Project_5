@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
+import com.openclassrooms.safetinet.model.DTO.ListPersonByAddressDTO;
+
 import com.openclassrooms.safetinet.model.DTO.PersonByAdressWithFireStationListDTO;
 import com.openclassrooms.safetinet.model.DTO.PersonByStationWithCountDTO;
 
@@ -22,7 +25,7 @@ public class DTOServiceTest {
 
 	@Autowired
 	private DTOService dTOService;
-	
+
 	@Test
 	@Order(1)
 	public void testGetPersonByStation() {
@@ -46,54 +49,40 @@ public class DTOServiceTest {
 
 		assertEquals(result.size(), 5);
 		assertEquals(phoneList, result);
-
-
 	}
-	
+
 	@Test
 	@Order(3)
 	public void testGetFireByAddress() {
-/*
-		resultPersonByAdressWithFireStationListDTO(fireStation=3, personByAdressWithFireStationDTO=[PersonByAdressWithFireStationDTO(lastName=Boyd, phone=841-874-6512, age=39, medications=[aznol:350mg, hydrapermazol:100mg], allergies=[nillacilan]), PersonByAdressWithFireStationDTO(lastName=Boyd, phone=841-874-6513, age=34, medications=[pharmacol:5000mg, terazine:10mg, noznazol:250mg], allergies=[]), PersonByAdressWithFireStationDTO(lastName=Boyd, phone=841-874-6512, age=11, medications=[], allergies=[peanut]), PersonByAdressWithFireStationDTO(lastName=Boyd, phone=841-874-6512, age=5, medications=[], allergies=[]), PersonByAdressWithFireStationDTO(lastName=Boyd, phone=841-874-6544, age=37, medications=[tetracyclaz:650mg], allergies=[xilliathal])])
-
-*/
-
 		PersonByAdressWithFireStationListDTO result = dTOService.getFireByAddress("1509 Culver St");
-System.out.println("result" + result);
-		//assertEquals(result);
-		//assertEquals(phoneList, result);
-
-
+		
+		assertEquals(result. getPersonByAdressWithFireStationDTO().size(), 5);
 	}
-	
-	/*
+
+
 	@Test
 	@Order(4)
 	public void testGetChildByAddress() {
-		assertEquals();
+		ListPersonByAddressDTO result = dTOService.getChildByAddress("1509 Culver St");
+		
+		assertEquals(result.getChildByAddressDTO().size(), 2);
+		assertEquals(result.getAdultByAddressDTO().size() , 3);
 	}
-	
+
+	/*
 	@Test
 	@Order(5)
 	public void testGetHouseholdByStation() {
 		assertEquals();
 	}
-	
+	 */
 
-	
 	@Test
 	@Order(7)
 	public void testGetEmailByCity() {
-		List<String> result = 
-		assertEquals();
+		List<String> result =  dTOService.getEmailByCity("Culver");
+		
+		assertEquals(result.size(), 15);
 	}
-	*/
-	/*
-	@Test
-	@Order()
-	public void test() {
-		assertEquals();
-	}
-	*/
 
 }
