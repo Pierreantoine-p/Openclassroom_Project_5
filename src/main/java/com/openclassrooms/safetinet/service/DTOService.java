@@ -186,14 +186,14 @@ public class DTOService {
 	}
 	
 	/**
-	 * Get a list of households served by the barracks, there must be the nim, telephone number, age and medical history
+	 * Get a list of households served by the barracks, there must be the im, telephone number, age and medical history
 	 * @Param Integer : stationNumber
 	 * @return List Person
 	 */
 	public AddressByStationDTO getHouseholdByStation(String stationNumber){
 		AddressByStationDTO addressByStationDTO = new AddressByStationDTO();
 		List<AddressPersonByStationDTO> addressPersonByStationListDTO = new ArrayList<AddressPersonByStationDTO>();
-		List<HouseholdByStationDTO> householdByStationDTOList = new ArrayList<HouseholdByStationDTO>();
+		List<HouseholdByStationDTO> householdByStationDTOList;
 		List<FireStations> fireStationsList = fireStationsService.getStationByNumber(stationNumber);
 		addressByStationDTO.setStation(stationNumber);
 
@@ -202,6 +202,7 @@ public class DTOService {
 		}
 
 		for (FireStations fireStationList : fireStationsList){
+			householdByStationDTOList = new ArrayList<HouseholdByStationDTO>();
 			AddressPersonByStationDTO listAddressPersonByStationDTO = new AddressPersonByStationDTO();
 			listAddressPersonByStationDTO.setAddress(fireStationList.getAddress());
 			List<Person> personList = personsService.getPersonByAddress(fireStationList.getAddress());
@@ -217,14 +218,12 @@ public class DTOService {
 				householdByStationDTO.setMedications(medicalRecords.get(0).getMedications());
 				householdByStationDTO.setAllergies(medicalRecords.get(0).getAllergies());
 				householdByStationDTOList.add(householdByStationDTO);
-
-				listAddressPersonByStationDTO.setHouseholdByStationDTO(householdByStationDTOList);
 			}
+			listAddressPersonByStationDTO.setHouseholdByStationDTO(householdByStationDTOList);
 
 			addressPersonByStationListDTO.add(listAddressPersonByStationDTO);
-			addressByStationDTO.setAddressPersonByStationDTO(addressPersonByStationListDTO);
-			//String addressByStationD= objectMapper.writeValueAsString(addressByStationDTO);
 		}
+		addressByStationDTO.setAddressPersonByStationDTO(addressPersonByStationListDTO);
 		return addressByStationDTO;
 	}
 	

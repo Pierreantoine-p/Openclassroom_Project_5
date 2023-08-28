@@ -9,19 +9,7 @@ import lombok.NoArgsConstructor;
 public class PhoneByFireStationDTO {
 
 	private String phone;
-	
 
-/*
-	public static void add(PhoneByFireStationDTO phoneByFireStationDTO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setPhone(List<Person> phoneList) {
-		// TODO Auto-generated method stub
-		
-	}
-	*/
 	@JsonCreator
 	public PhoneByFireStationDTO(String phone) {
 		this.phone = phone ;

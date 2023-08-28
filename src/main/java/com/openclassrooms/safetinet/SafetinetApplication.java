@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SafetinetApplication {
 	
   
-//TODO logger entrer et parametre
 	
 	public static void main(String[] args) {
 
@@ -31,3 +30,7 @@ public class SafetinetApplication {
 
 
 //TODO une adresse ou un numéro de poste d'incendie n’est pas trouvé dans notre fichier, l'application devra renvoyer un objet JSON vide
+
+//TODO rappel contexte
+//TODO Raconte mvc + diagramme architecture 
+//TODO

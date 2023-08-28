@@ -20,7 +20,6 @@ import com.openclassrooms.safetinet.model.DTO.PersonByStationWithCountDTO;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@AutoConfigureMockMvc
 public class DTOServiceTest {
 
 	@Autowired
