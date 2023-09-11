@@ -20,7 +20,7 @@ import com.openclassrooms.safetinet.model.Person;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
-public class PersonRepository {
+public class PersonRepositoryTest {
 
 	@Autowired
 	private DataWrapper dataWrapper;

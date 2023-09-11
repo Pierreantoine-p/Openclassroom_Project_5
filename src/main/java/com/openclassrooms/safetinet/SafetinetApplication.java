@@ -19,18 +19,6 @@ public class SafetinetApplication {
 }
 
 
-
-//TODO finir dernier url
-
-//TODO test coverage 80%
-//TODO generate html surefire
-//TODO Add commentaire
-//TODO Check convention nommage
-
-
-
-//TODO une adresse ou un numéro de poste d'incendie n’est pas trouvé dans notre fichier, l'application devra renvoyer un objet JSON vide
-
-//TODO rappel contexte
-//TODO Raconte mvc + diagramme architecture 
-//TODO
+//TODO diagramme de class ajout les classes à la place des controller et service 
+//TODO diagramme de domaine 3 table cardinalité
+//TODO actuator 

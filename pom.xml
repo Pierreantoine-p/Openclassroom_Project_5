@@ -8,14 +8,14 @@
 		<version>3.0.5</version>
 		<relativePath />
 	</parent>
-	<groupId>com.openclassrooms</groupId>
-	<artifactId>safetinet</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>safetinet</name>
-	<description>Demo project for Spring Boot</description>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
+		<groupId>com.openclassrooms</groupId>
+		<artifactId>safetinet</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<name>safetinet</name>
+		<description>Demo project for Spring Boot</description>
+		<properties>
+			<java.version>17</java.version>
+		</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -25,12 +25,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.8</version>
-			<type>maven-plugin</type>
 		</dependency>
 		<dependency>
 			<groupId>com.github.spotbugs</groupId>
@@ -56,39 +50,41 @@
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--
-    	<dependency>
-    		<groupId>com.openclassrooms</groupId>
-    		<artifactId>api</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    	</dependency>
-    	
-    	<dependency>
-    		<groupId>com.openclassrooms</groupId>
-    		<artifactId>api</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    	</dependency>
-    	-->
 	</dependencies>
 	<build>
-		<plugins>
-			<!--
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		 	<plugin>
+		   <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.4.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.0</version>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
+                <version>0.8.8</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com/openclassrooms/safetinet/model/*</exclude>
+                        <exclude>com/openclassrooms/safetinet/model/DTO/*</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
-                	</execution>
-                 <execution>
-                     <id>jacoco-report</id>
+                    </execution>
+                    <execution>
+                        <id>report</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
@@ -96,79 +92,20 @@
                     </execution>
                 </executions>
             </plugin>
-             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>$NO-MVN-MAN-VER$
-           
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.2.0</version>
-                    </dependency>
-                </dependencies>
-                
-                <configuration>
-                    <excludes>
-                        <exclude>**/*Test.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-			</plugin>
-			  -->
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-surefire-plugin</artifactId>
-	        </plugin>
-	                <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.10</version>
-            <executions>
-                <execution>
-                    <id>jacoco-initialize</id>
-                    <goals>
-                        <goal>prepare-agent</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>jacoco-site</id>
-                    <phase>test</phase>
-                    <goals>
-                        <goal>report</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-        </plugins>	
+        </plugins>
 	</build>
 	<reporting>
-		<plugins>
-			<plugin>
+        <plugins>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M5</version><!--$NO-MVN-MAN-VER$-->
-			</plugin>
-		</plugins>
-	</reporting>
-	<profiles>
-		<profile>
-			<id>log4j2</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.logging.log4j</groupId>
-					<artifactId>log4j-spring-cloud-config-client</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-log4j2</artifactId>
-				</dependency>
-			</dependencies>
-		</profile>
-		</profiles>
+                <version>2.22.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

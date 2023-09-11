@@ -10,9 +10,8 @@ import org.apache.logging.log4j.Logger;
 import com.openclassrooms.safetinet.model.FireStations;
 import com.openclassrooms.safetinet.model.MedicalRecords;
 import com.openclassrooms.safetinet.model.Person;
-import lombok.Data;
 
-@Data
+
 public class DataWrapper {
 
 	private static final Logger logger = LogManager.getLogger(DataWrapper.class);
